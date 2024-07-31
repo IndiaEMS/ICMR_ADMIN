@@ -15,6 +15,8 @@ import ProgressCircle from "../../components/ProgressCircle";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+const url = import.meta.env.VITE_SERVER;
+
 const Dashboard = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -23,8 +25,8 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get("http://localhost:3000/count");
-        console.log(data);
+        console.log(`${url}/count`);
+        const { data } = await axios.get(`${url}/count`);
         setCounter(data);
       } catch (error) {
         console.error(error);
