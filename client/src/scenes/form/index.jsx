@@ -1,19 +1,35 @@
-import { Box, Button, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Radio,
+  FormControlLabel,
+  Typography,
+} from "@mui/material";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import axios from "axios";
+
+const url = import.meta.env.VITE_SERVER;
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
-    console.log(values);
+  const handleFormSubmit = async (values) => {
+    try {
+      console.log(values);
+      const { data } = await axios.post(`${url}/user`, values);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE Admin" subtitle="Create a New Admin Profile" />
+      <Header title="CREATE User" subtitle="Create a New User Account" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -45,7 +61,7 @@ const Form = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.username}
-                name="userName"
+                name="username"
                 error={!!touched.username && !!errors.username}
                 helperText={touched.username && errors.username}
                 sx={{ gridColumn: "span 3" }}
@@ -67,11 +83,11 @@ const Form = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="PassWord"
+                label="Password"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.password}
-                name="Password"
+                name="password"
                 error={!!touched.password && !!errors.password}
                 helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 3" }}
@@ -80,7 +96,7 @@ const Form = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="site Name"
+                label="Site Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.sitename}
@@ -89,9 +105,43 @@ const Form = () => {
                 helperText={touched.sitename && errors.sitename}
                 sx={{ gridColumn: "span 3" }}
               />
+              <Box gridColumn="span 4">
+                <Typography variant="h5">User Type</Typography>
+                <FormControlLabel
+                  control={
+                    <Radio
+                      checked={values.role === "user"}
+                      onChange={handleChange}
+                      value="user"
+                      name="role"
+                      color="secondary"
+                      // i wan to change color of radio button
+                    />
+                  }
+                  label="User"
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      checked={values.role === "admin"}
+                      onChange={handleChange}
+                      value="admin"
+                      name="role"
+                      color="secondary"
+                    />
+                  }
+                  label="Admin"
+                />
+              </Box>
             </Box>
-            <Box display="flex"  mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
+
+            <Box display="flex" mt="20px">
+              <Button
+                type="submit"
+                color="secondary"
+                variant="contained"
+                onClick={handleFormSubmit}
+              >
                 Create New User
               </Button>
             </Box>
@@ -102,25 +152,19 @@ const Form = () => {
   );
 };
 
-// const phoneRegExp =
-//   /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
-
 const checkoutSchema = yup.object().shape({
   username: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
-  // contact: yup
-  //   .string()
-  //   .matches(phoneRegExp, "Phone number is not valid")
-  //   .required("required"),
   password: yup.string().required("required"),
   sitename: yup.string().required("required"),
 });
+
 const initialValues = {
   username: "",
   email: "",
-  // contact: "",
   password: "",
   sitename: "",
+  role: "user", // Set the default value for role to "user"
 };
 
 export default Form;

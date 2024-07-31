@@ -13,6 +13,8 @@ import HFAT1ROUTER from "./Routers/HFAT-1.js";
 import HFAT2ROUTER from "./Routers/HFAT-2.js";
 import HFAT3ROUTER from "./Routers/HFAT-3.js";
 import AMBULANCEROUTER from "./Routers/Ambulance.js";
+import FETCHROUTER from "./Routers/fetch.js";
+import USERROUTER from "./Routers/user.js";
 const mongoURL = process.env.MONGO_URL;
 const client = process.env.CLIENT_URL;
 
@@ -44,9 +46,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+console.log("client", client);
 app.use(
   cors({
-    origin: [`${client}`, `${client}/sign-up`, `${client}/sign-in`],
+    // origin: [`${client}`, `${client}/sign-up`, `${client}/sign-in`],
+    origin: "*",
     methods: "GET,POST,PUT,DELETE",
     credentials: true,
   })
@@ -60,6 +64,8 @@ app.use(HFAT1ROUTER);
 app.use(HFAT2ROUTER);
 app.use(HFAT3ROUTER);
 app.use(AMBULANCEROUTER);
+app.use(FETCHROUTER);
+app.use(USERROUTER);
 
 app.get("/", (req, res) => {
   res.json({

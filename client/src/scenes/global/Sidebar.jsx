@@ -182,7 +182,7 @@ const Sidebar = () => {
               Pages
             </Typography>
             <Item
-              title="Create Admin"
+              title="Create User"
               to="/form"
               icon={<PersonOutlinedIcon />}
               selected={selected}

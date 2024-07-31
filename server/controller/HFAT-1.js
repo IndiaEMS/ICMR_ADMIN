@@ -8,21 +8,6 @@ import { AMBULANCE } from "../Database/Ambulance.js";
 import { HFAT2 } from "../Database/HFAT-2.js";
 import { HFAT3 } from "../Database/HFAT-3.js";
 
-// for HFAT1, HFAT2,HFAT3 And AMBULANCE
-export const HFATCounter = async (req, res) => {
-  try {
-    const HFAT1Count = await HFAT1.countDocuments();
-    const HFAT2Count = await HFAT2.countDocuments();
-    const HFAT3Count = await HFAT3.countDocuments();
-    const AMBULANCECount = await AMBULANCE.countDocuments();
-    res
-      .status(200)
-      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount });
-  } catch (error) {
-    res.status(404).json({ message: error.message });
-  }
-};
-
 export const HFAT1Controller = async (req, res) => {
   var { completeform, table1, table2, table3, table4 } = req.body;
   // console.log(completeform, table1, table2, table3, table4);
