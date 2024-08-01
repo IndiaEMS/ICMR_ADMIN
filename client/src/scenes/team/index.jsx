@@ -70,7 +70,7 @@ const Team = () => {
 
   const getData = async () => {
     try {
-      console.log(`${url}/user`);
+      // console.log(`${url}/user`);
       const { data } = await axios.get(`${url}/user`);
       console.log(data.data);
       setData(data.data);

@@ -2,7 +2,7 @@ import { AmbulanceRows } from "../Ambulance/Ambulance_rows";
 
 export const HFAT3Rows = (data) =>
   data.map((row) => ({
-    AMBid: row._id,
+    id: row._id,
     H3A1: row.H3A1,
     date: row.HFAT3_DATE,
     H3A2: row.uniqueCode,

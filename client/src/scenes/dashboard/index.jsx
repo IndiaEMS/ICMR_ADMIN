@@ -25,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        console.log(`${url}/count`);
+        // console.log(`${url}/count`);
         const { data } = await axios.get(`${url}/count`);
         setCounter(data);
       } catch (error) {
