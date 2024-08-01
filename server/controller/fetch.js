@@ -1,7 +1,10 @@
 import express, { response } from "express";
 import mongoose from "mongoose";
-import { AMBULANCE } from "../Database/Ambulance.js";
 import { User } from "../Database/user.js";
+import { HFAT1 } from "../Database/HFAT-1.js";
+import { HFAT2 } from "../Database/HFAT-2.js";
+import { HFAT3 } from "../Database/HFAT-3.js";
+import { AMBULANCE } from "../Database/Ambulance.js";
 const app = express();
 
 // for HFAT1, HFAT2,HFAT3 And AMBULANCE

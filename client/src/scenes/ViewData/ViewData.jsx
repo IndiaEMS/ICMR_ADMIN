@@ -96,6 +96,7 @@ const ViewData = ({ formName }) => {
 
   const getData = async () => {
     try {
+      console.log(`${url}/${formName}`);
       const { data } = await axios.get(`${url}/${formName}`);
       setData(data.data);
     } catch (error) {
