@@ -159,7 +159,7 @@ const getAmbulanceRow = (row) => {
     AMB19_4: row.AMB19?.[4],
     AMB19_5: row.AMB19?.[5],
     AMB19_6: row.AMB19?.[6],
-    AMB19_7: row.AMB19?.[7] != "" || row.AMB19?.[7] != null ? "other" : "",
+    AMB19_7: row.AMB19?.[7] !== "" || row.AMB19?.[7] !== null ? "other" : "",
     AMB19_8: row.AMB19?.[7],
   };
 };

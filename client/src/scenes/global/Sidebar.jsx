@@ -44,6 +44,7 @@ const Sidebar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [isHfatOpen, setIsHfatOpen] = useState(false);
+  const [isHfatAMBOpen, setIsHfatAMBOpen] = useState(false);
 
   return (
     <Box
@@ -169,6 +170,70 @@ const Sidebar = () => {
                   icon={<ViewListIcon />}
                   title="Ambulance"
                   to="ViewData/AMBULANCE"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                {/* <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-1 With Ambulance"
+                  to="ViewData/HFAT-1WithAMB"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-2 With Ambulance"
+                  to="ViewData/HFAT-2WithAMB"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-3 With Ambulance"
+                  to="ViewData/HFAT-3WithAMB"
+                  selected={selected}
+                  setSelected={setSelected}
+                /> */}
+              </Box>
+            )}
+            <MenuItem
+              icon={<ViewListIcon />}
+              onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}
+              active={selected.startsWith("HFAT")}
+              // active={selected === "HFAT"}
+              style={{ color: colors.grey[100] }}
+              suffix={
+                !isCollapsed ? (
+                  isHfatAMBOpen ? (
+                    <KeyboardArrowDownIcon />
+                  ) : (
+                    <KeyboardArrowRightIcon />
+                  )
+                ) : null
+              }
+            >
+              <Typography>HFAT With Ambulance</Typography>
+            </MenuItem>
+            {isHfatAMBOpen && (
+              <Box paddingLeft="10%">
+                <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-1"
+                  to="ViewData/HFAT-1WithAMB"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-2"
+                  to="ViewData/HFAT-2WithAMB"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
+                  icon={<ViewListIcon />}
+                  title="HFAT-3"
+                  to="ViewData/HFAT-3WithAMB"
                   selected={selected}
                   setSelected={setSelected}
                 />

@@ -246,7 +246,10 @@ export const HFAT1Rows = (data) =>
       C4_8: row.C4?.[8],
       C4_9: row.C4?.[9],
       C4_10: row.C4?.[10],
-      C4_11: row.C4?.[11] != null || row.C4?.[11] != "" ? "Other" : "",
+      C4_11:
+        row.C4?.[11] != null || row.C4?.[11] != "" || row.C4?.[11] != undefined
+          ? "Other"
+          : "",
       C4_12: row.C4?.[11],
       C5_0: row.C5?.split(":")[0],
       C5_1: row.C5?.split(":")[1],

@@ -50,35 +50,43 @@ const ViewData = ({ formName }) => {
   const [cols, setCols] = useState([]);
   const [columns, setColumns] = useState([]);
   const [exportColumns, setExportColumns] = useState([]);
+  const [title, setTitle] = useState(formName);
 
   useEffect(() => {
     if (formName === "HFAT-1") {
+      setTitle("HFAT-1");
       setColumns(HFAT1Columns);
       setExportColumns(HFAT1ColumnsExport);
       setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
+      setTitle("HFAT-2");
       setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
       setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
+      setTitle("HFAT-3");
       setColumns(HFAT3Columns);
       setExportColumns(HFAT3ColumnsExport);
       setRows(HFAT3Rows(data));
     } else if (formName === "HFAT-1WithAMB") {
+      setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...AmbulanceColumns]);
       setExportColumns([...HFAT1ColumnsExport, ...AmbulanceColumnsExport]);
       setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2WithAMB") {
+      setTitle("HFAT-2 with Ambulance");
       setColumns([...HFAT2Columns, ...AmbulanceColumns]);
       setExportColumns([...HFAT2ColumnsExport, ...AmbulanceColumnsExport]);
       setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3WithAMB") {
+      setTitle("HFAT-3 with Ambulance");
       setColumns([...HFAT3Columns, ...AmbulanceColumns]);
       setExportColumns([...HFAT3ColumnsExport, ...AmbulanceColumnsExport]);
       setRows(HFAT3Rows(data));
     } else if (formName === "AMBULANCE") {
+      setTitle("Ambulance");
       setColumns(AmbulanceColumns);
       setExportColumns(AmbulanceColumnsExport);
       setRows(AmbulanceRows(data));
@@ -126,7 +134,7 @@ const ViewData = ({ formName }) => {
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title={formName} subtitle={`Managing the ${formName}`} />
+        <Header title={title} subtitle={`Managing the ${title}`} />
         <Box>
           <Button
             sx={{

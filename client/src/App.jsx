@@ -31,7 +31,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />
-              <Route
+              {/* <Route
                 path="/ViewData/HFAT-1"
                 element={<ViewData formName={"HFAT-1"} />}
               />
@@ -46,7 +46,22 @@ function App() {
               <Route
                 path="/ViewData/AMBULANCE"
                 element={<ViewData formName={"AMBULANCE"} />}
-              />
+              /> */}
+              {[
+                { path: "/ViewData/HFAT-1", formName: "HFAT-1" },
+                { path: "/ViewData/HFAT-2", formName: "HFAT-2" },
+                { path: "/ViewData/HFAT-3", formName: "HFAT-3" },
+                { path: "/ViewData/HFAT-1WithAMB", formName: "HFAT-1WithAMB" },
+                { path: "/ViewData/HFAT-2WithAMB", formName: "HFAT-2WithAMB" },
+                { path: "/ViewData/HFAT-3WithAMB", formName: "HFAT-3WithAMB" },
+                { path: "/ViewData/AMBULANCE", formName: "AMBULANCE" },
+              ].map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  element={<ViewData formName={route.formName} />}
+                />
+              ))}
               <Route path="/contacts" element={<Contacts />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/form" element={<Form />} />
