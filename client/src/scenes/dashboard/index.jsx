@@ -2,6 +2,7 @@ import { Box, Button, IconButton, Typography, useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import { mockTransactions } from "../../data/mockData";
 import DownloadOutlinedIcon from "@mui/icons-material/DownloadOutlined";
+import FeedIcon from "@mui/icons-material/Feed";
 import EmailIcon from "@mui/icons-material/Email";
 import PointOfSaleIcon from "@mui/icons-material/PointOfSale";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
@@ -72,10 +73,10 @@ const Dashboard = () => {
           <StatBox
             title={counter.HFAT1Count ?? "0"}
             subtitle="HFAT-1"
-            progress={counter.HFAT1Count / 100}
-            increase="+2 New"
+            // progress={counter.HFAT1Count / 100}
+            // increase="+2 New"
             icon={
-              <EmailIcon
+              <FeedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -91,10 +92,10 @@ const Dashboard = () => {
           <StatBox
             title={counter.HFAT2Count ?? "0"}
             subtitle="HFAT-2"
-            progress={counter.HFAT2Count / 100}
-            increase="+21 New"
+            // progress={counter.HFAT2Count / 100}
+            // increase="+21 New"
             icon={
-              <PointOfSaleIcon
+              <FeedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -110,10 +111,10 @@ const Dashboard = () => {
           <StatBox
             title={counter.HFAT3Count ?? "0"}
             subtitle="HFAT-3"
-            progress={counter.HFAT3Count / 100}
-            increase="+5 New"
+            // progress={counter.HFAT3Count / 100}
+            // increase="+5 New"
             icon={
-              <PersonAddIcon
+              <FeedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
@@ -129,10 +130,10 @@ const Dashboard = () => {
           <StatBox
             title={counter.AMBULANCECount ?? "0"}
             subtitle="Ambulance"
-            progress={counter.AMBULANCECount / 10000}
-            increase="+43 New"
+            // progress={counter.AMBULANCECount / 10000}
+            // increase="+43 New"
             icon={
-              <TrafficIcon
+              <FeedIcon
                 sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
               />
             }
