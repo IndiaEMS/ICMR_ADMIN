@@ -246,10 +246,7 @@ export const HFAT1Rows = (data) =>
       C4_8: row.C4?.[8],
       C4_9: row.C4?.[9],
       C4_10: row.C4?.[10],
-      C4_11:
-        row.C4?.[11] != null || row.C4?.[11] != "" || row.C4?.[11] != undefined
-          ? "Other"
-          : "",
+      C4_11: row.C4?.[11]?.length > 0 ? "Other" : "",
       C4_12: row.C4?.[11],
       C5_0: row.C5?.split(":")[0],
       C5_1: row.C5?.split(":")[1],
@@ -348,7 +345,7 @@ export const HFAT1Rows = (data) =>
       E3_13: row.E3?.[13],
       E3_14: row.E3?.[14],
       E3_15: row.E3?.[15],
-      E3_16: row.E3?.[16] != null || row.E3?.[16] != "" ? "Other" : "",
+      E3_16: row.E3?.[16]?.length > 0 ? "Other" : "",
       E3_17: row.E3?.[16],
       E4_0: row.E4?.[0],
       E4_1: row.E4?.[1],
@@ -356,7 +353,7 @@ export const HFAT1Rows = (data) =>
       E4_3: row.E4?.[3],
       E4_4: row.E4?.[4],
       E4_5: row.E4?.[5],
-      E4_6: row.E4?.[6] != null || row.E4?.[6] != "" ? "Other" : "",
+      E4_6: row.E4?.[6]?.length > 0 ? "Other" : "",
       E4_7: row.E4?.[6],
       H1F1: row.H1F1,
       H1F2: row.H1F2,
@@ -391,7 +388,7 @@ export const HFAT1Rows = (data) =>
       H1H7: row.H1H7,
       H1H8_0: row.H1H8?.[0],
       H1H8_1: row.H1H8?.[1],
-      H1H8_2: row.H1H8?.[2] != null ? "other" : "",
+      H1H8_2: row.H1H8?.[2]?.length > 0 ? "other" : "",
       H1H8_3: row.H1H8?.[2],
       H1H9: row.H1H9,
       I1_0: row.I1?.[0],
