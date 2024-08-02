@@ -51,6 +51,7 @@ const ViewData = ({ formName }) => {
   const [columns, setColumns] = useState([]);
   const [exportColumns, setExportColumns] = useState([]);
   const [title, setTitle] = useState(formName);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (formName === "HFAT-1") {
@@ -104,16 +105,17 @@ const ViewData = ({ formName }) => {
 
   const getData = async () => {
     try {
+      setLoading(true);
       // console.log(`${url}/${formName}`);
       const { data } = await axios.get(`${url}/${formName}`);
       setData(data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    // getRowsAndCols();
     getData();
   }, [formName]);
 
@@ -227,6 +229,7 @@ const ViewData = ({ formName }) => {
             filter: true,
             floatingFilter: true,
           }}
+          localeText={loading ? "Loading..." : "No data available"}
           pagination={true}
           paginationPageSize={20}
         />

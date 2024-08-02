@@ -33,10 +33,6 @@ export const GetUser = async (req, res, next) => {
 export const CreateUser = async (req, res, next) => {
   try {
     const jwt_secret = process.env.JWT_SECRET;
-    console.log("create user");
-
-    // console.log(req.headers);
-    console.log(req.body);
 
     const { username, email, password, sitename, role } = req.body;
 

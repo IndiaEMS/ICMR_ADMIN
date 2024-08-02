@@ -11,24 +11,39 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
+import { useState } from "react";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
+  const [SubmitedMsg, setSubmittedMsg] = useState("");
+
   const handleFormSubmit = async (values) => {
     try {
       console.log(values);
       const { data } = await axios.post(`${url}/user`, values);
       console.log(data);
+      if (data.error) {
+        setSubmittedMsg(data.error);
+        return;
+      }
+      setSubmittedMsg("User Created Successfully");
     } catch (error) {
       console.log(error);
+      // setSubmittedMsg(error.response.data.message);
     }
   };
 
   return (
     <Box m="20px">
+      {SubmitedMsg ? (
+        <Typography variant="h3" className="mb-2">
+          {SubmitedMsg}
+        </Typography>
+      ) : null}
+
       <Header title="CREATE User" subtitle="Create a New User Account" />
 
       <Formik

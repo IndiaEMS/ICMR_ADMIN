@@ -1,10 +1,11 @@
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import RefreshIcon from "@mui/icons-material/Refresh";
 import Header from "../../components/Header";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -39,7 +40,6 @@ const Team = () => {
       headerName: "Access Level",
       flex: 1,
       renderCell: ({ row: { role } }) => {
-        console.log(role);
         return (
           <Box
             width="60%"
@@ -67,13 +67,15 @@ const Team = () => {
       },
     },
   ];
+  const [loading, setLoading] = useState(false);
 
   const getData = async () => {
     try {
-      // console.log(`${url}/user`);
+      setLoading(true);
       const { data } = await axios.get(`${url}/user`);
-      console.log(data.data);
+      // console.log(data.data);
       setData(data.data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -85,7 +87,28 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title="TEAM" subtitle="Managing the Team Members" />
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            <RefreshIcon sx={{ mr: "10px" }} />
+            Refresh
+          </Button>
+        </Box>
+      </Box>
+
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -120,6 +143,9 @@ const Team = () => {
           rows={data}
           columns={columns}
           getRowId={(row) => row._id}
+          localeText={{
+            noRowsLabel: loading ? "Loading" : "No data available",
+          }}
         />
       </Box>
     </Box>
