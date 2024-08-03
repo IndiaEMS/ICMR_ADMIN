@@ -203,6 +203,9 @@ const ViewData = ({ formName }) => {
           "& .ag-icon": {
             color: colors.grey[100],
           },
+          "& .ag-floating-filter-input": {
+            color: "black",
+          },
           "& .ag-checkbox-input-wrapper": {
             color: colors.greenAccent[200],
           },
