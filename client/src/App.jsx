@@ -17,6 +17,7 @@ import { ColorModeContext, useMode } from "./theme";
 import ViewData from "./scenes/ViewData/ViewData";
 
 function App() {
+  document.title = "Super Admin | INDIA EMS";
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 

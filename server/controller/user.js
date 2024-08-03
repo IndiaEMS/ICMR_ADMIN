@@ -43,14 +43,6 @@ export const CreateUser = async (req, res, next) => {
             error: "This username / email already exists.",
           });
         } else {
-          const token = jwt.sign(
-            {
-              username: email,
-            },
-            jwt_secret,
-            { expiresIn: "1h" }
-          );
-
           const user = new User({
             name: username,
             password: password,
@@ -65,7 +57,6 @@ export const CreateUser = async (req, res, next) => {
               res.status(200).json({
                 success: "User Added!",
                 user: user,
-                token: token,
               });
             })
             .catch((err) => {

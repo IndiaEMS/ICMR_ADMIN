@@ -12,11 +12,15 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
 import { useState } from "react";
+import { useTheme } from "@emotion/react";
+import { tokens } from "../../theme";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const theme = useTheme();
+  const colors = tokens(theme.palette);
 
   const [SubmitedMsg, setSubmittedMsg] = useState("");
 
@@ -66,6 +70,9 @@ const Form = () => {
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                "& .MuiFormLabel-root.Mui-focused": {
+                  color: colors.greenAccent[400],
+                },
               }}
             >
               <TextField
@@ -179,7 +186,7 @@ const initialValues = {
   email: "",
   password: "",
   sitename: "",
-  role: "user", // Set the default value for role to "user"
+  role: "user",
 };
 
 export default Form;
