@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { ProSidebar, Menu, MenuItem, SubMenu } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -15,6 +15,7 @@ import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ViewListIcon from "@mui/icons-material/ViewList";
+import { AppContext } from "../../context/user";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -34,7 +35,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ userRole }) => {
+const Sidebar = () => {
+  const { state } = useContext(AppContext);
+  const userRole = state.user?.role ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

@@ -17,7 +17,7 @@ const Team = () => {
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
   const columns = [
-    { field: "_id", headerName: "ID" },
+    { field: "_id", headerName: "ID", flex: 1 },
     {
       field: "name",
       headerName: "Name",

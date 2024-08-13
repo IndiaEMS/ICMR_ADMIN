@@ -13,9 +13,12 @@ import React from "react";
 import Menu from "@mui/material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+import { AppContext } from "../../context/user";
+const settings = ["Logout"];
 
 const Topbar = () => {
+  // const { state } = useContext(AppContext);
+
   const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);

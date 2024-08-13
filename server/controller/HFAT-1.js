@@ -54,20 +54,26 @@ export const HFAT1Controller = async (req, res) => {
 export const HFAT1Get = async (req, res, next) => {
   try {
     const id = req.params.id;
-    // const HEAT1Data = await HFAT1.find({ _id: "668b69b81f251d985457e463" });
-    var HEAT1Data;
+    const state = req.params.state;
+
+    var HFAT1Data;
     if (id) {
-      HEAT1Data = await HFAT1.findById({ _id: id });
+      HFAT1Data = await HFAT1.findById({ _id: id });
+    } else if (state) {
+      HFAT1Data = await HFAT1.find({ A3: { $regex: state } });
     } else {
-      HEAT1Data = await HFAT1.find();
+      console.log("else");
+
+      HFAT1Data = await HFAT1.find();
     }
-    if (!HEAT1Data) {
+
+    if (!HFAT1Data) {
       res.status(404).json({ error: "Data not found" });
     }
 
     res.status(200).json({
       success: true,
-      data: HEAT1Data,
+      data: HFAT1Data,
     });
   } catch (error) {
     next(error);
@@ -77,10 +83,10 @@ export const HFAT1Get = async (req, res, next) => {
 export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
   try {
     const id = req.params.id;
-    let HEAT1Data;
+    let HFAT1Data;
 
     if (id) {
-      HEAT1Data = await HFAT1.aggregate([
+      HFAT1Data = await HFAT1.aggregate([
         { $match: { _id: mongoose.Types.ObjectId(id) } },
         {
           $lookup: {
@@ -109,8 +115,38 @@ export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
           },
         }, // Unwind the array to get a direct object
       ]);
+    } else if (state) {
+      HFAT1Data = await HFAT1.aggregate([
+        { $match: { A3: { $regex: state } } },
+        {
+          $lookup: {
+            from: "ambulances", // The collection name in MongoDB for Ambulance
+            pipeline: [
+              {
+                $addFields: {
+                  formUniqueCode: {
+                    $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
+                  },
+                },
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$formUniqueCode", "$$uniqueCode"] },
+                },
+              },
+            ],
+            as: "ambulanceDetails",
+          },
+        },
+        {
+          $unwind: {
+            path: "$ambulanceDetails",
+            preserveNullAndEmptyArrays: true,
+          },
+        }, // Unwind the array to get a direct object
+      ]);
     } else {
-      HEAT1Data = await HFAT1.aggregate([
+      HFAT1Data = await HFAT1.aggregate([
         {
           $lookup: {
             from: "ambulances", // The collection name in MongoDB for Ambulance
@@ -141,13 +177,13 @@ export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
       ]);
     }
 
-    if (!HEAT1Data || HEAT1Data.length === 0) {
+    if (!HFAT1Data || HFAT1Data.length === 0) {
       return res.status(404).json({ error: "Data not found" });
     }
 
     res.status(200).json({
       success: true,
-      data: HEAT1Data,
+      data: HFAT1Data,
     });
   } catch (error) {
     next(error);

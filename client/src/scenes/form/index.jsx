@@ -5,28 +5,71 @@ import {
   Radio,
   FormControlLabel,
   Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  FormHelperText,
+  IconButton,
 } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
 import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import axios from "axios";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useTheme } from "@emotion/react";
 import { tokens } from "../../theme";
+// import {
+//   Gujarat,
+//   Odisha,
+//   MadhyaPradesh,
+//   Ludhiana,
+//   pondicherry,
+// } from "./blockList.js";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Form = () => {
+  const state = [
+    "Gujarat",
+    "Odisha",
+    "Madhya Pradesh",
+    "Ludhiana",
+    "pondicherry",
+  ];
+  // const [selectedState, setSelectedState] = useState(initialValues.state);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();
-  const colors = tokens(theme.palette);
+  const colors = tokens(theme.palette.mode);
+
+  // const dropdownItems = useMemo(() => {
+  //   console.log(initialValues);
+
+  //   switch (selectedState) {
+  //     case "Gujarat":
+  //       return Gujarat;
+  //     case "Odisha":
+  //       return Odisha;
+  //     case "Madhya Pradesh":
+  //       return MadhyaPradesh;
+  //     case "Ludhiana":
+  //       return Ludhiana;
+  //     case "pondicherry":
+  //       return pondicherry;
+  //     default:
+  //       return [];
+  //   }
+  // }, [selectedState]);
+  // }, [selectedState]);
 
   const [SubmitedMsg, setSubmittedMsg] = useState("");
+  // const [dropdownItems, setDropDownItems] = useState([]);
 
   const handleFormSubmit = async (values) => {
     try {
-      console.log(values);
+      // console.log(values);
       const { data } = await axios.post(`${url}/user`, values);
       console.log(data);
       if (data.error) {
@@ -40,12 +83,46 @@ const Form = () => {
     }
   };
 
+  // const handleDropdownChange = (event) => {
+  //   // console.log(event.target);
+  //   initialValues.state = event.target.value;
+  //   console.log(initialValues.state);
+  //   // initialValues[event.target.name] = event.target.value;
+
+  //   // setSelectedState(event.target);
+  // };
+
   return (
     <Box m="20px">
       {SubmitedMsg ? (
-        <Typography variant="h3" className="mb-2">
-          {SubmitedMsg}
-        </Typography>
+        <Box
+          sx={{
+            backgroundColor: colors.greenAccent[400],
+            width: "75%",
+            marginBottom: "20px",
+            padding: "5px",
+            // radius
+            borderRadius: "10px",
+          }}
+          display={"flex"}
+          justifyContent={"space-between"}
+          alignItems="center"
+        >
+          <Typography
+            variant="h3"
+            color={colors.grey[900]}
+            align="center"
+            alignItems={"center"}
+          >
+            {SubmitedMsg}
+          </Typography>
+          <IconButton onClick={() => setSubmittedMsg("")}>
+            <CloseIcon
+              fontSize="5"
+              sx={{ color: colors.grey[900], height: "5" }}
+            />
+          </IconButton>
+        </Box>
       ) : null}
 
       <Header title="CREATE User" subtitle="Create a New User Account" />
@@ -70,9 +147,11 @@ const Form = () => {
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+
                 "& .MuiFormLabel-root.Mui-focused": {
                   color: colors.greenAccent[400],
                 },
+                // "& .MuiInputBase-input": { color: "red" },
               }}
             >
               <TextField
@@ -114,7 +193,81 @@ const Form = () => {
                 helperText={touched.password && errors.password}
                 sx={{ gridColumn: "span 3" }}
               />
-              <TextField
+              {/* <Box gridColumn="span 3">
+                <FormControl
+                  fullWidth
+                  variant="filled"
+                  error={!!touched.state && !!errors.state}
+                >
+                  <InputLabel id="demo-simple-select-label-state">
+                    State
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label-state"
+                    label="state"
+                    name="state"
+                    onBlur={handleBlur}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setSelectedState(e.target.value);
+                    }}
+                    value={values.state}
+                  >
+                    <MenuItem value="" disabled>
+                      Select State Name
+                    </MenuItem>
+                    {state.map((site) => (
+                      <MenuItem key={site} value={site}>
+                        {site}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    {touched.state && errors.state}
+                  </FormHelperText>
+                </FormControl>
+              </Box> */}
+              <Box gridColumn="span 3">
+                <FormControl
+                  fullWidth
+                  variant="filled"
+                  error={!!touched.sitename && !!errors.sitename}
+                >
+                  <InputLabel id="demo-simple-select-label">
+                    Site Name
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-label"
+                    fullWidth
+                    variant="filled"
+                    label="Site Name"
+                    onBlur={handleBlur}
+                    onChange={handleChange}
+                    value={values.sitename}
+                    name="sitename"
+                    // error={!!touched.sitename && !!errors.sitename}
+                    // helperText={touched.sitename && errors.sitename}
+                    sx={{ gridColumn: "span 3" }}
+                  >
+                    <MenuItem value="" disabled>
+                      Select Site Name
+                    </MenuItem>
+                    {/* <MenuItem value="1">sss</MenuItem>
+                    <MenuItem value="2">sss</MenuItem>
+                    <MenuItem value="3">sss</MenuItem> */}
+                    {state.map((site) => (
+                      <MenuItem key={site} value={site}>
+                        {site}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    {touched.sitename && errors.sitename}
+                  </FormHelperText>
+                </FormControl>
+              </Box>
+
+              {/* <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -126,7 +279,8 @@ const Form = () => {
                 error={!!touched.sitename && !!errors.sitename}
                 helperText={touched.sitename && errors.sitename}
                 sx={{ gridColumn: "span 3" }}
-              />
+              /> */}
+
               <Box gridColumn="span 4">
                 <Typography variant="h5">User Type</Typography>
                 <FormControlLabel
@@ -178,6 +332,7 @@ const checkoutSchema = yup.object().shape({
   username: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
+  state: yup.string().required("required"),
   sitename: yup.string().required("required"),
 });
 
@@ -185,6 +340,7 @@ const initialValues = {
   username: "",
   email: "",
   password: "",
+  state: "",
   sitename: "",
   role: "user",
 };

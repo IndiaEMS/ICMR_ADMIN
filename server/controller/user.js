@@ -40,7 +40,7 @@ export const CreateUser = async (req, res, next) => {
   try {
     const jwt_secret = process.env.JWT_SECRET;
 
-    const { username, email, password, sitename, role } = req.body;
+    const { username, email, password, state, sitename, role } = req.body;
 
     User.findOne({ username: email })
       .then((result) => {
@@ -49,11 +49,19 @@ export const CreateUser = async (req, res, next) => {
             error: "This username / email already exists.",
           });
         } else {
+          // const token = jwt.sign(
+          //   {
+          //     username: email,
+          //   },
+          //   jwt_secret,
+          //   { expiresIn: "1h" }
+          // );
+
           const user = new User({
             name: username,
             password: password,
             username: email,
-            sitename: sitename,
+            sitename: `${sitename}, ${state}`,
             role: role,
           });
 
@@ -61,7 +69,8 @@ export const CreateUser = async (req, res, next) => {
             .save()
             .then(() => {
               res.status(200).json({
-                success: "User Added!",
+                message: "User Added!",
+                success: true,
                 user: user,
               });
             })

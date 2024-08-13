@@ -52,6 +52,16 @@ const ViewData = ({ formName }) => {
   const [exportColumns, setExportColumns] = useState([]);
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
+  const [selectedState, setSelectedState] = useState("");
+
+  const states = [
+    { value: "", label: "All" },
+    { value: "GJBRC", label: "Gujarat" },
+    { value: "ORPUR", label: "Odisha" },
+    { value: "MPBHS", label: "Madhya Pradesh" },
+    { value: "PBLDH", label: "Ludhiana" },
+    { value: "PYPDY", label: "Pondicherry" },
+  ];
 
   useEffect(() => {
     if (formName === "HFAT-1") {
@@ -106,14 +116,25 @@ const ViewData = ({ formName }) => {
   const getData = async () => {
     try {
       setLoading(true);
-      // console.log(`${url}/${formName}`);
-      const { data } = await axios.get(`${url}/${formName}`);
+      console.log(`${url}/${formName}/${selectedState}`);
+      const { data } = await axios.get(`${url}/${formName}/${selectedState}`);
       setData(data.data);
       setLoading(false);
     } catch (error) {
       console.log(error);
     }
   };
+
+  // make a function to filter data based on state
+  useEffect(() => {
+    if (selectedState === "") {
+      setRows(HFAT1Rows(data));
+    } else {
+      setRows(
+        HFAT1Rows(data).filter((row) => row["A3"].startsWith(selectedState))
+      );
+    }
+  }, [selectedState, data]);
 
   useEffect(() => {
     getData();
@@ -167,6 +188,96 @@ const ViewData = ({ formName }) => {
             <DownloadOutlined sx={{ mr: "10px" }} />
             Download in CSV
           </Button>
+        </Box>
+      </Box>
+      <Box>
+        <Box>
+          {...states.map((state) => (
+            <Button
+              sx={{
+                backgroundColor:
+                  selectedState == state["value"]
+                    ? colors.greenAccent[700]
+                    : colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                mr: "10px",
+              }}
+              onClick={() => {
+                setSelectedState(state["value"]);
+              }}
+            >
+              {state["label"]}
+            </Button>
+          ))}
+
+          {/* <Button
+            sx={{
+              backgroundColor: colors.greenAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={handleDownloadCSV}
+          >
+            Gujarat
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={handleDownloadCSV}
+          >
+            Odisha
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={handleDownloadCSV}
+          >
+            Madhya Pradesh
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={handleDownloadCSV}
+          >
+            Ludhiana
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={handleDownloadCSV}
+          >
+            pondicherry
+          </Button> */}
         </Box>
       </Box>
       <Box

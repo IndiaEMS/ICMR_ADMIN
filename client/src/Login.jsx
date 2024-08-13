@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
@@ -9,8 +9,10 @@ import {
   Grid,
 } from "@mui/material";
 import axios from "axios";
+import { AppContext } from "./context/user";
 
 export default function AdminLogin() {
+  const { setUser } = useContext(AppContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -28,9 +30,9 @@ export default function AdminLogin() {
         password,
       });
       const { user, token } = response.data;
-      console.log(user.role, token);
-
+      
       if (user.role === "admin" || user.role === "superadmin") {
+        setUser(user,token);
         localStorage.setItem("token", token);
         navigate("/");
       } else {

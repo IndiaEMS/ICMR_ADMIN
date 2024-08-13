@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
   },
   sitename: {
     type: String,
+    
   },
   role: {
     type: String,
