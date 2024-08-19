@@ -38,6 +38,8 @@ import { AmbulanceRows } from "./Ambulance/Ambulance_rows";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+import { CSTColumns } from "./CST/CST_columns";
+import { CSTRows } from "./CST/CST_rows";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -101,6 +103,12 @@ const ViewData = ({ formName }) => {
       setColumns(AmbulanceColumns);
       setExportColumns(AmbulanceColumnsExport);
       setRows(AmbulanceRows(data));
+    } else if (formName === "CST") {
+      setTitle("Community Survey Tool");
+      setColumns(CSTColumns(data));
+      setExportColumns(CSTColumns);
+      setRows(data);
+      // setRows(CSTRows(data));
     } else {
       console.log("No form found");
     }
@@ -117,8 +125,10 @@ const ViewData = ({ formName }) => {
     try {
       setLoading(true);
       console.log(`${url}/${formName}/${selectedState}`);
-      const { data } = await axios.get(`${url}/${formName}/${selectedState}`);
+      const { data } = await axios.get(`${url}/${formName}`);
       setData(data.data);
+      console.log(data.data[0]);
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -126,15 +136,15 @@ const ViewData = ({ formName }) => {
   };
 
   // make a function to filter data based on state
-  useEffect(() => {
-    if (selectedState === "") {
-      setRows(HFAT1Rows(data));
-    } else {
-      setRows(
-        HFAT1Rows(data).filter((row) => row["A3"].startsWith(selectedState))
-      );
-    }
-  }, [selectedState, data]);
+  // useEffect(() => {
+  //   if (selectedState === "") {
+  //     setRows(HFAT1Rows(data));
+  //   } else {
+  //     setRows(
+  //       HFAT1Rows(data).filter((row) => row["A3"].startsWith(selectedState))
+  //     );
+  //   }
+  // }, [selectedState, data]);
 
   useEffect(() => {
     getData();
@@ -192,7 +202,7 @@ const ViewData = ({ formName }) => {
       </Box>
       <Box>
         <Box>
-          {...states.map((state) => (
+          {/* ...states.map((state) => (
             <Button
               sx={{
                 backgroundColor:
@@ -211,7 +221,7 @@ const ViewData = ({ formName }) => {
             >
               {state["label"]}
             </Button>
-          ))}
+          )) */}
 
           {/* <Button
             sx={{

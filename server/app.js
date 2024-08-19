@@ -13,6 +13,7 @@ import HFAT1ROUTER from "./Routers/HFAT-1.js";
 import HFAT2ROUTER from "./Routers/HFAT-2.js";
 import HFAT3ROUTER from "./Routers/HFAT-3.js";
 import AMBULANCEROUTER from "./Routers/Ambulance.js";
+import CSTROUTER from "./Routers/CST.js";
 import FETCHROUTER from "./Routers/fetch.js";
 import USERROUTER from "./Routers/user.js";
 import cookieParser from "cookie-parser";
@@ -68,6 +69,7 @@ app.use(HFAT1ROUTER);
 app.use(HFAT2ROUTER);
 app.use(HFAT3ROUTER);
 app.use(AMBULANCEROUTER);
+app.use(CSTROUTER);
 app.use(FETCHROUTER);
 app.use(USERROUTER);
 

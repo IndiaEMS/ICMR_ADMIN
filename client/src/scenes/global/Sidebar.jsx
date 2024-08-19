@@ -169,6 +169,13 @@ const Sidebar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
+                <Item
+                  icon={<ViewListIcon />}
+                  title="CST"
+                  to="ViewData/CST"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
               </Box>
             )}
             <MenuItem
