@@ -124,10 +124,10 @@ const ViewData = ({ formName }) => {
   const getData = async () => {
     try {
       setLoading(true);
-      console.log(`${url}/${formName}/${selectedState}`);
+      // console.log(`${url}/${formName}/${selectedState}`);
       const { data } = await axios.get(`${url}/${formName}`);
       setData(data.data);
-      console.log(data.data[0]);
+      // console.log(data.data[0]);
 
       setLoading(false);
     } catch (error) {
