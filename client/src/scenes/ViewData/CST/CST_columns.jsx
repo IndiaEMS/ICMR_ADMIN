@@ -924,6 +924,7 @@ export const CSTColumns = (data) => {
     ...generateColumns(maxMembers, PartDcolumns),
     ...generateColumns(maxMembers, PartEcolumns),
     ...generateColumns(maxMembers, PartFcolumns),
+    ...geneerateColumns(maxMembers,PartGcolumns),
     ...generateColumns(maxMembers, PartHcolumns),
   ];
 };
