@@ -68,6 +68,7 @@ function App() {
                 { path: "/ViewData/HFAT-3WithAMB", formName: "HFAT-3WithAMB" },
                 { path: "/ViewData/AMBULANCE", formName: "AMBULANCE" },
                 { path: "/ViewData/CST", formName: "CST" },
+                { path: "/ViewData/Autopsy", formName: "Autopsy" },
               ].map((route) => (
                 <Route
                   key={route.path}

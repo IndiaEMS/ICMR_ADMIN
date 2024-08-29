@@ -40,6 +40,7 @@ import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the 
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { CSTColumns } from "./CST/CST_columns";
 import { CSTRows } from "./CST/CST_rows";
+import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -106,7 +107,13 @@ const ViewData = ({ formName }) => {
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));
-      setExportColumns(CSTColumns);
+      setExportColumns(CSTColumns(data));
+      setRows(data);
+      // setRows(CSTRows(data));
+    } else if (formName === "Autopsy") {
+      setTitle("Verbal Autopsy Tool");
+      setColumns(AutopsyColumnsExport);
+      setExportColumns(AutopsyColumnsExport);
       setRows(data);
       // setRows(CSTRows(data));
     } else {
