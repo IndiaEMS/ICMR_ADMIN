@@ -16,6 +16,8 @@ import AMBULANCEROUTER from "./Routers/Ambulance.js";
 import CSTROUTER from "./Routers/CST.js";
 import FETCHROUTER from "./Routers/fetch.js";
 import USERROUTER from "./Routers/user.js";
+import AUTOPSYROUTER from "./Routers/Autopsy.js";
+
 import cookieParser from "cookie-parser";
 
 const mongoURL = process.env.MONGO_URL;
@@ -70,6 +72,7 @@ app.use(HFAT2ROUTER);
 app.use(HFAT3ROUTER);
 app.use(AMBULANCEROUTER);
 app.use(CSTROUTER);
+app.use(AUTOPSYROUTER);
 app.use(FETCHROUTER);
 app.use(USERROUTER);
 
