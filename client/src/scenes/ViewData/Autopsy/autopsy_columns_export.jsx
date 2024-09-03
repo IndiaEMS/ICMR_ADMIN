@@ -1,4 +1,9 @@
 const column = [
+  {
+    field: "id",
+    headerName: "Record ID",
+    valueGetter: (params) => params.data._id,
+  },
   { field: "FA1", headerName: "FA.1 : Name of the respondent:" },
   {
     field: "FA2",
@@ -618,16 +623,16 @@ const generateColumns = (columns) => {
     field: column.field,
     headerName: column.headerName,
     valueGetter: (params) => {
-      const member = params?.data?.Emergency_Data?.[index];
+      // const member = params?.data?.Emergency_Data?.[index];
       if (column.valueGetter) {
-        return column.valueGetter(member);
+        return column.valueGetter(params);
       } else {
-        if (Array.isArray(member?.[column.field.split("_")[0]])) {
-          return member?.[column.field.split("_")[0]]?.[
+        if (Array.isArray(params?.data?.[column.field])) {
+          return params?.data?.[column.field.split("_")[0]]?.[
             column.field.split("_")[1]
           ];
         } else {
-          return member ? member[column.field] : "";
+          return params?.data?.[column.field];
         }
       }
     },

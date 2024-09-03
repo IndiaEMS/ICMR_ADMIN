@@ -114,7 +114,9 @@ const ViewData = ({ formName }) => {
       setTitle("Verbal Autopsy Tool");
       setColumns(AutopsyColumnsExport);
       setExportColumns(AutopsyColumnsExport);
+      console.log(data);
       setRows(data);
+
       // setRows(CSTRows(data));
     } else {
       console.log("No form found");
