@@ -55,8 +55,8 @@ export const CSTColumns = (data) => {
     ...generateColumns(maxMembers, PartDcolumns),
     ...generateColumns(maxMembers, PartEcolumns),
     ...generateColumns(maxMembers, PartFcolumns),
-    ...generateColumns(maxMembers, PartGcolumns),
-    ...generateColumns(maxMembers, PartHcolumns),
+    // ...generateColumns(maxMembers, PartGcolumns),
+    // ...generateColumns(maxMembers, PartHcolumns),
   ];
 };
 
@@ -73,7 +73,26 @@ const PartAcolumns = (generateMemeberColumns) => {
     },
     { field: "AB2", headerName: "AB.2 Type of PSU:" },
     { field: "AB3", headerName: "AB.3 Name of PSU (Town/Village):" },
-    { field: "AB4", headerName: "AB.4 GPS Co-ordinates:" },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (Latitude)",
+      valueGetter: (params) => params?.AB4?.latitude,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (Longitude)",
+      valueGetter: (params) => params?.AB4?.longitude,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (State)",
+      valueGetter: (params) => params?.AB4?.district,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (district)",
+      valueGetter: (params) => params?.AB4?.state,
+    },
     { field: "AB5", headerName: "AB.5 Household ID Number:" },
     {
       field: "AB6",
@@ -369,135 +388,162 @@ const PartBcolumns = [
   {
     field: "B4_4",
     headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Community Health Insurance Programme)",
+      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Co-Payment)",
   },
   {
     field: "B4_5",
     headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = None)",
+      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Community Health Insurance Programme)",
   },
   {
     field: "B4_6",
     headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Prefer not to disclose/ Refuse)",
+      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = None)",
   },
   {
     field: "B4_7",
+    headerName:
+      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Prefer not to disclose/ Refuse)",
+  },
+  {
+    field: "B4_8",
     headerName:
       "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Don’t Know)",
   },
   { field: "B5_dt", headerName: "B.5 When did this incident take place?" },
   {
+    field: "B6",
+    headerName: "B.6 How sure/confident are you about the time of Incident?",
+  },
+  {
+    field: "B7",
+    headerName: "B.7 Where did the medical emergency situation arise?",
+  },
+  {
+    field: "B7",
+    headerName:
+      "B.7 Where did the medical emergency situation arise? (other Speify)",
+  },
+  {
+    field: "B8",
+    headerName:
+      "B.8 Which was the first symptom you/ or the person expressed or complaint of during emergency condition?",
+  },
+  {
+    field: "B9",
+    headerName:
+      "B.9 When was the first symptom of a medical emergency recognised? ",
+  },
+  {
     field: "B10",
+    headerName: "B.10 How sure/confident are you about the time of Incident?",
+  },
+  {
+    field: "B11",
     headerName:
-      "B.10 At the start of symptoms was any medication taken/ given at home to alleviate symptoms?",
+      "B.11 At the start of symptoms was any medication taken/ given at home to alleviate symptoms?",
   },
   {
-    field: "B11_if",
-    headerName: "B.11 If yes, what medication was given?",
-  },
-  {
-    field: "B12",
-    headerName: "B.12 Which was the first symptom recognised as serious?",
+    field: "B12_if",
+    headerName: "B.12 If yes, what medication was given?",
   },
   {
     field: "B13",
-    headerName: "B.13 Who first recognized the symptoms to be serious?",
+    headerName: "B.13 Which was the first symptom recognised as serious?",
   },
   {
-    field: "B13",
-    headerName:
-      "B.13 Who first recognized the symptoms to be serious? (other specify)",
+    field: "B14",
+    headerName: "B.14 Who first recognized the symptoms to be serious?",
   },
   {
     field: "B14",
     headerName:
-      "B.14 What was your first course of action on identifying the emergency condition?",
+      "B.14 Who first recognized the symptoms to be serious? (other specify)",
   },
   {
     field: "B15",
     headerName:
-      "B.15 If Home visit by a doctor, then which type of doctor visited to attend the emergency patient?",
-  },
-  {
-    field: "B15",
-    headerName:
-      "B.15 If Home visit by a doctor, then which type of doctor visited to attend the emergency patient? (Other specify)",
+      "B.15 What was your first course of action on identifying the emergency condition?",
   },
   {
     field: "B16",
     headerName:
-      "B.16 Who suggested you visit the healthcare facility for emergency care?",
+      "B.16 If Home visit by a doctor, then which type of doctor visited to attend the emergency patient?",
   },
   {
     field: "B16",
     headerName:
-      "B.16 Who suggested you visit the healthcare facility for emergency care? (Other Specify)",
+      "B.16 If Home visit by a doctor, then which type of doctor visited to attend the emergency patient? (Other specify)",
   },
   {
     field: "B17",
     headerName:
-      "B.17 How much time did it take to decide to seek care or call an ambulance or any transport after recognizing the symptom? (In Min/Hour)",
+      "B.17 Who suggested you visit the healthcare facility for emergency care?",
+  },
+  {
+    field: "B17",
+    headerName:
+      "B.17 Who suggested you visit the healthcare facility for emergency care? (Other Specify)",
+  },
+  {
+    field: "B18",
+    headerName:
+      "B.18 How much time did it take to decide to seek care or call an ambulance or any transport after recognizing the symptom? (In Min/Hour)",
     valueGetter: (params) =>
-      `${params?.B17_1 ?? ""} ${params?.B17_2 ? ":" : ""} ${
-        params?.B17_2 ?? ""
+      `${params?.B18_1 ?? ""} ${params?.B18_2 ? ":" : ""} ${
+        params?.B18_2 ?? ""
       }`,
   },
   {
-    field: "B18",
+    field: "B19",
     headerName:
-      "B.18 How did you or the patient reach the first health care facility?",
-  },
-  {
-    field: "B18",
-    headerName:
-      "B.18 How did you or the patient reach the first health care facility? (Other specify)",
+      "B.19 How did you or the patient reach the first health care facility?",
+    valueGetter: (params) => params?.B19?.split(":")[0],
   },
   {
     field: "B19",
     headerName:
-      "B.19 What type of transport was used to reach the first health care facility?",
-  },
-  {
-    field: "B19",
-    headerName:
-      "B.19 What type of transport was used to reach the first health care facility? (Other specify)",
+      "B.19 How did you or the patient reach the first health care facility? (Other specify)",
+    valueGetter: (params) => params?.B19?.split(":")[1],
   },
   {
     field: "B20",
     headerName:
-      "B.20 If Govt. Ambulance, Which ambulance service you opted for?",
+      "B.20 What type of transport was used to reach the first health care facility?",
+    valueGetter: (params) => params?.B20?.split(":")[0],
   },
   {
     field: "B20",
     headerName:
-      "B.20 If Govt. Ambulance, Which ambulance service you opted for? (Other Specify)",
+      "B.20 What type of transport was used to reach the first health care facility? (Other specify)",
+    valueGetter: (params) => params?.B20?.split(":")[1],
   },
   {
     field: "B21",
     headerName:
-      "B.21 Were there any problems in arranging for transport of the patient?",
-    valueGetter: (params) => params?.B21?.split(":")[0],
+      "B.21 If Govt. Ambulance, Which ambulance service you opted for?",
   },
   {
     field: "B21",
     headerName:
-      "B.21 Were there any problems in arranging for transport of the patient? (other specify)",
-    valueGetter: (params) => params?.B21?.split(":")[1],
+      "B.21 If Govt. Ambulance, Which ambulance service you opted for? (Other Specify)",
   },
   {
     field: "B22",
     headerName:
-      "B.22 How much time the ambulance/ any transport took to reach the point of incident? (In Min/Hour)",
-    valueGetter: (params) =>
-      `${params?.B22_1 ?? ""} ${params?.B22_2 ? ":" : ""} ${
-        params?.B22_2 ?? ""
-      }`,
+      "B.22 Were there any problems in arranging for transport of the patient?",
+    valueGetter: (params) => params?.B22?.split(":")[0],
+  },
+  {
+    field: "B22",
+    headerName:
+      "B.22 Were there any problems in arranging for transport of the patient? (other specify)",
+    valueGetter: (params) => params?.B22?.split(":")[1],
   },
   {
     field: "B23",
     headerName:
-      "B.23 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (in minutes/ hours)",
+      "B.23 How much time the ambulance/ any transport took to reach the point of incident? (In Min/Hour)",
     valueGetter: (params) =>
       `${params?.B23_1 ?? ""} ${params?.B23_2 ? ":" : ""} ${
         params?.B23_2 ?? ""
@@ -505,84 +551,95 @@ const PartBcolumns = [
   },
   {
     field: "B24",
-    headerName: "B.24 Which type of facility did you visit first?",
+    headerName:
+      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (in minutes/ hours)",
+    valueGetter: (params) =>
+      `${params?.B24_1 ?? ""} ${params?.B24_2 ? ":" : ""} ${
+        params?.B24_2 ?? ""
+      }`,
   },
   {
-    field: "B24",
+    field: "B25",
+    headerName: "B.24 Which type of facility did you visit first?",
+    valueGetter: (params) => params?.B25?.split(":")[0],
+  },
+  {
+    field: "B25",
     headerName:
       "B.24 Which type of facility did you visit first? (Other Specify)",
+    valueGetter: (params) => params?.B25?.split(":")[1],
   },
-  { field: "B25", headerName: "B.25 What was the name of the facility?" },
+  { field: "B26", headerName: "B.25 What was the name of the facility?" },
   {
-    field: "B26_0",
+    field: "B27_0",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = Self)",
-  },
-  {
-    field: "B26_1",
-    headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = Family members)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Self)",
   },
   {
-    field: "B26_2",
+    field: "B27_1",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = Neighbour)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Family members)",
   },
   {
-    field: "B26_3",
+    field: "B27_2",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = ASHA/AWW)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Neighbour)",
   },
   {
-    field: "B26_4",
+    field: "B27_3",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = ANM)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = ASHA/AWW)",
   },
   {
-    field: "B26_5",
+    field: "B27_4",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (choice = CHO)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = ANM)",
   },
   {
-    field: "B26_5",
+    field: "B27_5",
     headerName:
-      "B.26 Who suggested you the above-mentioned facility for emergency care? (Other Specify)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = CHO)",
   },
   {
-    field: "B27",
+    field: "B27_5",
     headerName:
-      "B.27 How long after reaching the first HCF (in emergency) was the patient attended?",
+      "B.27 Who suggested you the above-mentioned facility for emergency care? (Other Specify)",
   },
   {
     field: "B28",
-    headerName: "B.28 Who attended the patient at the first HCF?",
+    headerName:
+      "B.28 How long after reaching the first HCF (in emergency) was the patient attended?",
   },
   {
     field: "B29",
-    headerName: "B.29 Was any treatment started at the HCF?",
+    headerName: "B.29 Who attended the patient at the first HCF?",
   },
   {
     field: "B30",
-    headerName:
-      "B.30 Were any laboratory &/or radiology investigations done at the HCF?",
+    headerName: "B.30 Was any treatment started at the HCF?",
   },
   {
     field: "B31",
-    headerName: "B.31 How much time was spent in investigations?",
+    headerName:
+      "B.31 Were any laboratory &/or radiology investigations done at the HCF?",
   },
   {
     field: "B32",
-    headerName: "B.32 Was the patient shifted to ICU/ CCU/ HDU at HCF?",
+    headerName: "B.32 How much time was spent in investigations?",
   },
   {
     field: "B33",
-    headerName:
-      "B.33 What was the final outcome of visiting the first facility or home visit by Doctor?",
+    headerName: "B.33 Was the patient shifted to ICU/ CCU/ HDU at HCF?",
   },
   {
     field: "B34",
     headerName:
-      "B.34 What was the final diagnosis on consultation with the doctor or mentioned in the final discharge summary?",
+      "B.34 What was the final outcome of visiting the first facility or home visit by Doctor?",
+  },
+  {
+    field: "B35",
+    headerName:
+      "B.35 What was the final diagnosis on consultation with the doctor or mentioned in the final discharge summary?",
   },
 ];
 
@@ -644,7 +701,7 @@ const PartCcolumns = [
     field: "C2_7_other_specify",
     headerName:
       "C.2 If referral was suggested by the medical team, what was the reason given for referral? (Other Specify)",
-    valueGetter: (params) => params?.C2_7,
+    valueGetter: (params) => params?.C2_7?.split(":")[1],
   },
   { field: "C3", headerName: "C.3 Which facility were you referred?" },
   {
@@ -726,7 +783,7 @@ const PartCcolumns = [
     valueGetter: (params) => params?.C12?.split(":")[0],
   },
   {
-    field: "C12_other_specify",
+    field: "C12",
     headerName:
       "C.12 Which type of facility did you or the patient shifted? (Other Specify)",
     valueGetter: (params) => params?.C12?.split(":")[1],
@@ -1048,41 +1105,196 @@ const PartEcolumns = [
   {
     field: "E2_4",
     headerName:
+      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Co-Payment)",
+  },
+  {
+    field: "E2_4",
+    headerName:
       "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Community Health Insurance Programme)",
   },
   {
-    field: "E2_5",
+    field: "E2_6",
     headerName:
       "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = None)",
   },
   {
     field: "E3",
     headerName:
-      "E.3 How much amount was spent on the following while availing the emergency care facility?",
+      "E.3 How much amount was spent on the following while availing the emergency care service?",
   },
   {
     field: "E4",
     headerName:
-      "E.4 What was the approximate overall money spent on the availing the emergency care?",
+      "E.4 What was the approximate overall money spent on the availing the emergency care service?",
+  },
+  {
+    field: "E5",
+    headerName:
+      "E.5 How much extra amount was spent on the following while availing the emergency care service?",
+  },
+  {
+    field: "E6",
+    headerName:
+      "E.6 What was the approximate overall money spent on the availing the emergency care service?",
+  },
+  {
+    field: "E7",
+    headerName:
+      "E.7 What is the cost of lost productivity due to missed workdays for patients and their family caregivers while accessing emergency care services?",
+  },
+  {
+    field: "E8",
+    headerName:
+      "E.8 What is the cost of lost productivity due to premature death on the availing the emergency care service?",
+  },
+  {
+    field: "E9",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered?",
+  },
+  {
+    field: "E10",
+    headerName:
+      "E.10 Based on your experience what suggestion would you like to make to the government to improve the emergency services in your district?",
   },
 ];
 
 const PartFcolumns = [
-  { field: "F1", headerName: "F.1 Date of death" },
-  { field: "F2", headerName: "F.2 Place of death" },
+  { field: "F1", headerName: "F.1 Name of the Head of the Household:" },
+  { field: "F2", headerName: "F.2 Age (in Years):" },
   {
     field: "F3",
-    headerName: "F.3 If death in hospital, Name & Address of the Hospital",
+    headerName: "F.3 Sex:",
+    valueGetter: (params) => params?.F3?.split(":")[0],
   },
-  { field: "F4", headerName: "F.4 Type of Hospital" },
   {
-    field: "F5",
-    headerName:
-      "F.5 What was the cause of death as per the discharge summary/doctor’s report/any medical report?",
+    field: "F3",
+    headerName: "F.3 Sex: (Other Specify)",
+    valueGetter: (params) => params?.F3?.split(":")[1],
   },
+  {
+    field: "F4",
+    headerName: "F.4 Religion",
+  },
+  { field: "F5", headerName: "F.5 Caste" },
   {
     field: "F6",
-    headerName: "F.6 Do you have the death certificate of the deceased?",
+    headerName: "F.6 Marital status:",
+  },
+  {
+    field: "F7",
+    headerName: "F.7 Level of education:",
+  },
+  {
+    field: "F8",
+    headerName: "F.8 Occupation:",
+  },
+  {
+    field: "F9",
+    headerName: "F.9 Total family Income per Month (in INR):",
+  },
+  {
+    field: "F10_0",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = None)",
+  },
+  {
+    field: "F10_1",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Two-Wheeler (Bicycle))",
+  },
+  {
+    field: "F10_2",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Two-Wheeler (Motorcycle))",
+  },
+  {
+    field: "F10_3",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Three-Wheeler (Manual Rickshaw, Auto rickshaw etc.))",
+  },
+  {
+    field: "F10_4",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Four-Wheeler (Car/Jeep/etc.))",
+  },
+  {
+    field: "F10_5",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Agricultural Vehicle (Tractor))",
+  },
+  {
+    field: "F10_6",
+    headerName:
+      "F.10 What type of Transport facility available at home: (choice = Others)",
+    valueGetter: (params) => params?.F10?.split(":")[0],
+  },
+  {
+    field: "F10_os",
+    headerName:
+      "F.10 What type of Transport facility available at home: (Other Specify)",
+    valueGetter: (params) => params?.F10?.split(":")[1],
+  },
+  {
+    field: "F11",
+    headerName: "F.11 Do you have any medical insurance?",
+  },
+  {
+    field: "F12_0",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Private Insurance)",
+  },
+  {
+    field: "F12_1",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Central Health Insurance Scheme (Ayushmaan Bharat))",
+  },
+  {
+    field: "F12_2",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = State Health Insurance Scheme)",
+  },
+  {
+    field: "F12_3",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Co-Payment)",
+  },
+  {
+    field: "F12_4",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Community Health Insurance Programme)",
+  },
+  {
+    field: "F12_5",
+    headerName:
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Employee based Insurance (ESI / CGHS/others))",
+  },
+  {
+    field: "F13",
+    headerName:
+      "F.13 Are all your family members enrolled with the same Health Insurance coverage?",
+  },
+  {
+    field: "F14",
+    headerName:
+      "F.14 How many of you or your family members have an individual medical/ health insurance scheme?",
+  },
+  {
+    field: "F15",
+    headerName: "F.15 Do you have a BPL card?",
+  },
+  {
+    field: "F16",
+    headerName: "F.16 Do you have ABHA ID?",
+  },
+  {
+    field: "F17",
+    headerName:
+      "F.17 How many of your family members are enrolled with ABHA id?",
+  },
+  {
+    field: "F18",
+    headerName: "F.18 Type of Family",
   },
 ];
 
