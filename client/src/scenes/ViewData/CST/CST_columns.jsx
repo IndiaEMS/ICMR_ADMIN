@@ -21,24 +21,92 @@ const generateColumns = (maxMembers, columns) => {
   }).flat();
 };
 
+const generatePartCColumns = (maxMembers, columns) => {
+  return Array.from({ length: maxMembers }, (_, index) => {
+    return columns.map((column) => ({
+      field: column.field,
+      headerName: column.headerName,
+      valueGetter: (params) => {
+        const PartC = params?.data?.Emergency_Data?.[index].PartCLoop;
+        const PartCLength =
+          params?.data?.Emergency_Data?.[index].PartCLoop?.length;
+
+        console.log("PartCLength : ", PartCLength);
+
+        if (!PartC) return ""; // If no member data, return empty string
+      },
+    }));
+  }).flat();
+};
+
+const generateMemberColumns = (maxMembers, columns, table_name) => {
+  return Array.from({ length: maxMembers }, (_, index) => {
+    return columns.map((column) => ({
+      field: column.field,
+      headerName: column.headerName,
+      valueGetter: (params) => {
+        const member = params?.data?.[table_name]?.[index];
+
+        if (column.valueGetter) {
+          return column.valueGetter(member);
+        } else {
+          if (Array.isArray(member?.[column.field.split("_")[0]])) {
+            return member?.[column.field.split("_")[0]]?.[
+              column.field.split("_")[1]
+            ];
+          } else {
+            return member ? member[column.field] : "";
+          }
+        }
+      },
+    }));
+  }).flat();
+};
+
 const MemberColumns = [
-  { field: `Name`, headerName: "Name" },
-  { field: `Age`, headerName: "Age" },
-  { field: `Sex`, headerName: "Sex" },
+  { field: `name`, headerName: "Name" },
+  { field: `age`, headerName: "Age" },
+  { field: `sex`, headerName: "Sex" },
   { field: `MemberID`, headerName: "MemberID" },
 ];
 
 export const CSTColumns = (data) => {
-  let maxMembers;
-  maxMembers = Math.max(
+  let maxMembers = Math.max(
+    1,
     ...(data ?? []).map((row) => {
-      return row.Emergency_Data?.length ?? 1;
+      return row?.AC3_table?.length || 1;
     })
   );
-  // maxMembers = data?.Emergency_Data?.length ?? 1;
-  const generateMemeberColumns = generateColumns(maxMembers, MemberColumns);
-  // console.log("maxMembers", maxMembers);
+  let DeathMembers = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.AC15_table?.length || 1;
+    })
+  );
+  let PartBLoopLength = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.Emergency_Data?.length || 1;
+    })
+  );
+  let PartCLoopLength = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.Emergency_Data?.PartCLoop?.length || 1;
+    })
+  );
 
+  // maxMembers = data?.Emergency_Data?.length ?? 1;
+  const generateMemeberColumns = generateMemberColumns(
+    maxMembers,
+    MemberColumns,
+    "AC3_table"
+  );
+  const generateDeathMemeberColumns = generateMemberColumns(
+    DeathMembers,
+    MemberColumns,
+    "AC15_table"
+  );
   return [
     {
       headerName: "Record ID",
@@ -49,23 +117,27 @@ export const CSTColumns = (data) => {
       valueGetter: (params) => params.data._id,
     },
 
-    ...PartAcolumns(generateMemeberColumns),
-    ...generateColumns(maxMembers, PartBcolumns),
-    ...generateColumns(maxMembers, PartCcolumns),
-    ...generateColumns(maxMembers, PartDcolumns),
-    ...generateColumns(maxMembers, PartEcolumns),
-    ...generateColumns(maxMembers, PartFcolumns),
-    // ...generateColumns(maxMembers, PartGcolumns),
-    // ...generateColumns(maxMembers, PartHcolumns),
+    ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
+    ...generateColumns(PartBLoopLength, PartBcolumns),
+    // ...generatePartCColumns(PartBLoopLength, PartCcolumns),
+    ...generateColumns(PartBLoopLength, PartDcolumns),
+    ...generateColumns(PartBLoopLength, PartEcolumns),
+    ...generateColumns(PartBLoopLength, PartFcolumns),
+    ...generateColumns(maxMembers, PartGcolumns),
+    ...generateColumns(maxMembers, PartHcolumns),
   ];
 };
 
-const PartAcolumns = (generateMemeberColumns) => {
+const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
   return [
     { field: "AA1", headerName: "AA.1 Date & Time:" },
     { field: "AA2", headerName: "AA.2 Site:" },
     { field: "AA3", headerName: "AA.3 Name of the Data Collector:" },
-    { field: "AA4", headerName: "AA.4 Respondent ID:" },
+    {
+      field: "AA4",
+      headerName: "AA.4 Respondent ID:",
+      valueGetter: (params) => params?.data?.Respondent_ID,
+    },
     {
       field: "AB1",
       headerName:
@@ -76,24 +148,28 @@ const PartAcolumns = (generateMemeberColumns) => {
     {
       field: "AB4",
       headerName: "AB.4 GPS Co-ordinates: (Latitude)",
-      valueGetter: (params) => params?.AB4?.latitude,
+      valueGetter: (params) => params?.data?.AB4?.latitude,
     },
     {
       field: "AB4",
       headerName: "AB.4 GPS Co-ordinates: (Longitude)",
-      valueGetter: (params) => params?.AB4?.longitude,
+      valueGetter: (params) => params?.data?.AB4?.longitude,
     },
     {
       field: "AB4",
       headerName: "AB.4 GPS Co-ordinates: (State)",
-      valueGetter: (params) => params?.AB4?.district,
+      valueGetter: (params) => params?.data?.AB4?.district,
     },
     {
       field: "AB4",
       headerName: "AB.4 GPS Co-ordinates: (district)",
-      valueGetter: (params) => params?.AB4?.state,
+      valueGetter: (params) => params?.data?.AB4?.state,
     },
-    { field: "AB5", headerName: "AB.5 Household ID Number:" },
+    {
+      field: "AB5",
+      headerName: "AB.5 Household ID Number:",
+      valueGetter: (params) => params?.data?.Household_ID,
+    },
     {
       field: "AB6",
       headerName:
@@ -104,8 +180,6 @@ const PartAcolumns = (generateMemeberColumns) => {
       headerName:
         "AC.1 How many members are currently residing in his household?",
     },
-    // ...generateMemeberColumns, // Spread the dynamically generated columns
-    // ...generateColumns(maxMembers, MemberColumns),
     ...generateMemeberColumns,
     { field: "AC2_1", headerName: "AC.2.1 Name of Respondent?" },
     {
@@ -124,7 +198,7 @@ const PartAcolumns = (generateMemeberColumns) => {
         "AC.5 In the past one year, did any member of this household have any health emergency that could have required any sort of medical attention or treatment?",
     },
     {
-      field: "AC6",
+      field: "AC6_1",
       headerName:
         "AC.6.1 In the past one year, did you or any member of this household suffered from sudden injury in Road Traffic Accident/ fracture/ severe fall/ drowning/ stabbing/ gunshot/ any other assault/ any attempt to self-harm/ domestic violence/ homicidal etc.?",
     },
@@ -138,13 +212,13 @@ const PartAcolumns = (generateMemeberColumns) => {
       headerName:
         "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
     },
+    // {
+    //   field: "AC6_2",
+    //   headerName:
+    //     "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    // },
     {
-      field: "AC6_2",
-      headerName:
-        "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    },
-    {
-      field: "AC7",
+      field: "AC7_1",
       headerName:
         "AC.7.1 In the past one year, did you or any member of this household suffered from severe/ minor burns etc.",
     },
@@ -159,7 +233,7 @@ const PartAcolumns = (generateMemeberColumns) => {
         "Ac.7.2 If yes, could you please tell who all from your Household suffered with this condition?",
     },
     {
-      field: "AC8",
+      field: "AC8_1",
       headerName:
         "AC.8.1 In the past one year, has anyone in your household had a history of heart attack or sudden onset of acute chest pain/ heaviness/ constriction, with possible radiation to the left arm, neck, or back, associated with symptoms such as upper abdominal pain/ palpitations/ dizziness/ profuse sweating, and exacerbated by exertion after meals?",
     },
@@ -174,7 +248,7 @@ const PartAcolumns = (generateMemeberColumns) => {
         "AC.8.2 If yes, could you please tell who all from your Household suffered with this condition?",
     },
     {
-      field: "AC9",
+      field: "AC9_1",
       headerName:
         "Ac.9.1 In the past one year, did you or any member of this household suffered with brain stroke or symptoms like sudden onset of weakness, especially one side of the body/ loss of consciousness/ altered sensorium/ Imbalance/ blurred vision/ facial deviation/ drooping of eyelid/ speech abnormality with numbness and tingling sensation, or difficulty in speaking or understanding speech (aphasia), or sudden severe headache with no known cause of one's life (haemorrhagic strokes)?",
     },
@@ -189,7 +263,7 @@ const PartAcolumns = (generateMemeberColumns) => {
         "AC.9.2 If yes, could you please tell who all from your Household suffered with this condition?",
     },
     {
-      field: "AC10",
+      field: "AC10_1",
       headerName:
         "AC.10.1 In the past one year, has anyone in your household experienced breathlessness with or without sudden onset of fever/ cough with expectoration/ chest pain (pleuritic)/ fast breathing/ not able to speak complete sentences/ loss of consciousness/ or chest tightness leading to suspicion of pneumonia?",
     },
@@ -293,6 +367,7 @@ const PartAcolumns = (generateMemeberColumns) => {
       headerName:
         "AC.15.1 In the last one year, did any member in your household lost his/her life due to any health emergency condition?",
     },
+    ...generateDeathMemeberColumns,
     {
       field: "AC15_2",
       headerName:
@@ -302,56 +377,67 @@ const PartAcolumns = (generateMemeberColumns) => {
       field: "AC15_4_0",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Trauma)",
+      valueGetter: (params) => params?.AC15_4?.[0],
     },
     {
       field: "AC15_4_1",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Burn: Severe / Minor burns)",
+      valueGetter: (params) => params?.AC15_4?.[1],
     },
     {
       field: "AC15_4_2",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = STEMI)",
+      valueGetter: (params) => params?.AC15_4?.[2],
     },
     {
       field: "AC15_4_3",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Stroke)",
+      valueGetter: (params) => params?.AC15_4?.[3],
     },
     {
       field: "AC15_4_4",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Acute Respiratory Illness)",
+      valueGetter: (params) => params?.AC15_4?.[4],
     },
     {
       field: "AC15_4_5",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Postpartum Haemorrhage & Pre-Eclampsia)",
+      valueGetter: (params) => params?.AC15_4?.[5],
     },
     {
       field: "AC15_4_6",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Neonatal Emergency)",
+      valueGetter: (params) => params?.AC15_4?.[6],
     },
     {
       field: "AC15_4_7",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Snake bite)",
+      valueGetter: (params) => params?.AC15_4?.[7],
     },
     {
       field: "AC15_4_8",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Poisoning)",
+      valueGetter: (params) => params?.AC15_4?.[9],
     },
     {
       field: "AC15_4_9",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (choice = others)",
+      valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[0],
     },
     {
       field: "AC15_4_9_other_specify",
       headerName:
         "Ac.15.4 What werw the symptoms the deceased complained about? (Others(Specify))",
+      valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[1],
     },
   ];
 };
