@@ -5,6 +5,8 @@ import { HFAT1 } from "../Database/HFAT-1.js";
 import { HFAT2 } from "../Database/HFAT-2.js";
 import { HFAT3 } from "../Database/HFAT-3.js";
 import { AMBULANCE } from "../Database/Ambulance.js";
+import { CSTFORM } from "../Database/CST.js";
+import { Autopsy } from "../Database/Autopsy.js";
 const app = express();
 
 // for HFAT1, HFAT2,HFAT3 And AMBULANCE
@@ -14,9 +16,11 @@ export const HFATCounter = async (req, res) => {
     const HFAT2Count = await HFAT2.countDocuments();
     const HFAT3Count = await HFAT3.countDocuments();
     const AMBULANCECount = await AMBULANCE.countDocuments();
+    const CSTCount = await CSTFORM.countDocuments();
+    const AutopsyCount = await Autopsy.countDocuments();
     res
       .status(200)
-      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount });
+      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount,CSTCount,AutopsyCount});
   } catch (error) {
     res.status(404).json({ message: error.message });
   }

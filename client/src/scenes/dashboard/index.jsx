@@ -10,11 +10,12 @@ import TrafficIcon from "@mui/icons-material/Traffic";
 import Header from "../../components/Header";
 import LineChart from "../../components/LineChart";
 import GeographyChart from "../../components/GeographyChart";
-import BarChart from "../../components/BarChart";
 import StatBox from "../../components/StatBox";
 import ProgressCircle from "../../components/ProgressCircle";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import PieChart from "../../components/dashboard/PieChart";
+import BarChart from "../../components/dashboard/BarChart";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -35,6 +36,8 @@ const Dashboard = () => {
     };
     fetchData();
   }, []);
+
+  console.log("DATA............", counter);
 
   return (
     <Box m="20px">
@@ -130,6 +133,46 @@ const Dashboard = () => {
           <StatBox
             title={counter.AMBULANCECount ?? "0"}
             subtitle="Ambulance"
+            // progress={counter.AMBULANCECount / 10000}
+            // increase="+43 New"
+            icon={
+              <FeedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={counter.CSTCount ?? "0"}
+            subtitle="CST"
+            // progress={counter.AMBULANCECount / 10000}
+            // increase="+43 New"
+            icon={
+              <FeedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            title={counter.AutopsyCount ?? "0"}
+            subtitle="Autopsy"
             // progress={counter.AMBULANCECount / 10000}
             // increase="+43 New"
             icon={
@@ -240,6 +283,15 @@ const Dashboard = () => {
           </Box>
         </Box> */}
       </Box>
+
+      <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+        <PieChart counter={counter}/>
+      </Box>
+
+      <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+        <BarChart counter={counter}/>
+      </Box>
+
     </Box>
   );
 };
