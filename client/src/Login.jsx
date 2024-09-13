@@ -10,13 +10,17 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import { AppContext } from "./context/user";
+import { useDispatch } from "react-redux";
+import { setToken, setUser } from "./slices/authSlice";
 
 export default function AdminLogin() {
-  const { setUser } = useContext(AppContext);
+  // const { setUser } = useContext(AppContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const dispatch = useDispatch()
   const navigate = useNavigate();
+  
 
   const url = import.meta.env.VITE_SERVER;
   
@@ -33,8 +37,10 @@ export default function AdminLogin() {
       const { user, token } = response.data;
       
       if (user.role === "admin" || user.role === "superadmin") {
-        setUser(user,token);
+        dispatch(setUser(user));
+        dispatch(setToken(token))
         localStorage.setItem("token", token);
+        // localStorage.setItem("user", user);
         navigate("/");
       } else {
         setError("Access Denied: Only Admins can log in");
