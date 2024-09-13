@@ -10,7 +10,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { DownloadOutlined } from "@mui/icons-material";
 import Header from "../../components/Header";
-import { useContext } from "react";
+// import { useContext } from "react";
 import React, {
   useState,
   useEffect,
@@ -43,13 +43,13 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied
 import { CSTColumns } from "./CST/CST_columns";
 import { CSTRows } from "./CST/CST_rows";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
-import { AppContext } from "../../context/user";
+// import { AppContext } from "../../context/user";
 import { useSelector } from "react-redux";
 
 const url = import.meta.env.VITE_SERVER;
 
 const ViewData = ({ formName }) => {
-  const { state } = useContext(AppContext);
+  // const { state } = useContext(AppContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const gridRef = useRef();
@@ -72,7 +72,7 @@ const ViewData = ({ formName }) => {
 //   const userRole = state;
 //   console.log(userRole);
 
-const adminState = user?.sitename.split(",")[1]?.trim();
+const adminState = user;
 console.log("Admin State:", adminState);
 
 const states = [

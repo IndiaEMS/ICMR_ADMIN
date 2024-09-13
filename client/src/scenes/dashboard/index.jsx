@@ -37,7 +37,6 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
-  console.log("DATA............", counter);
 
   return (
     <Box m="20px">

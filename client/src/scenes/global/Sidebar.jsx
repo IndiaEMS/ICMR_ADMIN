@@ -16,6 +16,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import { AppContext } from "../../context/user";
+import { useSelector } from "react-redux";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -36,8 +37,9 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const Sidebar = () => {
-  const { state } = useContext(AppContext);
-  const userRole = state.user?.role ?? "";
+  // const { state } = useContext(AppContext);
+  const {user} = useSelector((state) =>state.auth)
+  const userRole = user?.role ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
