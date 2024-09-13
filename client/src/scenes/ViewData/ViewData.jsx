@@ -10,7 +10,7 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { DownloadOutlined } from "@mui/icons-material";
 import Header from "../../components/Header";
-
+import { useContext } from "react";
 import React, {
   useState,
   useEffect,
@@ -18,6 +18,8 @@ import React, {
   useMemo,
   useRef,
 } from "react";
+// import { jwtDecode } from 'jwt-decode';
+
 
 // import DataGridComponent from "./DataGridComponent";
 
@@ -41,10 +43,13 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied
 import { CSTColumns } from "./CST/CST_columns";
 import { CSTRows } from "./CST/CST_rows";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
+import { AppContext } from "../../context/user";
+import { useSelector } from "react-redux";
 
 const url = import.meta.env.VITE_SERVER;
 
 const ViewData = ({ formName }) => {
+  const { state } = useContext(AppContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const gridRef = useRef();
@@ -56,15 +61,43 @@ const ViewData = ({ formName }) => {
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
+  const {user} = useSelector((state) => state.auth)
 
-  const states = [
-    { value: "", label: "All" },
-    { value: "GJBRC", label: "Gujarat" },
-    { value: "ORPUR", label: "Odisha" },
-    { value: "MPBHS", label: "Madhya Pradesh" },
-    { value: "PBLDH", label: "Ludhiana" },
-    { value: "PYPDY", label: "Pondicherry" },
-  ];
+  // const getTokenFromLocalStorage = () => {
+  //   console.log(jwtDecode(localStorage.token))
+  // };
+
+  // getTokenFromLocalStorage();
+
+//   const userRole = state;
+//   console.log(userRole);
+
+const adminState = user?.sitename.split(",")[1]?.trim();
+console.log("Admin State:", adminState);
+
+const states = [
+  { value: "", label: "All" },
+  { value: "GJBRC", label: "Gujarat" },
+  { value: "ORPUR", label: "Odisha" },
+  { value: "MPBHS", label: "Madhya Pradesh" },
+  { value: "PBLDH", label: "Ludhiana" },
+  { value: "PYPDY", label: "Pondicherry" },
+];
+
+// let uniqueCode = null;
+
+// for (let i = 0; i < states.length; i++) {
+//   console.log(`Comparing: "${states[i].label}" with "${adminState}"`); 
+//   if (states[i].label === adminState) {
+//     uniqueCode = states[i]?.value;
+//     break;
+//   }
+// }
+
+// console.log("UNIQUECODE", uniqueCode); 
+
+
+//   console.log("UNIQUECODE",uniqueCode);
 
   useEffect(() => {
     if (formName === "HFAT-1") {
@@ -135,8 +168,10 @@ const ViewData = ({ formName }) => {
       setLoading(true);
       // console.log(`${url}/${formName}/${selectedState}`);
       const { data } = await axios.get(`${url}/${formName}`);
-      setData(data.data);
-      // console.log(data.data[0]);
+      setData(data?.data);
+      console.log("DATA......................",data?.data);
+
+      
 
       setLoading(false);
     } catch (error) {

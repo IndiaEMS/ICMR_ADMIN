@@ -9,9 +9,6 @@ import { User } from "../Database/user.js";
 const jwt_secret = process.env.JWT_SECRET;
 
 
-
-
-
 router.post("/register", (req, res) => {
     // console.log(req.headers);
     const username = req.headers.username;
