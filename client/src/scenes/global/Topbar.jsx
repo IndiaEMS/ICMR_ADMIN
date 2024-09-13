@@ -14,10 +14,15 @@ import Menu from "@mui/material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/user";
+import { useSelector } from "react-redux";
 const settings = ["Logout"];
 
 const Topbar = () => {
   // const { state } = useContext(AppContext);
+
+  const {user} = useSelector((state) => state.auth);
+
+  console.log("USER...........",user);
 
   const navigate = useNavigate();
   const theme = useTheme();

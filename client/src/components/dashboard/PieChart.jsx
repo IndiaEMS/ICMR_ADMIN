@@ -10,9 +10,6 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 const PieChart = ({ counter }) => {
     const theme = useTheme();
     const colors = tokens(theme.palette.mode);
-
-    console.log("colors.........",colors);
-
     const data = {
         labels: ['HFAT-1', 'HFAT-2', 'HFAT-3', 'Ambulance', 'CST', 'Autopsy'],
         datasets: [
