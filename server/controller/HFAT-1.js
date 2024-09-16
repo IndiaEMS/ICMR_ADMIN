@@ -7,6 +7,7 @@ import ExcelJS from "exceljs";
 import { AMBULANCE } from "../Database/Ambulance.js";
 import { HFAT2 } from "../Database/HFAT-2.js";
 import { HFAT3 } from "../Database/HFAT-3.js";
+import { User } from "../Database/user.js";
 
 export const HFAT1Controller = async (req, res) => {
   var { completeform, table1, table2, table3, table4 } = req.body;
@@ -51,34 +52,88 @@ export const HFAT1Controller = async (req, res) => {
   // }
 };
 
-export const HFAT1Get = async (req, res, next) => {
-  try {
-    const id = req.params.id;
-    const state = req.params.state;
 
-    var HFAT1Data;
-    if (id) {
-      HFAT1Data = await HFAT1.findById({ _id: id });
-    } else if (state) {
-      HFAT1Data = await HFAT1.find({ A3: { $regex: state } });
-    } else {
-      console.log("else");
+// export const HFAT1Get = async (req, res, next) => {
+//   try {
+//     const id = req.params.id;
+//     const state = req.params.state;
 
-      HFAT1Data = await HFAT1.find();
+//     var HFAT1Data;
+//     if (id) {
+//       HFAT1Data = await HFAT1.findById({ _id: id });
+//     } else if (state) {
+//       HFAT1Data = await HFAT1.find({ A3: { $regex: state } });
+//     } else {
+//       console.log("else");
+
+//       HFAT1Data = await HFAT1.find();
+//     }
+
+//     if (!HFAT1Data) {
+//       res.status(404).json({ error: "Data not found" });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: HFAT1Data,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const HFAT1Get = async(req,res,next) => {
+  try{
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+
+    if(!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"))
     }
 
-    if (!HFAT1Data) {
-      res.status(404).json({ error: "Data not found" });
+    const validateUser = await User.findById(adminId) 
+
+    if(!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"))
+    }
+
+    const stateCode = state.split(",")[1]?.trim();
+
+    const states = [
+      { value: "", label: "All" },
+      { value: "GJBRC", label: "Gujarat" },
+      { value: "ORPUR", label: "Odisha" },
+      { value: "MPBHS", label: "Madhya Pradesh" },
+      { value: "PBLDH", label: "Ludhiana" },
+      { value: "PYPDY", label: "Pondicherry" },
+    ];
+
+    const matchedState = states.find((s) => s.label === stateCode);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    const regex = new RegExp(`^${matchedState.value}`);
+
+    const HFAT1Data = await HFAT1.find({ uniqueCode: { $regex: regex } });
+
+    if(!HFAT1Data) {
+      return next(new ErrorHandler("data not found"))
     }
 
     res.status(200).json({
       success: true,
       data: HFAT1Data,
     });
-  } catch (error) {
+
+  } catch(error) {
     next(error);
   }
-};
+}
 
 export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
   try {

@@ -47,7 +47,6 @@ const Dashboard = () => {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        params: { user },
       });
       setCounter(data);
     } catch (error) {

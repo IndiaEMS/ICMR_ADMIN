@@ -62,6 +62,7 @@ const ViewData = ({ formName }) => {
   const [loading, setLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const {user} = useSelector((state) => state.auth)
+  const { token } = useSelector((state) => state.auth);
 
   // const getTokenFromLocalStorage = () => {
   //   console.log(jwtDecode(localStorage.token))
@@ -73,7 +74,7 @@ const ViewData = ({ formName }) => {
 //   console.log(userRole);
 
 const adminState = user;
-console.log("Admin State:", adminState);
+// console.log("Admin State:", adminState);
 
 const states = [
   { value: "", label: "All" },
@@ -167,11 +168,13 @@ const states = [
     try {
       setLoading(true);
       // console.log(`${url}/${formName}/${selectedState}`);
-      const { data } = await axios.get(`${url}/${formName}`);
+      const { data } = await axios.get(`${url}/${formName}`,{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setData(data?.data);
-      console.log("DATA......................",data?.data);
-
-      
+      // console.log("DATA......................",data?.data);
 
       setLoading(false);
     } catch (error) {

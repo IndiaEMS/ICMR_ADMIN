@@ -2,6 +2,7 @@ import express, { response } from "express";
 import mongoose from "mongoose";
 import { HFAT2 } from "../Database/HFAT-2.js";
 const app = express();
+import { User } from "../Database/user.js";
 
 export const HFAT2Controller = async (req, res) => {
   var { completeform, table1, table2, table3, table4 } = req.body;
@@ -44,21 +45,74 @@ export const HFAT2Controller = async (req, res) => {
   // }
 };
 
-export const HFAT2Get = async (req, res, next) => {
-  try {
-    const HEAT2Data = await HFAT2.find();
-    if (!HEAT2Data) {
-      res.status(404).json({ error: "Data not found" });
+// export const HFAT2Get = async (req, res, next) => {
+//   try {
+//     const HEAT2Data = await HFAT2.find();
+//     if (!HEAT2Data) {
+//       res.status(404).json({ error: "Data not found" });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: HEAT2Data,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
+export const HFAT2Get = async(req,res,next) => {
+  try{
+    const adminId = req.user.id
+    const state = req.user.sitename
+
+    if(!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"))
+    }
+
+    const validateUser = await User.findById(adminId) 
+
+    if(!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"))
+    }
+
+    const stateCode = state.split(",")[1]?.trim();
+
+    const states = [
+      { value: "", label: "All" },
+      { value: "GJBRC", label: "Gujarat" },
+      { value: "ORPUR", label: "Odisha" },
+      { value: "MPBHS", label: "Madhya Pradesh" },
+      { value: "PBLDH", label: "Ludhiana" },
+      { value: "PYPDY", label: "Pondicherry" },
+    ];
+
+    const matchedState = states.find((s) => s.label === stateCode);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    const regex = new RegExp(`^${matchedState.value}`);
+
+    const HFAT2Data = await HFAT2.find({ uniqueCode: { $regex: regex } });
+
+    if(!HFAT2Data) {
+      return next(new ErrorHandler("data not found"))
     }
 
     res.status(200).json({
       success: true,
-      data: HEAT2Data,
+      data: HFAT2Data,
     });
-  } catch (error) {
+
+  } catch(error) {
     next(error);
   }
-};
+}
 
 export const HFAT2AndAMBULANCEGet = async (req, res, next) => {
   try {

@@ -6,6 +6,7 @@ import React, {
   useMemo,
 } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
 import { HFAT1Columns } from "./HFAT_1_columns";
 import { HFAT1ColumnsExport } from "./HFAT_1_columns_export";
@@ -23,6 +24,7 @@ const Hfat_1_ViewData = () => {
   const gridRef = useRef();
   const [data, setData] = useState([]);
   const [columnDefs, setColumnDefs] = useState(HFAT1Columns);
+  const { token } = useSelector((state) => state.auth);
   const rows = data.map((row) => ({
     id: row._id,
     A1: row.A1,
@@ -416,17 +418,21 @@ const Hfat_1_ViewData = () => {
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(`${url}/HFAT-1`);
+      const { data } = await axios.get(`${url}/HFAT-1`,);
       setData(data.HEAT1Data);
+      // console.log("data>>>>>",data)
       console.log(data.HEAT1Data[1].B4.split(" : ")[1]);
     } catch (error) {
       console.log(error);
     }
   };
 
+
   useEffect(() => {
     getData();
   }, []);
+
+  console.log("data>>>>>>>>>>>",data)
   const handleDownloadCSV = async () => {
     try {
       setColumnDefs(HFAT1ColumnsExport);

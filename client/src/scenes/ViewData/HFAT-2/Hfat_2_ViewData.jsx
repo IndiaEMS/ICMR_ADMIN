@@ -337,7 +337,7 @@ const Hfat_2_ViewData = () => {
 
   const getData = async () => {
     try {
-      const { data } = await axios.get(`${url}/HFAT-2`);
+      const { data } = await axios.get(`${url}/HFAT-2`,);
       setData(data.data);
     } catch (error) {
       console.log(error);
