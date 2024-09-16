@@ -16,26 +16,57 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PieChart from "../../components/dashboard/PieChart";
 import BarChart from "../../components/dashboard/BarChart";
+import { useSelector } from "react-redux";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Dashboard = () => {
+  const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [counter, setCounter] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     try {
+  //       // console.log(`${url}/count`);
+  //       const { data } = await axios.get(`${url}/count`);
+  //       setCounter(data);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
+
+  const fetchData = async () => {
+    try {
+      const { data } = await axios.get(`${url}/adminCount`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: { user },
+      });
+      setCounter(data);
+    } catch (error) {
+      console.log(error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // console.log(`${url}/count`);
-        const { data } = await axios.get(`${url}/count`);
-        setCounter(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     fetchData();
   }, []);
+
+  // console.log(counter);
+
+  if (loading) {
+    return <div>Loading...</div>; // Display loading indicator
+  }
 
 
   return (
@@ -284,11 +315,11 @@ const Dashboard = () => {
       </Box>
 
       <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
-        <PieChart counter={counter}/>
+        <PieChart counter={counter} />
       </Box>
 
       <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
-        <BarChart counter={counter}/>
+        <BarChart counter={counter} />
       </Box>
 
     </Box>
