@@ -22,7 +22,7 @@ const Topbar = () => {
 
   const {user} = useSelector((state) => state.auth);
 
-  console.log("USER...........",user);
+  // console.log("USER...........",user);
 
   const navigate = useNavigate();
   const theme = useTheme();

@@ -34,13 +34,15 @@ export default function AdminLogin() {
         username,
         password,
       });
+
+      console.log("RESPONSE",response);
       const { user, token } = response.data;
       
       if (user.role === "admin" || user.role === "superadmin") {
         dispatch(setUser(user));
         dispatch(setToken(token))
-        localStorage.setItem("token", token);
-        // localStorage.setItem("user", user);
+        localStorage.setItem("token", JSON.stringify(token));
+        localStorage.setItem("user", JSON.stringify(user));
         navigate("/");
       } else {
         setError("Access Denied: Only Admins can log in");

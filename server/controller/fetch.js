@@ -20,8 +20,64 @@ export const HFATCounter = async (req, res) => {
     const AutopsyCount = await Autopsy.countDocuments();
     res
       .status(200)
-      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount,CSTCount,AutopsyCount});
+      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount, CSTCount, AutopsyCount });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
+
+
+export const DashboardCounter = async (req, res) => {
+  try {
+
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+
+    if (!adminId || !state) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide adminId and state"
+      })
+    }
+
+    const stateCode = state.split(",")[1]?.trim();
+
+    const states = [
+      { value: "", label: "All" },
+      { value: "GJBRC", label: "Gujarat" },
+      { value: "ORPUR", label: "Odisha" },
+      { value: "MPBHS", label: "Madhya Pradesh" },
+      { value: "PBLDH", label: "Ludhiana" },
+      { value: "PYPDY", label: "Pondicherry" },
+    ];
+
+    const matchedState = states.find((s) => s.label === stateCode);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    const regex = new RegExp(`^${matchedState.value}`);
+
+    const HFAT1Count = await HFAT1.countDocuments({ uniqueCode: { $regex: regex } });
+    const HFAT2Count = await HFAT2.countDocuments({ uniqueCode: { $regex: regex } });
+    const HFAT3Count = await HFAT3.countDocuments({ uniqueCode: { $regex: regex } });
+    const AMBULANCECount = await AMBULANCE.countDocuments({ uniqueCode: { $regex: regex } });
+    const CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
+    const AutopsyCount = await Autopsy.countDocuments({ FA2: { $regex: regex } });
+
+    return res.status(200).json({
+      success: true,
+      HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount, CSTCount, AutopsyCount
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error: error.message
+    })
+  }
+}

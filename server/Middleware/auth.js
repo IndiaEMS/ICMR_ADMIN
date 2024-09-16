@@ -5,7 +5,11 @@ import ErrorHandler from '../utils/ErrorHandler.js';
 
 
 export const AuthenciatedUser = catchAsyncError(async (req, res, next) => {
-    const { token } = req.cookies; 
+    let token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "");
+    token = token.replace(/"/g, "");
+
+    // console.log("TOKEN:", token);
+    // console.log(process.env.JWT_SECRET)
     if (!token) {
         return next(new ErrorHandler("Please login to access this resource", 401));
     }
@@ -14,10 +18,11 @@ export const AuthenciatedUser = catchAsyncError(async (req, res, next) => {
     try {
         decodeData = jwt.verify(token, process.env.JWT_SECRET);
     } catch (error) {
+        console.log("ERROR........", error)
         return next(new ErrorHandler("Invalid or expired token", 401));
     }
 
-    req.user = await User.findById(decodeData.id); 
+    req.user = await User.findById(decodeData.id);
     next();
 });
 
