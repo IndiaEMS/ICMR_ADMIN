@@ -3,9 +3,9 @@ import catchAsyncError from './catchAsyncError.js';
 import { User } from '../Database/user.js';
 import ErrorHandler from '../utils/ErrorHandler.js';
 
-
 export const AuthenciatedUser = catchAsyncError(async (req, res, next) => {
     let token = req.cookies.token || req.body.token || req.header("Authorization").replace("Bearer ", "");
+    // console.log("token>>>>>",token)
     token = token.replace(/"/g, "");
 
     // console.log("TOKEN:", token);
