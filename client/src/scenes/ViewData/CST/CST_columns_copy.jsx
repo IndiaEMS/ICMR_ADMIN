@@ -39,9 +39,9 @@ const generatePartCColumns = (maxMembers, columns, data) => {
       field: column.field,
       headerName: column.headerName,
       valueGetter: (params) => {
-        const PartC = params?.data?.Emergency_Data?.[index].PartCLoop;
+        const PartC = params?.data?.Emergency_Data?.[index]?.PartCLoop;
         const PartCLength =
-          params?.data?.Emergency_Data?.[index].PartCLoop?.length;
+          params?.data?.Emergency_Data?.[index]?.PartCLoop?.length;
 
         console.log("PartCLength : ", PartCLength);
 
@@ -1039,13 +1039,13 @@ const PartDcolumns = [
     field: "D1_14",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = other)",
-    valueGetter: (params) => params?.D1[14]?.split(":")[0],
+    valueGetter: (params) => params?.D?.[14]?.split(":")[0],
   },
   {
     field: "D1_14_other_specify",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (other specify)",
-    valueGetter: (params) => params?.D1[14]?.split(":")[1],
+    valueGetter: (params) => params?.D1?.[14]?.split(":")[1],
   },
   {
     field: "D2_0",
@@ -1101,13 +1101,13 @@ const PartDcolumns = [
     field: "D2_10",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Others)",
-    valueGetter: (params) => params?.D2[10]?.split(":")[0],
+    valueGetter: (params) => params?.D2?.[10]?.split(":")[0],
   },
   {
     field: "D2_10_other_specify",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Other specify)",
-    valueGetter: (params) => params?.D2[10]?.split(":")[1],
+    valueGetter: (params) => params?.D2?.[10]?.split(":")[1],
   },
   {
     field: "D2_11",
@@ -1158,13 +1158,13 @@ const PartDcolumns = [
     field: "D3_8",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Others)",
-    valueGetter: (params) => params?.D3[8]?.split(":")[0],
+    valueGetter: (params) => params?.D3?.[8]?.split(":")[0],
   },
   {
     field: "D3_8_other_specify",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (other specify)",
-    valueGetter: (params) => params?.D3[8]?.split(":")[1],
+    valueGetter: (params) => params?.D3?.[8]?.split(":")[1],
   },
   {
     field: "D4_0",
@@ -1195,13 +1195,13 @@ const PartDcolumns = [
     field: "D4_5",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Others)",
-    valueGetter: (params) => params?.D4[5]?.split(":")[0],
+    valueGetter: (params) => params?.D4?.[5]?.split(":")[0],
   },
   {
     field: "D4_5_other_specify",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (other specify)",
-    valueGetter: (params) => params?.D4[5]?.split(":")[1],
+    valueGetter: (params) => params?.D4?.[5]?.split(":")[1],
   },
 ];
 
@@ -1352,14 +1352,14 @@ const PartFcolumns = [
     field: "F10_6",
     headerName:
       "F.10 What type of Transport facility available at home: (choice = Others)",
-    valueGetter: (params) => params?.F10?.split(":")[0],
+    valueGetter: (params) => params?.F10,
   },
-  {
-    field: "F10_os",
-    headerName:
-      "F.10 What type of Transport facility available at home: (Other Specify)",
-    valueGetter: (params) => params?.F10?.split(":")[1],
-  },
+  // {
+  //   field: "F10_os",
+  //   headerName:
+  //     "F.10 What type of Transport facility available at home: (Other Specify)",
+  //   valueGetter: (params) => params?.F10?.split(":")[1],
+  // },
   {
     field: "F11",
     headerName: "F.11 Do you have any medical insurance?",
