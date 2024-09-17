@@ -68,22 +68,24 @@ export const AMBULANCEController = async (req, res) => {
 //   }
 // };
 
-export const AMBULANCEGet = async(req,res,next) => {
-  try{
-    const adminId = req.user.id
-    const state = req.user.sitename
+export const AMBULANCEGet = async (req, res, next) => {
+  try {
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+    const role = req.user.role;
 
-    if(!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"))
+    if (!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"));
     }
 
-    const validateUser = await User.findById(adminId) 
+    const validateUser = await User.findById(adminId);
 
-    if(!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"))
+    if (!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"));
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -105,18 +107,24 @@ export const AMBULANCEGet = async(req,res,next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const AmbulanceData = await AMBULANCE.find({ uniqueCode: { $regex: regex } });
+    var AmbulanceData;
+    if (role === "superadmin") {
+      AmbulanceData = await AMBULANCE.find();
+    } else {
+      AmbulanceData = await AMBULANCE.find({
+        uniqueCode: { $regex: regex },
+      });
+    }
 
-    if(!AmbulanceData) {
-      return next(new ErrorHandler("data not found"))
+    if (!AmbulanceData) {
+      return next(new ErrorHandler("data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: AmbulanceData,
     });
-
   } catch (error) {
     next(error);
   }
-}
+};

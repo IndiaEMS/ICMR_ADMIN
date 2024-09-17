@@ -18,29 +18,34 @@ export const HFATCounter = async (req, res) => {
     const AMBULANCECount = await AMBULANCE.countDocuments();
     const CSTCount = await CSTFORM.countDocuments();
     const AutopsyCount = await Autopsy.countDocuments();
-    res
-      .status(200)
-      .json({ HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount, CSTCount, AutopsyCount });
+    res.status(200).json({
+      HFAT1Count,
+      HFAT2Count,
+      HFAT3Count,
+      AMBULANCECount,
+      CSTCount,
+      AutopsyCount,
+    });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
-
 export const DashboardCounter = async (req, res) => {
   try {
-
     const adminId = req.user.id;
     const state = req.user.sitename;
+    const role = req.user.role;
 
     if (!adminId || !state) {
       return res.status(400).json({
         success: false,
-        message: "Please provide adminId and state"
-      })
+        message: "Please provide adminId and state",
+      });
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -62,22 +67,53 @@ export const DashboardCounter = async (req, res) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const HFAT1Count = await HFAT1.countDocuments({ uniqueCode: { $regex: regex } });
-    const HFAT2Count = await HFAT2.countDocuments({ uniqueCode: { $regex: regex } });
-    const HFAT3Count = await HFAT3.countDocuments({ uniqueCode: { $regex: regex } });
-    const AMBULANCECount = await AMBULANCE.countDocuments({ uniqueCode: { $regex: regex } });
-    const CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
-    const AutopsyCount = await Autopsy.countDocuments({ FA2: { $regex: regex } });
+    var HFAT1Count;
+    var HFAT2Count;
+    var HFAT3Count;
+    var AMBULANCECount;
+    var CSTCount;
+    var AutopsyCount;
+
+    if (role === "superadmin") {
+      HFAT1Count = await HFAT1.countDocuments();
+      HFAT2Count = await HFAT2.countDocuments();
+      HFAT3Count = await HFAT3.countDocuments();
+      AMBULANCECount = await AMBULANCE.countDocuments();
+      CSTCount = await CSTFORM.countDocuments();
+      AutopsyCount = await Autopsy.countDocuments();
+    } else {
+      HFAT1Count = await HFAT1.countDocuments({
+        uniqueCode: { $regex: regex },
+      });
+      HFAT2Count = await HFAT2.countDocuments({
+        uniqueCode: { $regex: regex },
+      });
+      HFAT3Count = await HFAT3.countDocuments({
+        uniqueCode: { $regex: regex },
+      });
+      AMBULANCECount = await AMBULANCE.countDocuments({
+        uniqueCode: { $regex: regex },
+      });
+      CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
+      AutopsyCount = await Autopsy.countDocuments({
+        FA2: { $regex: regex },
+      });
+    }
 
     return res.status(200).json({
       success: true,
-      HFAT1Count, HFAT2Count, HFAT3Count, AMBULANCECount, CSTCount, AutopsyCount
+      HFAT1Count,
+      HFAT2Count,
+      HFAT3Count,
+      AMBULANCECount,
+      CSTCount,
+      AutopsyCount,
     });
   } catch (error) {
     console.log(error);
     return res.status(500).json({
       success: false,
-      error: error.message
-    })
+      error: error.message,
+    });
   }
-}
+};

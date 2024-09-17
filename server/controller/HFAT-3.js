@@ -64,22 +64,24 @@ export const HFAT3Controller = (req, res) => {
 //   }
 // };
 
-export const HFAT3Get = async(req,res,next) => {
-  try{
-    const adminId = req.user.id
-    const state = req.user.sitename
+export const HFAT3Get = async (req, res, next) => {
+  try {
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+    const role = req.user.role;
 
-    if(!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"))
+    if (!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"));
     }
 
-    const validateUser = await User.findById(adminId) 
+    const validateUser = await User.findById(adminId);
 
-    if(!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"))
+    if (!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"));
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -101,21 +103,25 @@ export const HFAT3Get = async(req,res,next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const HFAT3Data = await HFAT3.find({ uniqueCode: { $regex: regex } });
+    var HFAT3Data;
+    if (role === "superadmin") {
+      HFAT3Data = await HFAT3.find();
+    } else {
+      HFAT3Data = await HFAT3.find({ uniqueCode: { $regex: regex } });
+    }
 
-    if(!HFAT3Data) {
-      return next(new ErrorHandler("data not found"))
+    if (!HFAT3Data) {
+      return next(new ErrorHandler("data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: HFAT3Data,
     });
-
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-}
+};
 
 export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
   try {

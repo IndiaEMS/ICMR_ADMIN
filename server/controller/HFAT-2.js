@@ -61,22 +61,23 @@ export const HFAT2Controller = async (req, res) => {
 //   }
 // };
 
-export const HFAT2Get = async(req,res,next) => {
-  try{
-    const adminId = req.user.id
-    const state = req.user.sitename
+export const HFAT2Get = async (req, res, next) => {
+  try {
+    const adminId = req.user.id;
+    const state = req.user.sitename;
 
-    if(!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"))
+    if (!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"));
     }
 
-    const validateUser = await User.findById(adminId) 
+    const validateUser = await User.findById(adminId);
 
-    if(!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"))
+    if (!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"));
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -100,19 +101,18 @@ export const HFAT2Get = async(req,res,next) => {
 
     const HFAT2Data = await HFAT2.find({ uniqueCode: { $regex: regex } });
 
-    if(!HFAT2Data) {
-      return next(new ErrorHandler("data not found"))
+    if (!HFAT2Data) {
+      return next(new ErrorHandler("data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: HFAT2Data,
     });
-
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-}
+};
 
 export const HFAT2AndAMBULANCEGet = async (req, res, next) => {
   try {

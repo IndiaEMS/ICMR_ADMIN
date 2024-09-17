@@ -38,7 +38,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 
 const Sidebar = () => {
   // const { state } = useContext(AppContext);
-  const {user} = useSelector((state) =>state.auth)
+  const { user } = useSelector((state) => state.auth);
   const userRole = user?.role ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
@@ -117,13 +117,15 @@ const Sidebar = () => {
             >
               View
             </Typography>
-            <Item
-              title="Manage Team"
-              to="/team"
-              icon={<PeopleOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
+            {userRole === "superadmin" && (
+              <Item
+                title="Manage Team"
+                to="/team"
+                icon={<PeopleOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            )}
             <MenuItem
               icon={<ViewListIcon />}
               onClick={() => setIsHfatOpen(!isHfatOpen)}
@@ -171,15 +173,22 @@ const Sidebar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="CST"
-                  to="ViewData/CST"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
               </Box>
             )}
+            <Item
+              icon={<ViewListIcon />}
+              title="CST"
+              to="ViewData/CST"
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Autopsy"
+              to="ViewData/Autopsy"
+              icon={<ViewListIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
             <MenuItem
               icon={<ViewListIcon />}
               onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}

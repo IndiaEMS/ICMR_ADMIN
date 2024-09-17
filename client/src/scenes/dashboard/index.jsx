@@ -313,12 +313,14 @@ const Dashboard = () => {
         </Box> */}
       </Box>
 
-      <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
-        <PieChart counter={counter} />
-      </Box>
-
-      <Box m="20px" p="20px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
-        <BarChart counter={counter} />
+      <Box display="flex" my="20px" flexDirection="row" justifyContent="space-between" flexWrap="wrap">
+        <Box p="100px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+          <PieChart counter={counter} />
+        </Box>
+      
+        <Box p="100px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+          <BarChart counter={counter} />
+        </Box>
       </Box>
 
     </Box>

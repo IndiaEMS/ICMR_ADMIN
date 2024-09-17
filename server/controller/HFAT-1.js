@@ -52,7 +52,6 @@ export const HFAT1Controller = async (req, res) => {
   // }
 };
 
-
 // export const HFAT1Get = async (req, res, next) => {
 //   try {
 //     const id = req.params.id;
@@ -82,22 +81,24 @@ export const HFAT1Controller = async (req, res) => {
 //   }
 // };
 
-export const HFAT1Get = async(req,res,next) => {
-  try{
+export const HFAT1Get = async (req, res, next) => {
+  try {
     const adminId = req.user.id;
     const state = req.user.sitename;
+    const role = req.user.role;
 
-    if(!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"))
+    if (!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"));
     }
 
-    const validateUser = await User.findById(adminId) 
+    const validateUser = await User.findById(adminId);
 
-    if(!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"))
+    if (!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"));
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -119,21 +120,25 @@ export const HFAT1Get = async(req,res,next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const HFAT1Data = await HFAT1.find({ uniqueCode: { $regex: regex } });
+    var HFAT1Data;
+    if (role === "superadmin") {
+      HFAT1Data = await HFAT1.find();
+    } else {
+      HFAT1Data = await HFAT1.find({ uniqueCode: { $regex: regex } });
+    }
 
-    if(!HFAT1Data) {
-      return next(new ErrorHandler("data not found"))
+    if (!HFAT1Data) {
+      return next(new ErrorHandler("data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: HFAT1Data,
     });
-
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-}
+};
 
 export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
   try {

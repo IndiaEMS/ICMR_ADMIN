@@ -54,7 +54,19 @@ const generateColumns = (
       valueGetter: (params) => {
         const currentMember = params?.data?.Emergency_Data?.[memberIndex];
         const currentPartC = currentMember?.PartCLoop?.[partCIndex];
+        console.log(currentPartC[partCColumn.field]);
+        // console.log(
+        //   currentPartC && Array.isArray(currentPartC[partCColumn.field])
+        // );
         return currentPartC ? currentPartC[partCColumn.field] : "";
+
+        // if (Array.isArray(currentPartC[partCColumn.field])) {
+        //   return currentPartC[partCColumn.field.split("_")[0]]?.[
+        //     columns.field?.split?.[1]
+        //   ];
+        // } else {
+        //   return currentPartC ? currentPartC[partCColumn.field] : "";
+        // }
       },
     }));
   };
@@ -73,30 +85,30 @@ const generateColumns = (
         },
       })),
       ...generatePartCColumns(PartCcolumns, memberIndex),
-      ...PartDcolumns.map((column) => ({
-        field: `${column.field}_Member_${memberIndex + 1}`,
-        headerName: `${column.headerName} (Member ${memberIndex + 1})`,
-        valueGetter: (params) => {
-          const member = params?.data?.Emergency_Data?.[memberIndex];
-          return member ? member[column.field] : "";
-        },
-      })),
-      ...PartEcolumns.map((column) => ({
-        field: `${column.field}_Member_${memberIndex + 1}`,
-        headerName: `${column.headerName} (Member ${memberIndex + 1})`,
-        valueGetter: (params) => {
-          const member = params?.data?.Emergency_Data?.[memberIndex];
-          return member ? member[column.field] : "";
-        },
-      })),
-      ...PartFcolumns.map((column) => ({
-        field: `${column.field}_Member_${memberIndex + 1}`,
-        headerName: `${column.headerName} (Member ${memberIndex + 1})`,
-        valueGetter: (params) => {
-          const member = params?.data?.Emergency_Data?.[memberIndex];
-          return member ? member[column.field] : "";
-        },
-      })),
+      // ...PartDcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
+      // ...PartEcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
+      // ...PartFcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
     ];
 
     return memberColumns;
@@ -218,7 +230,7 @@ export const CSTColumns = (data) => {
       valueGetter: (params) => params.data._id,
     },
 
-    ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
+    // ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
     ...generateColumns(
       maxMembers,
       PartBcolumns,
@@ -857,17 +869,19 @@ const PartCcolumns = [
     field: "C1",
     headerName:
       "C.1 Who took the decision to refer/ shift the patient to another facility? (Other Specify)",
-    valueGetter: (params) => params?.C1?.split(":")[1],
+    valueGetter: (params) => params?.C1?.split(":")[0],
   },
   {
     field: "C2_0",
     headerName:
       "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Serious illness requiring higher centre)",
+    valueGetter: (params) => params?.C2?.[0],
   },
   {
     field: "C2_1",
     headerName:
       "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of doctor)",
+    valueGetter: (params) => params?.C2?.[1],
   },
   {
     field: "C2_2",

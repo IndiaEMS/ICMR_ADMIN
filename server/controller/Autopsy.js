@@ -45,22 +45,24 @@ export const AutopsyController = (req, res) => {
 //   }
 // };
 
-export const AutopsyGetController = async(req,res,next) => {
-  try{
-    const adminId = req.user.id
-    const state = req.user.sitename
+export const AutopsyGetController = async (req, res, next) => {
+  try {
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+    const role = req.user.role;
 
-    if(!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"))
+    if (!adminId || !state) {
+      return next(new ErrorHandler("both id and state are required"));
     }
 
-    const validateUser = await User.findById(adminId) 
+    const validateUser = await User.findById(adminId);
 
-    if(!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"))
+    if (!validateUser) {
+      return next(new ErrorHandler("user is not authenticated"));
     }
 
-    const stateCode = state.split(",")[1]?.trim();
+    // const stateCode = state.split(",")[1]?.trim();
+    const stateCode = state?.trim();
 
     const states = [
       { value: "", label: "All" },
@@ -82,19 +84,22 @@ export const AutopsyGetController = async(req,res,next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const AutopsyData = await Autopsy.find({ FA2: { $regex: regex } })
+    var AutopsyData;
+    if (role === "superadmin") {
+      AutopsyData = await Autopsy.find();
+    } else {
+      AutopsyData = await Autopsy.find({ FA2: { $regex: regex } });
+    }
 
-    if(!AutopsyData) {
-      return next(new ErrorHandler("data not found"))
+    if (!AutopsyData) {
+      return next(new ErrorHandler("data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: Autopsy,
     });
-
-  } catch(error) {
+  } catch (error) {
     next(error);
   }
-}
-
+};
