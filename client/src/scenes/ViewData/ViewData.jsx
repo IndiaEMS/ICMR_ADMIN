@@ -20,7 +20,6 @@ import React, {
 } from "react";
 // import { jwtDecode } from 'jwt-decode';
 
-
 // import DataGridComponent from "./DataGridComponent";
 
 import { HFAT1Columns } from "./HFAT-1/HFAT_1_columns";
@@ -40,7 +39,7 @@ import { AmbulanceRows } from "./Ambulance/Ambulance_rows";
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { CSTColumns } from "./CST/CST_columns";
+import { CSTColumns } from "./CST/CST_columns_copy";
 import { CSTRows } from "./CST/CST_rows";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 // import { AppContext } from "../../context/user";
@@ -61,7 +60,7 @@ const ViewData = ({ formName }) => {
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
-  const {user} = useSelector((state) => state.auth)
+  const { user } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
 
   // const getTokenFromLocalStorage = () => {
@@ -70,37 +69,37 @@ const ViewData = ({ formName }) => {
 
   // getTokenFromLocalStorage();
 
-//   const userRole = state;
-//   console.log(userRole);
+  //   const userRole = state;
+  //   console.log(userRole);
 
-const adminState = user;
-// console.log("Admin State:", adminState);
+  const adminState = user;
+  // console.log("Admin State:", adminState);
 
-const states = [
-  { value: "", label: "All" },
-  { value: "GJBRC", label: "Gujarat" },
-  { value: "ORPUR", label: "Odisha" },
-  { value: "MPBHS", label: "Madhya Pradesh" },
-  { value: "PBLDH", label: "Ludhiana" },
-  { value: "PYPDY", label: "Pondicherry" },
-];
+  const states = [
+    { value: "", label: "All" },
+    { value: "GJBRC", label: "Gujarat" },
+    { value: "ORPUR", label: "Odisha" },
+    { value: "MPBHS", label: "Madhya Pradesh" },
+    { value: "PBLDH", label: "Ludhiana" },
+    { value: "PYPDY", label: "Pondicherry" },
+  ];
 
-// let uniqueCode = null;
+  // let uniqueCode = null;
 
-// for (let i = 0; i < states.length; i++) {
-//   console.log(`Comparing: "${states[i].label}" with "${adminState}"`); 
-//   if (states[i].label === adminState) {
-//     uniqueCode = states[i]?.value;
-//     break;
-//   }
-// }
+  // for (let i = 0; i < states.length; i++) {
+  //   console.log(`Comparing: "${states[i].label}" with "${adminState}"`);
+  //   if (states[i].label === adminState) {
+  //     uniqueCode = states[i]?.value;
+  //     break;
+  //   }
+  // }
 
-// console.log("UNIQUECODE", uniqueCode); 
+  // console.log("UNIQUECODE", uniqueCode);
 
-
-//   console.log("UNIQUECODE",uniqueCode);
+  //   console.log("UNIQUECODE",uniqueCode);
 
   useEffect(() => {
+    setRows([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
       setColumns(HFAT1Columns);
@@ -168,7 +167,7 @@ const states = [
     try {
       setLoading(true);
       // console.log(`${url}/${formName}/${selectedState}`);
-      const { data } = await axios.get(`${url}/${formName}`,{
+      const { data } = await axios.get(`${url}/${formName}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
