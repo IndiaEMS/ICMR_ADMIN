@@ -192,6 +192,34 @@ const ViewData = ({ formName }) => {
   //   }
   // }, [selectedState, data]);
 
+  // useEffect(() => {
+  //   if (selectedState === "") {
+  //     setRows(data); // Show all rows if no state is selected
+  //   } else {
+  //     const filteredRows = data.filter((row) =>
+  //       row["A3"].startsWith(selectedState)
+  //     );
+  //     setRows(filteredRows);
+  //   }
+  // }, [selectedState, data]);
+
+  useEffect(() => {
+    if (selectedState === "") {
+      setRows(data); // Show all rows if no state is selected
+    } else {
+      // Filter rows where any field in the row might contain the state value
+      const filteredRows = data.filter((row) => {
+        return Object.values(row).some((cellValue) => 
+          typeof cellValue === "string" && cellValue.startsWith(selectedState)
+        );
+      });
+      setRows(filteredRows);
+    }
+  }, [selectedState, data]);
+  
+  
+  
+
   useEffect(() => {
     getData();
   }, [formName]);
@@ -248,26 +276,33 @@ const ViewData = ({ formName }) => {
       </Box>
       <Box>
         <Box>
-          {/* ...states.map((state) => (
-            <Button
-              sx={{
-                backgroundColor:
-                  selectedState == state["value"]
-                    ? colors.greenAccent[700]
-                    : colors.blueAccent[700],
-                color: colors.grey[100],
-                fontSize: "14px",
-                fontWeight: "bold",
-                padding: "10px 20px",
-                mr: "10px",
-              }}
-              onClick={() => {
-                setSelectedState(state["value"]);
-              }}
-            >
-              {state["label"]}
-            </Button>
-          )) */}
+        {user.role === "superadmin" && (
+  <Box>
+    {states.map((state) => (
+      <Button
+        key={state.value}
+        sx={{
+          backgroundColor:
+            selectedState === state.value
+              ? colors.greenAccent[700]
+              : colors.blueAccent[700],
+          color: colors.grey[100],
+          fontSize: "14px",
+          fontWeight: "bold",
+          padding: "10px 20px",
+          mr: "10px",
+        }}
+        onClick={() => {
+          setSelectedState(state.value);
+        }}
+      >
+        {state.label}
+      </Button>
+    ))}
+  </Box>
+)}
+
+
 
           {/* <Button
             sx={{
@@ -278,7 +313,9 @@ const ViewData = ({ formName }) => {
               padding: "10px 20px",
               mr: "10px",
             }}
-            onClick={handleDownloadCSV}
+            onClick={() => {
+              getData();
+            }}
           >
             Gujarat
           </Button>
@@ -291,7 +328,9 @@ const ViewData = ({ formName }) => {
               padding: "10px 20px",
               mr: "10px",
             }}
-            onClick={handleDownloadCSV}
+            onClick={() => {
+              getData();
+            }}
           >
             Odisha
           </Button>
@@ -304,7 +343,9 @@ const ViewData = ({ formName }) => {
               padding: "10px 20px",
               mr: "10px",
             }}
-            onClick={handleDownloadCSV}
+            onClick={() => {
+              getData();
+            }}
           >
             Madhya Pradesh
           </Button>
@@ -317,7 +358,9 @@ const ViewData = ({ formName }) => {
               padding: "10px 20px",
               mr: "10px",
             }}
-            onClick={handleDownloadCSV}
+            onClick={() => {
+              getData();
+            }}
           >
             Ludhiana
           </Button>
@@ -330,7 +373,9 @@ const ViewData = ({ formName }) => {
               padding: "10px 20px",
               mr: "10px",
             }}
-            onClick={handleDownloadCSV}
+            onClick={() => {
+              getData();
+            }}
           >
             pondicherry
           </Button> */}
