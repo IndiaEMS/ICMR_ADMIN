@@ -43,7 +43,7 @@ const generatePartCColumns = (maxMembers, columns, data) => {
         const PartCLength =
           params?.data?.Emergency_Data?.[index]?.PartCLoop?.length;
 
-        console.log("PartCLength : ", PartCLength);
+        // console.log("PartCLength : ", PartCLength);
 
         if (!PartC) return ""; // If no member data, return empty string
       },
