@@ -17,16 +17,19 @@ import axios from "axios";
 import PieChart from "../../components/dashboard/PieChart";
 import BarChart from "../../components/dashboard/BarChart";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [counter, setCounter] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -51,6 +54,8 @@ const Dashboard = () => {
       setCounter(data);
     } catch (error) {
       console.log(error);
+      localStorage.removeItem("token");
+      navigate("/login");
       setError(error.message);
     } finally {
       setLoading(false);
@@ -66,7 +71,6 @@ const Dashboard = () => {
   if (loading) {
     return <div>Loading...</div>; // Display loading indicator
   }
-
 
   return (
     <Box m="20px">
@@ -313,16 +317,33 @@ const Dashboard = () => {
         </Box> */}
       </Box>
 
-      <Box display="flex" my="20px" flexDirection="row" justifyContent="space-between" flexWrap="wrap">
-        <Box p="100px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        my="20px"
+        flexDirection="row"
+        justifyContent="space-between"
+        flexWrap="wrap"
+      >
+        <Box
+          p="100px"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <PieChart counter={counter} />
         </Box>
-      
-        <Box p="100px" backgroundColor={colors.primary[400]} display="flex" justifyContent="center" alignItems="center">
+
+        <Box
+          p="100px"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <BarChart counter={counter} />
         </Box>
       </Box>
-
     </Box>
   );
 };

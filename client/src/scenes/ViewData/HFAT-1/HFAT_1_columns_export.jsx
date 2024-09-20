@@ -1,29 +1,50 @@
-// Column Definitions: Defines the columns to be displayed.
-// Column Definitions: Defines the columns to be displayed.
-export const HFAT1ColumnsExport = [
+import generateColumns from "./../generateColumns";
+
+const columns = [
   {
-    field: "id",
     headerName: "Record ID",
+    field: "_id",
     checkboxSelection: true,
     headerCheckboxSelection: true,
     width: 250,
+    valueGetter: (params) => params.data?._id,
   },
-  { field: "A1", headerName: "1A.1. Assessor's Name" },
-  { field: "A2", headerName: "1A.2. Date:" },
-  { field: "A3", headerName: "1A.3. Code:" },
-  { field: "A4", headerName: "1A.4. Block Name:" },
-  { field: "A5", headerName: "1A.5. Healthcare Facility Name" },
-  { field: "A6", headerName: "1A.6. Healthcare Facility Address:" },
-  { field: "A7", headerName: "1A.7. Name of the Hospital Superintendent:" },
+  { headerName: "1A.1. Assessor's Name", field: "A1" },
+  { headerName: "1A.2. Date", field: "A2" },
   {
-    field: "A8",
-    headerName: "1A.8. Contact Number of the Hospital Superintendent:",
+    headerName: "1A.3. Code",
+    field: "A3",
+    valueGetter: (params) => params.data?.uniqueCode,
   },
-  { field: "A9", headerName: "1A.9. Email ID:" },
-  { field: "A10_0", headerName: "1A.10. GPS_1" },
-  { field: "A10_1", headerName: "1A.10. GPS_2" },
-  { field: "A10_2", headerName: "1A.10. District" },
-  { field: "A10_3", headerName: "1A.10. State" },
+  { headerName: "1A.4. Block Name", field: "A4" },
+  { headerName: "1A.5. Healthcare Facility Name", field: "A5" },
+  { headerName: "1A.6. Healthcare Facility Address", field: "A6" },
+  { headerName: "1A.7. Name of the Hospital Superintendent", field: "A7" },
+  {
+    headerName: "1A.8. Contact Number of the Hospital Superintendent:",
+    field: "A8",
+  },
+  { headerName: "1A.9. Email ID:", field: "A9" },
+  {
+    field: "A10_0",
+    headerName: "1A.10. GPS_1",
+    valueGetter: (params) => params?.data?.A10?.latitude,
+  },
+  {
+    field: "A10_1",
+    headerName: "1A.10. GPS_2",
+    valueGetter: (params) => params?.data?.A10?.longitude,
+  },
+  {
+    field: "A10_2",
+    headerName: "1A.10. District",
+    valueGetter: (params) => params?.data?.A10?.district,
+  },
+  {
+    field: "A10_3",
+    headerName: "1A.10. State",
+    valueGetter: (params) => params?.data?.A10?.state,
+  },
   { field: "A11", headerName: "1A.11. Type of Health Care Facility?" },
   {
     field: "A12",
@@ -47,16 +68,19 @@ export const HFAT1ColumnsExport = [
     field: "B4_0",
     headerName:
       "1B.4 : Number of Beds by Emergency Severity Index (ESI): (choice=Red)",
+    valueGetter: (params) => params.data?.B4?.[0]?.split(":")[1],
   },
   {
     field: "B4_1",
     headerName:
       "1B.4 : Number of Beds by Emergency Severity Index (ESI): (choice=Yellow)",
+    valueGetter: (params) => params.data?.B4?.[1]?.split(":")[1],
   },
   {
     field: "B4_2",
     headerName:
       "1B.4 : Number of Beds by Emergency Severity Index (ESI): (choice=Green)",
+    valueGetter: (params) => params.data?.B4?.[2]?.split(":")[1],
   },
   {
     field: "B5",
@@ -71,11 +95,13 @@ export const HFAT1ColumnsExport = [
   {
     field: "B7_0",
     headerName: "1B.7 Does the facility have a licensed in-house blood bank?",
+    valueGetter: (params) => params.data?.B7?.split(":")[0],
   },
   {
     field: "B7_1",
     headerName:
       "1B.7 Does the facility have a licensed in-house blood bank? (Other Specify)",
+    valueGetter: (params) => params.data?.B7?.split(":")[1],
   },
   {
     field: "B8",
@@ -207,84 +233,86 @@ export const HFAT1ColumnsExport = [
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Names of doctor and nursing staff on duty are displayed and updated.)",
   },
   {
-    field: "B12_0",
+    field: "B12_2",
     headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=List of available drugs are displayed.)",
   },
   {
-    field: "B12_1",
+    field: "B12_3",
     headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=All relevant information is displayed for the patients and visitors including user charges wherever applicable at the time of procedure/ investigation/admission.)",
   },
   {
-    field: "B12_0",
+    field: "B12_4",
     headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Important contact numbers including ambulance, blood bank, police and referral centers displayed.)",
   },
   {
-    field: "B12_1",
+    field: "B12_5",
     headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Other)",
+    valueGetter: (params) =>
+      (params.data?.B12?.[5]?.length > 0 && "Other") || null,
   },
   {
-    field: "B12_0",
+    field: "B12_5",
     headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (Other Specify)",
   },
   {
-    field: "B12_1",
+    field: "B13_0",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Fire safety)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Fire safety)",
   },
   {
-    field: "B12_0",
+    field: "B13_1",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Building safety)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Building safety)",
   },
   {
-    field: "B12_1",
+    field: "B13_2",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Electrical safety)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Electrical safety)",
   },
   {
-    field: "B12_0",
+    field: "B13_3",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Patient and healthcare provider safety)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Patient and healthcare provider safety)",
   },
   {
-    field: "B12_1",
+    field: "B13_4",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Chemical safety)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Chemical safety)",
   },
   {
-    field: "B12_0",
+    field: "B13_5",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Periodic training of staff (Every 6 months))",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Periodic training of staff (Every 6 months))",
   },
   {
-    field: "B12_1",
+    field: "B13_6",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Periodic mock drill (Every 6 months))",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Periodic mock drill (Every 6 months))",
   },
   {
-    field: "B12_0",
+    field: "B13_7",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Police post available within the premises.)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Police post available within the premises.)",
   },
   {
-    field: "B12_1",
+    field: "B13_8",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Alarm bell in Emergency / Code announcement available for extra help.)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Alarm bell in Emergency / Code announcement available for extra help.)",
   },
   {
-    field: "B12_0",
+    field: "B13_9",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Disease outbreak management plan)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Disease outbreak management plan)",
   },
   {
-    field: "B12_1",
+    field: "B13_10",
     headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital (Select all that apply): (choice=Surge capacity in your hospital)",
+      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Surge capacity in your hospital)",
   },
   {
     field: "B14",
@@ -307,17 +335,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Faculty/Consultant) (Number)",
   },
   {
-    field: "table1_0_availability247",
+    field: "table1_0_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Faculty/Consultant) (availability24 X 7)",
   },
   {
-    field: "table1_0_onSiteAvailability",
+    field: "table1_0_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Faculty/Consultant) (onSiteAvailability)",
   },
   {
-    field: "table1_0_onCallAvailability",
+    field: "table1_0_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Faculty/Consultant) (onCallAvailability)",
   },
@@ -332,17 +360,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (CMO = casualty medical officer) (Number)",
   },
   {
-    field: "table1_1_availability248",
+    field: "table1_1_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (CMO = casualty medical officer) (availability24 X 7)",
   },
   {
-    field: "table1_1_onSiteAvailability",
+    field: "table1_1_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (CMO = casualty medical officer) (onSiteAvailability)",
   },
   {
-    field: "table1_1_onCallAvailability",
+    field: "table1_1_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (CMO = casualty medical officer) (onCallAvailability)",
   },
@@ -357,17 +385,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (SR = Senior Residents) (Number)",
   },
   {
-    field: "table1_2_availability247",
+    field: "table1_2_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SR = Senior Residents) (availability24 X 7)",
   },
   {
-    field: "table1_2_onSiteAvailability",
+    field: "table1_2_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SR = Senior Residents) (onSiteAvailability)",
   },
   {
-    field: "table1_2_onCallAvailability",
+    field: "table1_2_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SR = Senior Residents) (onCallAvailability)",
   },
@@ -382,17 +410,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (JR = Junior Residents) (Number)",
   },
   {
-    field: "table1_3_availability248",
+    field: "table1_3_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (JR = Junior Residents) (availability24 X 7)",
   },
   {
-    field: "table1_3_onSiteAvailability",
+    field: "table1_3_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (JR = Junior Residents) (onSiteAvailability)",
   },
   {
-    field: "table1_3_onCallAvailability",
+    field: "table1_3_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (JR = Junior Residents) (onCallAvailability)",
   },
@@ -407,17 +435,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (MO = Medical officer) (Number)",
   },
   {
-    field: "table1_4_availability247",
+    field: "table1_4_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (MO = Medical officer) (availability24 X 7)",
   },
   {
-    field: "table1_4_onSiteAvailability",
+    field: "table1_4_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (MO = Medical officer) (onSiteAvailability)",
   },
   {
-    field: "table1_4_onCallAvailability",
+    field: "table1_4_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (MO = Medical officer) (onCallAvailability)",
   },
@@ -432,17 +460,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Nursing officer in charge / Team leader) (Number)",
   },
   {
-    field: "table1_5_availability247",
+    field: "table1_5_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Nursing officer in charge / Team leader) (availability24 X 7)",
   },
   {
-    field: "table1_5_onSiteAvailability",
+    field: "table1_5_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Nursing officer in charge / Team leader) (onSiteAvailability)",
   },
   {
-    field: "table1_5_onCallAvailability",
+    field: "table1_5_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Nursing officer in charge / Team leader) (onCallAvailability)",
   },
@@ -457,17 +485,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Staff Nurse/ Nursing Officer) (Number)",
   },
   {
-    field: "table1_6_availability247",
+    field: "table1_6_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Staff Nurse/ Nursing Officer) (availability24 X 7)",
   },
   {
-    field: "table1_6_onSiteAvailability",
+    field: "table1_6_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Staff Nurse/ Nursing Officer) (onSiteAvailability)",
   },
   {
-    field: "table1_6_onCallAvailability",
+    field: "table1_6_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Staff Nurse/ Nursing Officer) (onCallAvailability)",
   },
@@ -482,17 +510,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Radiology technician/ Radiographer) (Number)",
   },
   {
-    field: "table1_7_availability247",
+    field: "table1_7_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Radiology technician/ Radiographer) (availability24 X 7)",
   },
   {
-    field: "table1_7_onSiteAvailability",
+    field: "table1_7_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Radiology technician/ Radiographer) (onSiteAvailability)",
   },
   {
-    field: "table1_7_onCallAvailability",
+    field: "table1_7_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Radiology technician/ Radiographer) (onCallAvailability)",
   },
@@ -507,17 +535,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Lab Technician) (Number)",
   },
   {
-    field: "table1_8_availability247",
+    field: "table1_8_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Lab Technician) (availability24 X 7)",
   },
   {
-    field: "table1_8_onSiteAvailability",
+    field: "table1_8_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Lab Technician) (onSiteAvailability)",
   },
   {
-    field: "table1_8_onCallAvailability",
+    field: "table1_8_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Lab Technician) (onCallAvailability)",
   },
@@ -532,17 +560,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (OT. Technician) (Number)",
   },
   {
-    field: "table1_9_availability247",
+    field: "table1_9_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (OT. Technician) (availability24 X 7)",
   },
   {
-    field: "table1_9_onSiteAvailability",
+    field: "table1_9_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (OT. Technician) (onSiteAvailability)",
   },
   {
-    field: "table1_9_onCallAvailability",
+    field: "table1_9_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (OT. Technician) (onCallAvailability)",
   },
@@ -557,17 +585,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (H.A/ GDA/ Orderly (GDA)General Duty Assistant, SA- Sanitary Attendant, HA- Hospital Attendant) (Number)",
   },
   {
-    field: "table1_10_availability247",
+    field: "table1_10_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (H.A/ GDA/ Orderly (GDA)General Duty Assistant, SA- Sanitary Attendant, HA- Hospital Attendant) (availability24 X 7)",
   },
   {
-    field: "table1_10_onSiteAvailability",
+    field: "table1_10_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (H.A/ GDA/ Orderly (GDA)General Duty Assistant, SA- Sanitary Attendant, HA- Hospital Attendant) (onSiteAvailability)",
   },
   {
-    field: "table1_10_onCallAvailability",
+    field: "table1_10_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (H.A/ GDA/ Orderly (GDA)General Duty Assistant, SA- Sanitary Attendant, HA- Hospital Attendant) (onCallAvailability)",
   },
@@ -582,17 +610,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (SA/ Housekeeping staff) (Number)",
   },
   {
-    field: "table1_11_availability247",
+    field: "table1_11_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SA/ Housekeeping staff) (availability24 X 7)",
   },
   {
-    field: "table1_11_onSiteAvailability",
+    field: "table1_11_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SA/ Housekeeping staff) (onSiteAvailability)",
   },
   {
-    field: "table1_11_onCallAvailability",
+    field: "table1_11_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (SA/ Housekeeping staff) (onCallAvailability)",
   },
@@ -607,17 +635,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (EMT) (Number)",
   },
   {
-    field: "table1_12_availability247",
+    field: "table1_12_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (EMT) (availability24 X 7)",
   },
   {
-    field: "table1_12_onSiteAvailability",
+    field: "table1_12_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (EMT) (onSiteAvailability)",
   },
   {
-    field: "table1_12_onCallAvailability",
+    field: "table1_12_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (EMT) (onCallAvailability)",
   },
@@ -632,17 +660,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Security) (Number)",
   },
   {
-    field: "table1_13_availability247",
+    field: "table1_13_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Security) (availability24 X 7)",
   },
   {
-    field: "table1_13_onSiteAvailability",
+    field: "table1_13_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Security) (onSiteAvailability)",
   },
   {
-    field: "table1_13_onCallAvailability",
+    field: "table1_13_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Security) (onCallAvailability)",
   },
@@ -657,17 +685,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Registration staff) (Number)",
   },
   {
-    field: "table1_14_availability247",
+    field: "table1_14_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Registration staff) (availability24 X 7)",
   },
   {
-    field: "table1_14_onSiteAvailability",
+    field: "table1_14_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Registration staff) (onSiteAvailability)",
   },
   {
-    field: "table1_14_onCallAvailability",
+    field: "table1_14_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Registration staff) (onCallAvailability)",
   },
@@ -682,17 +710,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (IT Staff) (Number)",
   },
   {
-    field: "table1_15_availability247",
+    field: "table1_15_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (IT Staff) (availability24 X 7)",
   },
   {
-    field: "table1_15_onSiteAvailability",
+    field: "table1_15_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (IT Staff) (onSiteAvailability)",
   },
   {
-    field: "table1_15_onCallAvailability",
+    field: "table1_15_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (IT Staff) (onCallAvailability)",
   },
@@ -707,17 +735,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Hospital Administrator) (Number)",
   },
   {
-    field: "table1_16_availability247",
+    field: "table1_16_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Hospital Administrator) (availability24 X 7)",
   },
   {
-    field: "table1_16_onSiteAvailability",
+    field: "table1_16_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Hospital Administrator) (onSiteAvailability)",
   },
   {
-    field: "table1_16_onCallAvailability",
+    field: "table1_16_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Hospital Administrator) (onCallAvailability)",
   },
@@ -732,17 +760,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (Number)",
   },
   {
-    field: "table1_17_availability247",
+    field: "table1_17_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (availability24 X 7)",
   },
   {
-    field: "table1_17_onSiteAvailability",
+    field: "table1_17_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (onSiteAvailability)",
   },
   {
-    field: "table1_17_onCallAvailability",
+    field: "table1_17_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (onCallAvailability)",
   },
@@ -762,17 +790,17 @@ export const HFAT1ColumnsExport = [
       "1C.1 Tick the manpower available in your emergency department and provide (Other (please specify)) (Number)",
   },
   {
-    field: "table1_18_availability247",
+    field: "table1_18_Availability",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Other (please specify)) (availability24 X 7)",
   },
   {
-    field: "table1_18_onSiteAvailability",
+    field: "table1_18_OnSite",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Other (please specify)) (onSiteAvailability)",
   },
   {
-    field: "table1_14_onCallAvailability",
+    field: "table1_14_OnCall",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Other (please specify)) (onCallAvailability)",
   },
@@ -960,20 +988,25 @@ export const HFAT1ColumnsExport = [
     field: "C4_11",
     headerName:
       "1C4. Which of the following emergency care trainings have you undergone? (choice = Other)",
+    valueGetter: (params) =>
+      (params.data?.C4?.[11].length > 0 && "Other") || "",
   },
   {
     field: "C4_12",
     headerName:
       "1C4. Which of the following emergency care trainings have you undergone? (Other Specify)",
+    valueGetter: (params) => params.data?.C4?.[11],
   },
   {
     field: "C5_0",
     headerName: "1C.5 Frequency of training on emergency care in a year?",
+    valueGetter: (params) => params.data?.C5?.split(":")[0],
   },
   {
     field: "C5_1",
     headerName:
       "1C.5 Frequency of training on emergency care in a year? (Other Specify)",
+    valueGetter: (params) => params.data?.C5?.split(":")[1],
   },
   { field: "C6", headerName: "1C.6 When was the last training conducted?" },
   {
@@ -1257,27 +1290,27 @@ export const HFAT1ColumnsExport = [
       "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=incubators)",
   },
   {
-    field: "table2_Adult",
+    field: "table2_0_Adult",
     headerName:
       "1E.1 Numbers of Patients who Visited ED in Last One Month (Adult (>18 Years))",
   },
   {
-    field: "table2_Pediatric",
+    field: "table2_0_Pediatric",
     headerName:
       "1E.1 Numbers of Patients who Visited ED in Last One Month (Pediatrics)",
   },
   {
-    field: "table2_Broughtdead",
+    field: "table2_0_Broughtdead",
     headerName:
       "1E.1 Numbers of Patients who Visited ED in Last One Month (Brought dead)",
   },
   {
-    field: "table2_Deathafterarrival",
+    field: "table2_0_Deathafterarrival",
     headerName:
       "1E.1 Numbers of Patients who Visited ED in Last One Month (Death after arrival)",
   },
   {
-    field: "table2_MLC",
+    field: "table2_0_MLC",
     headerName:
       "1E.1 Numbers of Patients who Visited ED in Last One Month (MLC)",
   },
@@ -1455,9 +1488,11 @@ export const HFAT1ColumnsExport = [
     field: "E3_16",
     headerName:
       "1E.3. Which services does your healthcare facility provide? (Select all that apply) (choice=Other)",
+    valueGetter: (params) =>
+      (params.data?.E3?.[16]?.length > 0 && "Other") || "",
   },
   {
-    field: "E3_17",
+    field: "E3_16",
     headerName:
       "1E.3. Which services does your healthcare facility provide? (Other Specify)",
   },
@@ -1495,9 +1530,11 @@ export const HFAT1ColumnsExport = [
     field: "E4_6",
     headerName:
       "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Other)",
+    valueGetter: (params) =>
+      (params.data?.E4?.[6]?.length > 0 && "Other") || "",
   },
   {
-    field: "E4_7",
+    field: "E4_6",
     headerName:
       "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (other specify)",
   },
@@ -1566,9 +1603,21 @@ export const HFAT1ColumnsExport = [
     headerName:
       "1F.6 If Yes, select all that apply and provide their value (choice=Time to activate emergency alert team)",
   },
-  { field: "H1F6_3", headerName: "1F.6 Door to CT/ECG time" },
-  { field: "H1F6_4", headerName: "1F.6 Door to needle time" },
-  { field: "H1F6_5", headerName: "1F.6 Time to activate emergency alert team" },
+  {
+    field: "H1F6_3",
+    headerName: "1F.6 Door to CT/ECG time",
+    valueGetter: (params) => params.data?.H1F6?.[0]?.split(":-")[1],
+  },
+  {
+    field: "H1F6_4",
+    headerName: "1F.6 Door to needle time",
+    valueGetter: (params) => params.data?.H1F6?.[1]?.split(":-")[1],
+  },
+  {
+    field: "H1F6_5",
+    headerName: "1F.6 Time to activate emergency alert team",
+    valueGetter: (params) => params.data?.H1F6?.[2]?.split(":-")[1],
+  },
   {
     field: "H1F7",
     headerName:
@@ -1644,9 +1693,11 @@ export const HFAT1ColumnsExport = [
   {
     field: "H1H8_2",
     headerName: "1H.2.5 Types of audits conducted? (choice = other)",
+    valueGetter: (params) =>
+      (params.data?.H1H8?.[2]?.length > 0 && "Other") || "",
   },
   {
-    field: "H1H8_3",
+    field: "H1H8_2",
     headerName: "2H.2.5 Types of audits conducted? (Other Specify)",
   },
   {
@@ -1783,3 +1834,5 @@ export const HFAT1ColumnsExport = [
       "1J.2 Does this facility have any policies and procedures which guide the transfer- out/referral of stable and unstable patients after stabilization to another facility with documentation?",
   },
 ];
+
+export const HFAT1ColumnsExport = generateColumns(columns);

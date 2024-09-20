@@ -10,7 +10,6 @@ import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { DownloadOutlined } from "@mui/icons-material";
 import Header from "../../components/Header";
-// import { useContext } from "react";
 import React, {
   useState,
   useEffect,
@@ -18,9 +17,6 @@ import React, {
   useMemo,
   useRef,
 } from "react";
-// import { jwtDecode } from 'jwt-decode';
-
-// import DataGridComponent from "./DataGridComponent";
 
 import { HFAT1Columns } from "./HFAT-1/HFAT_1_columns";
 import { HFAT1ColumnsExport } from "./HFAT-1/HFAT_1_columns_export";
@@ -42,13 +38,11 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied
 import { CSTColumns } from "./CST/CST_columns_copy";
 import { CSTRows } from "./CST/CST_rows";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
-// import { AppContext } from "../../context/user";
 import { useSelector } from "react-redux";
 
 const url = import.meta.env.VITE_SERVER;
 
 const ViewData = ({ formName }) => {
-  // const { state } = useContext(AppContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const gridRef = useRef();
@@ -63,17 +57,7 @@ const ViewData = ({ formName }) => {
   const { user } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
 
-  // const getTokenFromLocalStorage = () => {
-  //   console.log(jwtDecode(localStorage.token))
-  // };
-
-  // getTokenFromLocalStorage();
-
-  //   const userRole = state;
-  //   console.log(userRole);
-
   const adminState = user;
-  // console.log("Admin State:", adminState);
 
   const states = [
     { value: "", label: "All" },
@@ -84,27 +68,14 @@ const ViewData = ({ formName }) => {
     { value: "PYPDY", label: "Pondicherry" },
   ];
 
-  // let uniqueCode = null;
-
-  // for (let i = 0; i < states.length; i++) {
-  //   console.log(`Comparing: "${states[i].label}" with "${adminState}"`);
-  //   if (states[i].label === adminState) {
-  //     uniqueCode = states[i]?.value;
-  //     break;
-  //   }
-  // }
-
-  // console.log("UNIQUECODE", uniqueCode);
-
-  //   console.log("UNIQUECODE",uniqueCode);
-
   useEffect(() => {
     setRows([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
       setColumns(HFAT1Columns);
       setExportColumns(HFAT1ColumnsExport);
-      setRows(HFAT1Rows(data));
+      setRows(data);
+      // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
@@ -209,16 +180,14 @@ const ViewData = ({ formName }) => {
     } else {
       // Filter rows where any field in the row might contain the state value
       const filteredRows = data.filter((row) => {
-        return Object.values(row).some((cellValue) => 
-          typeof cellValue === "string" && cellValue.startsWith(selectedState)
+        return Object.values(row).some(
+          (cellValue) =>
+            typeof cellValue === "string" && cellValue.startsWith(selectedState)
         );
       });
       setRows(filteredRows);
     }
   }, [selectedState, data]);
-  
-  
-  
 
   useEffect(() => {
     getData();
@@ -276,33 +245,31 @@ const ViewData = ({ formName }) => {
       </Box>
       <Box>
         <Box>
-        {user.role === "superadmin" && (
-  <Box>
-    {states.map((state) => (
-      <Button
-        key={state.value}
-        sx={{
-          backgroundColor:
-            selectedState === state.value
-              ? colors.greenAccent[700]
-              : colors.blueAccent[700],
-          color: colors.grey[100],
-          fontSize: "14px",
-          fontWeight: "bold",
-          padding: "10px 20px",
-          mr: "10px",
-        }}
-        onClick={() => {
-          setSelectedState(state.value);
-        }}
-      >
-        {state.label}
-      </Button>
-    ))}
-  </Box>
-)}
-
-
+          {user.role === "superadmin" && (
+            <Box>
+              {states.map((state) => (
+                <Button
+                  key={state.value}
+                  sx={{
+                    backgroundColor:
+                      selectedState === state.value
+                        ? colors.greenAccent[700]
+                        : colors.blueAccent[700],
+                    color: colors.grey[100],
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                    mr: "10px",
+                  }}
+                  onClick={() => {
+                    setSelectedState(state.value);
+                  }}
+                >
+                  {state.label}
+                </Button>
+              ))}
+            </Box>
+          )}
 
           {/* <Button
             sx={{

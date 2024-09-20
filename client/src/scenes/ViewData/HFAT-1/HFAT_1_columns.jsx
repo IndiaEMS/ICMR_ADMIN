@@ -1,15 +1,22 @@
+import generateColumns from "./../generateColumns";
+
 // Column Definitions: Defines the columns to be displayed.
-export const HFAT1Columns = [
+const columns = [
   {
     headerName: "Record ID",
     field: "id",
     checkboxSelection: true,
     headerCheckboxSelection: true,
     width: 250,
+    valueGetter: (params) => params.data?._id,
   },
   { headerName: "1A.1. Assessor's Name", field: "A1" },
   { headerName: "1A.2. Date", field: "A2" },
-  { headerName: "1A.3. Code", field: "A3" },
+  {
+    headerName: "1A.3. Code",
+    field: "A3",
+    valueGetter: (params) => params.data?.uniqueCode,
+  },
   { headerName: "1A.4. Block Name", field: "A4" },
   { headerName: "1A.5. Healthcare Facility Name", field: "A5" },
   { headerName: "1A.6. Healthcare Facility Address", field: "A6" },
@@ -22,10 +29,26 @@ export const HFAT1Columns = [
   {
     headerName: "1A.10. GPS",
     children: [
-      { headerName: "latitude", field: "A10_0" },
-      { headerName: "longitude", field: "A10_1" },
-      { headerName: "district", field: "A10_2" },
-      { headerName: "state", field: "A10_3" },
+      {
+        headerName: "latitude",
+        field: "A10_latitude",
+        valueGetter: (params) => params?.data?.A10?.latitude,
+      },
+      {
+        headerName: "longitude",
+        field: "A10_longitude",
+        valueGetter: (params) => params?.data?.A10?.longitude,
+      },
+      {
+        headerName: "district",
+        field: "A10_district",
+        valueGetter: (params) => params?.data?.A10?.district,
+      },
+      {
+        headerName: "state",
+        field: "A10_state",
+        valueGetter: (params) => params?.data?.A10?.state,
+      },
     ],
   },
   { headerName: "1A.11. Type of Health Care Facility?", field: "A11" },
@@ -50,9 +73,21 @@ export const HFAT1Columns = [
   {
     headerName: "1B.4 : Number of Beds by Emergency Severity Index (ESI)",
     children: [
-      { headerName: "Red", field: "B4_0" },
-      { headerName: "Yellow", field: "B4_1" },
-      { headerName: "Green", field: "B4_2" },
+      {
+        headerName: "Red",
+        field: "B4_0",
+        valueGetter: (params) => params.data?.B4?.[0]?.split(":")[1],
+      },
+      {
+        headerName: "Yellow",
+        field: "B4_1",
+        valueGetter: (params) => params.data?.B4?.[1]?.split(":")[1],
+      },
+      {
+        headerName: "Green",
+        field: "B4_2",
+        valueGetter: (params) => params.data?.B4?.[2]?.split(":")[1],
+      },
     ],
   },
   {
@@ -68,11 +103,13 @@ export const HFAT1Columns = [
   {
     headerName: "1B.7 Does the facility have a licensed in-house blood bank?",
     field: "B7_0",
+    valueGetter: (params) => params.data?.B7?.split(":")[0],
   },
   {
     headerName:
       "1B.7 Does the facility have a licensed in-house blood bank? (Other Specify)",
     field: "B7_1",
+    valueGetter: (params) => params.data?.B7?.split(":")[1],
   },
   {
     headerName:
@@ -218,8 +255,16 @@ export const HFAT1Columns = [
         headerName:
           "Important contact numbers including ambulance, blood bank, police and referral centers displayed.",
       },
-      { field: "B12_5", headerName: "Other" },
-      { field: "B12_6", headerName: "Other Specify" },
+      {
+        field: "B12_5",
+        headerName: "Other",
+        valueGetter: (params) =>
+          (params.data?.B12?.[5]?.length > 0 && "Other") || null,
+      },
+      {
+        field: "B12_5",
+        headerName: "Other Specify",
+      },
     ],
   },
   {
@@ -267,19 +312,30 @@ export const HFAT1Columns = [
       {
         headerName: "Faculty/Consultant",
         children: [
-          { field: "table1_0_Manpower", headerName: "Manpower" },
-          { field: "table1_0_Number", headerName: "Number" },
           {
-            field: "table1_0_availability247",
+            field: "table1_0_Manpower",
+            headerName: "Manpower",
+            valueGetter: (params) => params.data?.table1?.[0]?.Manpower,
+          },
+          {
+            field: "table1_0_Number",
+            headerName: "Number",
+            valueGetter: (params) => params.data?.table1?.[0]?.Number,
+          },
+          {
+            field: "table1_0_Availability",
             headerName: "availability24 X 7",
+            valueGetter: (params) => params.data?.table1?.[0]?.Availability,
           },
           {
-            field: "table1_0_onSiteAvailability",
+            field: "table1_0_OnSite",
             headerName: "onSiteAvailability",
+            valueGetter: (params) => params.data?.table1?.[0]?.OnSite,
           },
           {
-            field: "table1_0_onCallAvailability",
+            field: "table1_0_OnCall",
             headerName: "onCallAvailability",
+            valueGetter: (params) => params.data?.table1?.[0]?.OnCall,
           },
         ],
       },
@@ -289,22 +345,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_1_Manpower",
+            valueGetter: (params) => params.data?.table1?.[1]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_1_Number",
+            valueGetter: (params) => params.data?.table1?.[1]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_1_availability247",
+            field: "table1_1_Availability",
+            valueGetter: (params) => params.data?.table1?.[1]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_1_onSiteAvailability",
+            field: "table1_1_OnSite",
+            valueGetter: (params) => params.data?.table1?.[1]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_1_onCallAvailability",
+            field: "table1_1_OnCall",
+            valueGetter: (params) => params.data?.table1?.[1]?.OnCall,
           },
         ],
       },
@@ -314,22 +375,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_2_Manpower",
+            valueGetter: (params) => params.data?.table1?.[2]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_2_Number",
+            valueGetter: (params) => params.data?.table1?.[2]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_2_availability247",
+            field: "table1_2_Availability",
+            valueGetter: (params) => params.data?.table1?.[2]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_2_onSiteAvailability",
+            field: "table1_2_OnSite",
+            valueGetter: (params) => params.data?.table1?.[2]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_2_onCallAvailability",
+            field: "table1_2_OnCall",
+            valueGetter: (params) => params.data?.table1?.[2]?.OnCall,
           },
         ],
       },
@@ -339,22 +405,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_3_Manpower",
+            valueGetter: (params) => params.data?.table1?.[3]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_3_Number",
+            valueGetter: (params) => params.data?.table1?.[3]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_3_availability247",
+            field: "table1_3_Availability",
+            valueGetter: (params) => params.data?.table1?.[3]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_3_onSiteAvailability",
+            field: "table1_3_OnSite",
+            valueGetter: (params) => params.data?.table1?.[3]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_3_onCallAvailability",
+            field: "table1_3_OnCall",
+            valueGetter: (params) => params.data?.table1?.[3]?.OnCall,
           },
         ],
       },
@@ -364,22 +435,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_4_Manpower",
+            valueGetter: (params) => params.data?.table1?.[4]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_4_Number",
+            valueGetter: (params) => params.data?.table1?.[4]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_4_availability247",
+            field: "table1_4_Availability",
+            valueGetter: (params) => params.data?.table1?.[4]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_4_onSiteAvailability",
+            field: "table1_4_OnSite",
+            valueGetter: (params) => params.data?.table1?.[4]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_4_onCallAvailability",
+            field: "table1_4_OnCall",
+            valueGetter: (params) => params.data?.table1?.[4]?.OnCall,
           },
         ],
       },
@@ -389,22 +465,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_5_Manpower",
+            valueGetter: (params) => params.data?.table1?.[5]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_5_Number",
+            valueGetter: (params) => params.data?.table1?.[5]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_5_availability247",
+            field: "table1_5_Availability",
+            valueGetter: (params) => params.data?.table1?.[5]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_5_onSiteAvailability",
+            field: "table1_5_OnSite",
+            valueGetter: (params) => params.data?.table1?.[5]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_5_onCallAvailability",
+            field: "table1_5_OnCall",
+            valueGetter: (params) => params.data?.table1?.[5]?.OnCall,
           },
         ],
       },
@@ -414,22 +495,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_6_Manpower",
+            valueGetter: (params) => params.data?.table1?.[6]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_6_Number",
+            valueGetter: (params) => params.data?.table1?.[6]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_6_availability247",
+            field: "table1_6_Availability",
+            valueGetter: (params) => params.data?.table1?.[6]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_6_onSiteAvailability",
+            field: "table1_6_OnSite",
+            valueGetter: (params) => params.data?.table1?.[6]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_6_onCallAvailability",
+            field: "table1_6_OnCall",
+            valueGetter: (params) => params.data?.table1?.[6]?.OnCall,
           },
         ],
       },
@@ -439,22 +525,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_7_Manpower",
+            valueGetter: (params) => params.data?.table1?.[7]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_7_Number",
+            valueGetter: (params) => params.data?.table1?.[7]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_7_availability247",
+            field: "table1_7_Availability",
+            valueGetter: (params) => params.data?.table1?.[7]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_7_onSiteAvailability",
+            field: "table1_7_OnSite",
+            valueGetter: (params) => params.data?.table1?.[7]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_7_onCallAvailability",
+            field: "table1_7_OnCall",
+            valueGetter: (params) => params.data?.table1?.[7]?.OnCall,
           },
         ],
       },
@@ -464,22 +555,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_8_Manpower",
+            valueGetter: (params) => params.data?.table1?.[8]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_8_Number",
+            valueGetter: (params) => params.data?.table1?.[8]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_8_availability247",
+            field: "table1_8_Availability",
+            valueGetter: (params) => params.data?.table1?.[8]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_8_onSiteAvailability",
+            field: "table1_8_OnSite",
+            valueGetter: (params) => params.data?.table1?.[8]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_8_onCallAvailability",
+            field: "table1_8_OnCall",
+            valueGetter: (params) => params.data?.table1?.[8]?.OnCall,
           },
         ],
       },
@@ -489,22 +585,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_9_Manpower",
+            valueGetter: (params) => params.data?.table1?.[9]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_9_Number",
+            valueGetter: (params) => params.data?.table1?.[9]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_9_availability247",
+            field: "table1_9_Availability",
+            valueGetter: (params) => params.data?.table1?.[9]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_9_onSiteAvailability",
+            field: "table1_9_OnSite",
+            valueGetter: (params) => params.data?.table1?.[9]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_9_onCallAvailability",
+            field: "table1_9_OnCall",
+            valueGetter: (params) => params.data?.table1?.[9]?.OnCall,
           },
         ],
       },
@@ -515,22 +616,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_10_Manpower",
+            valueGetter: (params) => params.data?.table1?.[10]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_10_Number",
+            valueGetter: (params) => params.data?.table1?.[10]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_10_availability247",
+            field: "table1_10_Availability",
+            valueGetter: (params) => params.data?.table1?.[10]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_10_onSiteAvailability",
+            field: "table1_10_OnSite",
+            valueGetter: (params) => params.data?.table1?.[10]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_10_onCallAvailability",
+            field: "table1_10_OnCall",
+            valueGetter: (params) => params.data?.table1?.[10]?.OnCall,
           },
         ],
       },
@@ -540,22 +646,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_11_Manpower",
+            valueGetter: (params) => params.data?.table1?.[11]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_11_Number",
+            valueGetter: (params) => params.data?.table1?.[11]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_11_availability247",
+            field: "table1_11_Availability",
+            valueGetter: (params) => params.data?.table1?.[11]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_11_onSiteAvailability",
+            field: "table1_11_OnSite",
+            valueGetter: (params) => params.data?.table1?.[11]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_11_onCallAvailability",
+            field: "table1_11_OnCall",
+            valueGetter: (params) => params.data?.table1?.[11]?.OnCall,
           },
         ],
       },
@@ -565,22 +676,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_12_Manpower",
+            valueGetter: (params) => params.data?.table1?.[12]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_12_Number",
+            valueGetter: (params) => params.data?.table1?.[12]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_12_availability247",
+            field: "table1_12_Availability",
+            valueGetter: (params) => params.data?.table1?.[12]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_12_onSiteAvailability",
+            field: "table1_12_OnSite",
+            valueGetter: (params) => params.data?.table1?.[12]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_12_onCallAvailability",
+            field: "table1_12_OnCall",
+            valueGetter: (params) => params.data?.table1?.[12]?.OnCall,
           },
         ],
       },
@@ -590,22 +706,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_13_Manpower",
+            valueGetter: (params) => params.data?.table1?.[13]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_13_Number",
+            valueGetter: (params) => params.data?.table1?.[13]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_13_availability247",
+            field: "table1_13_Availability",
+            valueGetter: (params) => params.data?.table1?.[13]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_13_onSiteAvailability",
+            field: "table1_13_OnSite",
+            valueGetter: (params) => params.data?.table1?.[13]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_13_onCallAvailability",
+            field: "table1_13_OnCall",
+            valueGetter: (params) => params.data?.table1?.[13]?.OnCall,
           },
         ],
       },
@@ -615,22 +736,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_14_Manpower",
+            valueGetter: (params) => params.data?.table1?.[14]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_14_Number",
+            valueGetter: (params) => params.data?.table1?.[14]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_14_availability247",
+            field: "table1_14_Availability",
+            valueGetter: (params) => params.data?.table1?.[14]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_14_onSiteAvailability",
+            field: "table1_14_OnSite",
+            valueGetter: (params) => params.data?.table1?.[14]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_14_onCallAvailability",
+            field: "table1_14_OnCall",
+            valueGetter: (params) => params.data?.table1?.[14]?.OnCall,
           },
         ],
       },
@@ -640,22 +766,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_15_Manpower",
+            valueGetter: (params) => params.data?.table1?.[15]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_15_Number",
+            valueGetter: (params) => params.data?.table1?.[15]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_15_availability247",
+            field: "table1_15_Availability",
+            valueGetter: (params) => params.data?.table1?.[15]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_15_onSiteAvailability",
+            field: "table1_15_OnSite",
+            valueGetter: (params) => params.data?.table1?.[15]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_15_onCallAvailability",
+            field: "table1_15_OnCall",
+            valueGetter: (params) => params.data?.table1?.[15]?.OnCall,
           },
         ],
       },
@@ -665,22 +796,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_16_Manpower",
+            valueGetter: (params) => params.data?.table1?.[16]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_16_Number",
+            valueGetter: (params) => params.data?.table1?.[16]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_16_availability247",
+            field: "table1_16_Availability",
+            valueGetter: (params) => params.data?.table1?.[16]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_16_onSiteAvailability",
+            field: "table1_16_OnSite",
+            valueGetter: (params) => params.data?.table1?.[16]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_16_onCallAvailability",
+            field: "table1_16_OnCall",
+            valueGetter: (params) => params.data?.table1?.[16]?.OnCall,
           },
         ],
       },
@@ -690,22 +826,27 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_17_Manpower",
+            valueGetter: (params) => params.data?.table1?.[17]?.Manpower,
           },
           {
             headerName: "Number",
             field: "table1_17_Number",
+            valueGetter: (params) => params.data?.table1?.[17]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_17_availability247",
+            field: "table1_17_Availability",
+            valueGetter: (params) => params.data?.table1?.[17]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_17_onSiteAvailability",
+            field: "table1_17_OnSite",
+            valueGetter: (params) => params.data?.table1?.[17]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_17_onCallAvailability",
+            field: "table1_17_OnCall",
+            valueGetter: (params) => params.data?.table1?.[17]?.OnCall,
           },
         ],
       },
@@ -715,26 +856,32 @@ export const HFAT1Columns = [
           {
             headerName: "Manpower",
             field: "table1_18_Manpower",
+            valueGetter: (params) => params.data?.table1?.[18]?.Manpower,
           },
           {
             headerName: "Other specify",
             field: "table1_18_Manpower_other_specify",
+            valueGetter: (params) => params.data?.table1?.[18]?.otherSpecify,
           },
           {
             headerName: "Number",
             field: "table1_18_Number",
+            valueGetter: (params) => params.data?.table1?.[18]?.Number,
           },
           {
             headerName: "availability24 X 7",
-            field: "table1_18_availability247",
+            field: "table1_18_Availability",
+            valueGetter: (params) => params.data?.table1?.[18]?.Availability,
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_18_onSiteAvailability",
+            field: "table1_18_OnSite",
+            valueGetter: (params) => params.data?.table1?.[18]?.OnSite,
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_18_onCallAvailability",
+            field: "table1_18_OnCall",
+            valueGetter: (params) => params.data?.table1?.[18]?.OnCall,
           },
         ],
       },
@@ -813,18 +960,28 @@ export const HFAT1Columns = [
       { headerName: "PPH", field: "C4_8" },
       { headerName: "Pre-Eclampsia", field: "C4_9" },
       { headerName: "Neonatal emergencies", field: "C4_10" },
-      { headerName: "Other", field: "C4_11" },
-      { headerName: "Other Specify", field: "C4_12" },
+      {
+        headerName: "Other",
+        field: "C4_11",
+        valueGetter: (params) =>
+          (params.data?.C4?.[11].length > 0 && "Other") || "",
+      },
+      {
+        headerName: "Other Specify",
+        field: "C4_11",
+      },
     ],
   },
   {
     headerName: "1C.5 Frequency of training on emergency care in a year?",
     field: "C5_0",
+    valueGetter: (params) => params.data?.C5?.split(":")[0],
   },
   {
     headerName:
       "1C.5 Frequency of training on emergency care in a year? (Other Specify)",
     field: "C5_1",
+    valueGetter: (params) => params.data?.C5?.split(":")[1],
   },
   { headerName: "1C.6 When was the last training conducted?", field: "C6" },
 
@@ -926,14 +1083,31 @@ export const HFAT1Columns = [
   {
     headerName: "1E.1 Numbers of Patients who Visited ED in Last One Month",
     children: [
-      { field: "table2_Adult", headerName: "Adult (>18 Years)" },
-      { field: "table2_Pediatric", headerName: "Pediatrics" },
-      { field: "table2_Broughtdead", headerName: "Brought dead" },
       {
-        field: "table2_Deathafterarrival",
-        headerName: "Death after arrival",
+        field: "table2_0_Adult",
+        headerName: "Adult (>18 Years)",
+        // valueGetter: (params) => params.data?.table2?.[0]?.Adult,
       },
-      { field: "table2_MLC", headerName: "MLC" },
+      {
+        field: "table2_0_Pediatric",
+        headerName: "Pediatrics",
+        // valueGetter: (params) => params.data?.table2?.[0]?.Pediatric,
+      },
+      {
+        field: "table2_0_Broughtdead",
+        headerName: "Brought dead",
+        // valueGetter: (params) => params.data?.table2?.[0]?.Broughtdead,
+      },
+      {
+        field: "table2_0_Deathafterarrival",
+        headerName: "Death after arrival",
+        // valueGetter: (params) => params.data?.table2?.[0]?.Deathafterarrival,
+      },
+      {
+        field: "table2_0_MLC",
+        headerName: "MLC",
+        // valueGetter: (params) => params.data?.table2?.[0]?.MLC,
+      },
     ],
   },
 
@@ -947,10 +1121,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_0_Attended",
+            valueGetter: (params) => params.data?.table3?.[0]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_0_Death",
+            valueGetter: (params) => params.data?.table3?.[0]?.Death,
           },
         ],
       },
@@ -960,10 +1136,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_1_Attended",
+            valueGetter: (params) => params.data?.table3?.[1]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_1_Death",
+            valueGetter: (params) => params.data?.table3?.[1]?.Death,
           },
         ],
       },
@@ -973,10 +1151,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_2_Attended",
+            valueGetter: (params) => params.data?.table3?.[2]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_2_Death",
+            valueGetter: (params) => params.data?.table3?.[2]?.Death,
           },
         ],
       },
@@ -986,10 +1166,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_3_Attended",
+            valueGetter: (params) => params.data?.table3?.[3]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_3_Death",
+            valueGetter: (params) => params.data?.table3?.[3]?.Death,
           },
         ],
       },
@@ -999,10 +1181,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_4_Attended",
+            valueGetter: (params) => params.data?.table3?.[4]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_4_Death",
+            valueGetter: (params) => params.data?.table3?.[4]?.Death,
           },
         ],
       },
@@ -1012,10 +1196,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_5_Attended",
+            valueGetter: (params) => params.data?.table3?.[5]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_5_Death",
+            valueGetter: (params) => params.data?.table3?.[5]?.Death,
           },
         ],
       },
@@ -1025,10 +1211,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_6_Attended",
+            valueGetter: (params) => params.data?.table3?.[6]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_6_Death",
+            valueGetter: (params) => params.data?.table3?.[6]?.Death,
           },
         ],
       },
@@ -1038,10 +1226,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_7_Attended",
+            valueGetter: (params) => params.data?.table3?.[7]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_7_Death",
+            valueGetter: (params) => params.data?.table3?.[7]?.Death,
           },
         ],
       },
@@ -1051,10 +1241,12 @@ export const HFAT1Columns = [
           {
             headerName: "Attended",
             field: "table3_8_Attended",
+            valueGetter: (params) => params.data?.table3?.[8]?.Attended,
           },
           {
             headerName: "Death",
             field: "table3_8_Death",
+            valueGetter: (params) => params.data?.table3?.[8]?.Death,
           },
         ],
       },
@@ -1099,8 +1291,13 @@ export const HFAT1Columns = [
       },
       { headerName: "Stroke unit", field: "E3_14" },
       { headerName: "Tele-Medicine facility", field: "E3_15" },
-      { headerName: "Other", field: "E3_16" },
-      { headerName: "Other Specify", field: "E3_17" },
+      {
+        headerName: "Other",
+        field: "E3_16",
+        valueGetter: (params) =>
+          (params.data?.E3?.[16]?.length > 0 && "Other") || "",
+      },
+      { headerName: "Other Specify", field: "E3_16" },
     ],
   },
   {
@@ -1113,8 +1310,15 @@ export const HFAT1Columns = [
       { headerName: "Radiology Services are functional 24X7", field: "E4_3" },
       { headerName: "Point of care lab -ABG, Troponin", field: "E4_4" },
       { headerName: "Availability of Functional ECG Services", field: "E4_5" },
-      { headerName: "Other", field: "E4_6" },
-      { headerName: "Other Specify", field: "E4_7" },
+      {
+        headerName: "Other",
+        field: "E4_6",
+        valueGetter: (params) =>
+          (params.data?.E4?.[params.data?.E4?.length - 1]?.length > 0 &&
+            "Other") ||
+          "",
+      },
+      { headerName: "Other Specify", field: "E4_6" },
     ],
   },
   {
@@ -1152,12 +1356,36 @@ export const HFAT1Columns = [
   {
     headerName: "1F.6 If Yes, select all that apply and provide their value",
     children: [
-      { headerName: "Door to CT/ECG", field: "H1F6_0" },
-      { headerName: "Time", field: "H1F6_1" },
-      { headerName: "Door to needle", field: "H1F6_2" },
-      { headerName: "Time", field: "H1F6_3" },
-      { headerName: "Time to activate emergency alert team", field: "H1F6_4" },
-      { headerName: "Time", field: "H1F6_5" },
+      {
+        headerName: "Door to CT/ECG",
+        field: "H1F6_0",
+        valueGetter: (params) => params.data?.H1F6?.[0]?.split(":-")[1],
+      },
+      // {
+      //   headerName: "Time",
+      //   field: "H1F6_1",
+      //   valueGetter: (params) => params.data?.H1F6?.[0]?.split(":-")[1],
+      // },
+      {
+        headerName: "Door to needle",
+        field: "H1F6_2",
+        valueGetter: (params) => params.data?.H1F6?.[1]?.split(":-")[1],
+      },
+      // {
+      //   headerName: "Time",
+      //   field: "H1F6_3",
+      //   valueGetter: (params) => params.data?.H1F6?.[1]?.split(":-")[1],
+      // },
+      {
+        headerName: "Time to activate emergency alert team",
+        field: "H1F6_4",
+        valueGetter: (params) => params.data?.H1F6?.[2]?.split(":-")[1],
+      },
+      // {
+      //   headerName: "Time",
+      //   field: "H1F6_5",
+      //   valueGetter: (params) => params.data?.H1F6?.[2]?.split(":-")[1],
+      // },
     ],
   },
   {
@@ -1229,8 +1457,16 @@ export const HFAT1Columns = [
     children: [
       { headerName: "Mortality Audit", field: "H1H8_0" },
       { headerName: "Morbidity Audit", field: "H1H8_1" },
-      { headerName: "Other", field: "H1H8_2" },
-      { headerName: "Other Specify", field: "H1H8_3" },
+      {
+        headerName: "Other",
+        field: "H1H8_2",
+        valueGetter: (params) =>
+          (params.data?.H1H8?.[2]?.length > 0 && "Other") || "",
+      },
+      {
+        headerName: "Other Specify",
+        field: "H1H8_2",
+      },
     ],
   },
   {
@@ -1292,10 +1528,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_0_SOP",
+            valueGetter: (params) => params.data?.table4?.[0]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_0_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[0]?.FollowsSOP,
           },
         ],
       },
@@ -1305,10 +1543,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_1_SOP",
+            valueGetter: (params) => params.data?.table4?.[1]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_1_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[1]?.FollowsSOP,
           },
         ],
       },
@@ -1318,10 +1558,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_2_SOP",
+            valueGetter: (params) => params.data?.table4?.[2]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_2_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[2]?.FollowsSOP,
           },
         ],
       },
@@ -1331,10 +1573,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_3_SOP",
+            valueGetter: (params) => params.data?.table4?.[3]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_3_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[3]?.FollowsSOP,
           },
         ],
       },
@@ -1344,10 +1588,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_4_SOP",
+            valueGetter: (params) => params.data?.table4?.[4]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_4_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[4]?.FollowsSOP,
           },
         ],
       },
@@ -1357,10 +1603,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_5_SOP",
+            valueGetter: (params) => params.data?.table4?.[5]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_5_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[5]?.FollowsSOP,
           },
         ],
       },
@@ -1370,10 +1618,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_6_SOP",
+            valueGetter: (params) => params.data?.table4?.[6]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_6_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[6]?.FollowsSOP,
           },
         ],
       },
@@ -1383,10 +1633,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_7_SOP",
+            valueGetter: (params) => params.data?.table4?.[7]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_7_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[7]?.FollowsSOP,
           },
         ],
       },
@@ -1396,10 +1648,12 @@ export const HFAT1Columns = [
           {
             headerName: "SOP/STW",
             field: "table4_8_SOP",
+            valueGetter: (params) => params.data?.table4?.[8]?.SOP,
           },
           {
             headerName: "FOLLOW SOP",
             field: "table4_8_FollowsSOP",
+            valueGetter: (params) => params.data?.table4?.[8]?.FollowsSOP,
           },
         ],
       },
@@ -1416,3 +1670,5 @@ export const HFAT1Columns = [
     field: "H1J2",
   },
 ];
+
+export const HFAT1Columns = generateColumns(columns);
