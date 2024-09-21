@@ -1,14 +1,18 @@
-// Column Definitions: Defines the columns to be displayed.
-export const HFAT2ColumnsExport = [
+import generateColumns from "./../generateColumns";
+export const columns = [
   {
-    field: "id",
+    field: "_id",
     headerName: "Record ID",
     checkboxSelection: true,
     headerCheckboxSelection: true,
     width: 250,
   },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },
-  { field: "date", headerName: "Date:" },
+  {
+    field: "date",
+    headerName: "Date:",
+    valueGetter: (params) => params.data?.HFAT2_DATE,
+  },
   { field: "H2A2", headerName: "2A.2 : State:" },
   { field: "H2A3", headerName: "2A.3 : Block Name:" },
   { field: "H2A4", headerName: "2A.4 : Healthcare Facility Name" },
@@ -16,10 +20,10 @@ export const HFAT2ColumnsExport = [
   { field: "H2A6", headerName: "2A.6 : Name of the MOIC" },
   { field: "H2A7", headerName: "2A.7 : Contact Number of MOIC" },
   { field: "H2A8", headerName: "2A.8 : Email ID:" },
-  { field: "H2A9_0", headerName: "2A.9 : GPS_1" },
-  { field: "H2A9_1", headerName: "2A.9 : GPS_2" },
-  { field: "H2A9_2", headerName: "2A.9 District" },
-  { field: "H2A9_3", headerName: "3A.9 State" },
+  { field: "H2A9_latitude", headerName: "2A.9 : GPS_1" },
+  { field: "H2A9_longitude", headerName: "2A.9 : GPS_2" },
+  { field: "H2A9_district", headerName: "2A.9 District" },
+  { field: "H2A9_state", headerName: "3A.9 State" },
   { field: "H2A10", headerName: "2A.10 : What type of CHC is this?" },
   { field: "H2A11", headerName: "2A.11 : Type of locality" },
   { field: "H2B1", headerName: "2B.1 Is the CHC 24/7?" },
@@ -175,9 +179,11 @@ export const HFAT2ColumnsExport = [
     field: "H2B8_6",
     headerName:
       "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=other)",
+    valueGetter: (params) =>
+      params.data?.H2B8?.[6]?.length > 0 ? "Other" : "",
   },
   {
-    field: "H2B8_7",
+    field: "H2B8_6",
     headerName:
       "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (Other Specify)",
   },
@@ -201,17 +207,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 : Which of the following manpower is available at the CHC? (Physician/Family Medicine Specialist) (Number)",
   },
   {
-    field: "table1_0_availability247",
+    field: "table1_0_Availability",
     headerName:
       "2C.1 : Which of the following manpower is available at the CHC? (Physician/Family Medicine Specialist) (availability24 X 7)",
   },
   {
-    field: "table1_0_onSiteAvailability",
+    field: "table1_0_OnSite",
     headerName:
       "2C.1 : Which of the following manpower is available at the CHC? (Physician/Family Medicine Specialist) (onSiteAvailability)",
   },
   {
-    field: "table1_0_onCallAvailability",
+    field: "table1_0_OnCall",
     headerName:
       "2C.1 : Which of the following manpower is available at the CHC? (Physician/Family Medicine Specialist) (onCallAvailability)",
   },
@@ -226,17 +232,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Surgeon) (Number)",
   },
   {
-    field: "table1_1_availability247",
+    field: "table1_1_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Surgeon) (availability24 X 7)",
   },
   {
-    field: "table1_1_onSiteAvailability",
+    field: "table1_1_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Surgeon) (onSiteAvailability)",
   },
   {
-    field: "table1_1_onCallAvailability",
+    field: "table1_1_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Surgeon) (onCallAvailability)",
   },
@@ -251,17 +257,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Obsterician & Gynecologist) (Number)",
   },
   {
-    field: "table1_2_availability247",
+    field: "table1_2_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Obsterician & Gynecologist) (availability24 X 7)",
   },
   {
-    field: "table1_2_onSiteAvailability",
+    field: "table1_2_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Obsterician & Gynecologist) (onSiteAvailability)",
   },
   {
-    field: "table1_2_onCallAvailability",
+    field: "table1_2_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Obsterician & Gynecologist) (onCallAvailability)",
   },
@@ -276,17 +282,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Pediatrician) (Number)",
   },
   {
-    field: "table1_3_availability247",
+    field: "table1_3_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pediatrician) (availability24 X 7)",
   },
   {
-    field: "table1_3_onSiteAvailability",
+    field: "table1_3_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pediatrician) (onSiteAvailability)",
   },
   {
-    field: "table1_3_onCallAvailability",
+    field: "table1_3_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pediatrician) (onCallAvailability)",
   },
@@ -301,17 +307,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Anesthesiologist) (Number)",
   },
   {
-    field: "table1_4_availability247",
+    field: "table1_4_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Anesthesiologist) (availability24 X 7)",
   },
   {
-    field: "table1_4_onSiteAvailability",
+    field: "table1_4_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Anesthesiologist) (onSiteAvailability)",
   },
   {
-    field: "table1_4_onCallAvailability",
+    field: "table1_4_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Anesthesiologist) (onCallAvailability)",
   },
@@ -326,17 +332,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Ophthalmologist) (Number)",
   },
   {
-    field: "table1_5_availability247",
+    field: "table1_5_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Ophthalmologist) (availability24 X 7)",
   },
   {
-    field: "table1_5_onSiteAvailability",
+    field: "table1_5_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Ophthalmologist) (onSiteAvailability)",
   },
   {
-    field: "table1_5_onCallAvailability",
+    field: "table1_5_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Ophthalmologist) (onCallAvailability)",
   },
@@ -351,17 +357,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Orthopaedician) (Number)",
   },
   {
-    field: "table1_6_availability247",
+    field: "table1_6_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Orthopaedician) (availability24 X 7)",
   },
   {
-    field: "table1_6_onSiteAvailability",
+    field: "table1_6_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Orthopaedician) (onSiteAvailability)",
   },
   {
-    field: "table1_6_onCallAvailability",
+    field: "table1_6_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Orthopaedician) (onCallAvailability)",
   },
@@ -376,17 +382,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (ENT) (Number)",
   },
   {
-    field: "table1_7_availability247",
+    field: "table1_7_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ENT) (availability24 X 7)",
   },
   {
-    field: "table1_7_onSiteAvailability",
+    field: "table1_7_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ENT) (onSiteAvailability)",
   },
   {
-    field: "table1_7_onCallAvailability",
+    field: "table1_7_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ENT) (onCallAvailability)",
   },
@@ -401,17 +407,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Microbiologist/Pathologist/Biochemist) (Number)",
   },
   {
-    field: "table1_8_availability247",
+    field: "table1_8_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Microbiologist/Pathologist/Biochemist) (availability24 X 7)",
   },
   {
-    field: "table1_8_onSiteAvailability",
+    field: "table1_8_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Microbiologist/Pathologist/Biochemist) (onSiteAvailability)",
   },
   {
-    field: "table1_8_onCallAvailability",
+    field: "table1_8_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Microbiologist/Pathologist/Biochemist) (onCallAvailability)",
   },
@@ -426,17 +432,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (GDMO) (Number)",
   },
   {
-    field: "table1_9_availability247",
+    field: "table1_9_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (GDMO) (availability24 X 7)",
   },
   {
-    field: "table1_9_onSiteAvailability",
+    field: "table1_9_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (GDMO) (onSiteAvailability)",
   },
   {
-    field: "table1_9_onCallAvailability",
+    field: "table1_9_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (GDMO) (onCallAvailability)",
   },
@@ -451,17 +457,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Nurses) (Number)",
   },
   {
-    field: "table1_10_availability247",
+    field: "table1_10_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Nurses) (availability24 X 7)",
   },
   {
-    field: "table1_10_onSiteAvailability",
+    field: "table1_10_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Nurses) (onSiteAvailability)",
   },
   {
-    field: "table1_10_onCallAvailability",
+    field: "table1_10_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Nurses) (onCallAvailability)",
   },
@@ -476,17 +482,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Data entry operator) (Number)",
   },
   {
-    field: "table1_11_availability247",
+    field: "table1_11_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Data entry operator) (availability24 X 7)",
   },
   {
-    field: "table1_11_onSiteAvailability",
+    field: "table1_11_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Data entry operator) (onSiteAvailability)",
   },
   {
-    field: "table1_11_onCallAvailability",
+    field: "table1_11_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Data entry operator) (onCallAvailability)",
   },
@@ -501,17 +507,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (ECG technician) (Number)",
   },
   {
-    field: "table1_12_availability247",
+    field: "table1_12_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ECG technician) (availability24 X 7)",
   },
   {
-    field: "table1_12_onSiteAvailability",
+    field: "table1_12_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ECG technician) (onSiteAvailability)",
   },
   {
-    field: "table1_12_onCallAvailability",
+    field: "table1_12_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (ECG technivian) (onCallAvailability)",
   },
@@ -526,17 +532,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (MLT) (Number)",
   },
   {
-    field: "table1_13_availability247",
+    field: "table1_13_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (MLT) (availability24 X 7)",
   },
   {
-    field: "table1_13_onSiteAvailability",
+    field: "table1_13_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (MLT) (onSiteAvailability)",
   },
   {
-    field: "table1_13_onCallAvailability",
+    field: "table1_13_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (MLT) (onCallAvailability)",
   },
@@ -551,17 +557,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (Number)",
   },
   {
-    field: "table1_14_availability247",
+    field: "table1_14_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (availability24 X 7)",
   },
   {
-    field: "table1_14_onSiteAvailability",
+    field: "table1_14_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (onSiteAvailability)",
   },
   {
-    field: "table1_14_onCallAvailability",
+    field: "table1_14_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Pharmacist) (onCallAvailability)",
   },
@@ -576,17 +582,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Radiology technician) (Number)",
   },
   {
-    field: "table1_15_availability247",
+    field: "table1_15_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Radiology technician) (availability24 X 7)",
   },
   {
-    field: "table1_15_onSiteAvailability",
+    field: "table1_15_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Radiology technician) (onSiteAvailability)",
   },
   {
-    field: "table1_15_onCallAvailability",
+    field: "table1_15_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Radiology technician) (onCallAvailability)",
   },
@@ -601,17 +607,17 @@ export const HFAT2ColumnsExport = [
       "2C.1 Tick the manpower available in your emergency department and provide (Others Specify) (Manpower)",
   },
   {
-    field: "table1_16_availability247",
+    field: "table1_16_Availability",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Others) (Number)",
   },
   {
-    field: "table1_16_onSiteAvailability",
+    field: "table1_16_OnSite",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Others) (availability24 X 7)",
   },
   {
-    field: "table1_16_onCallAvailability",
+    field: "table1_16_OnCall",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Others) (onSiteAvailability)",
   },
@@ -689,20 +695,24 @@ export const HFAT2ColumnsExport = [
     field: "H2C3_12",
     headerName:
       "2C.3 Which of the following emergency care trainings you have undergone? (choice = Other)",
+    valueGetter: (params) =>
+      params.data?.H2C3?.[12]?.length > 0 ? "Other" : "",
   },
   {
-    field: "H2C3_13",
+    field: "H2C3_12",
     headerName:
       "2C.3 Which of the following emergency care trainings you have undergone? (Other Specify)",
   },
   {
     field: "H2C4_0",
     headerName: "2C.4  Frequency of training on emergency care in a year?",
+    valueGetter: (params) => params.data?.H2C4?.split(":")[0],
   },
   {
     field: "H2C4_1",
     headerName:
       "2C.4  Frequency of training on emergency care in a year? (other specify)",
+      valueGetter: (params) => params.data?.H2C4?.split(":")[1],
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },
   {
@@ -981,27 +991,27 @@ export const HFAT2ColumnsExport = [
       "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Incubators)",
   },
   {
-    field: "table2_Adult",
+    field: "table2_0_Adult",
     headerName:
       "2E.1 : Numbers of Patients who Visited ED in Last One Month (Adult (> 18Years))",
   },
   {
-    field: "table2_Pediatric",
+    field: "table2_0_Pediatric",
     headerName:
       "2E.1 : Numbers of Patients who Visited ED in Last One Month (Pediatric)",
   },
   {
-    field: "table2_Broughtdead",
+    field: "table2_0_Broughtdead",
     headerName:
       "2E.1 : Numbers of Patients who Visited ED in Last One Month (Brought dead)",
   },
   {
-    field: "table2_Deathafterarrival",
+    field: "table2_0_Deathafterarrival",
     headerName:
       "2E.1 : Numbers of Patients who Visited ED in Last One Month (Death after arrival)",
   },
   {
-    field: "table2_MLC",
+    field: "table2_0_MLC",
     headerName:
       "2E.1 : Numbers of Patients who Visited ED in Last One Month (MLC)",
   },
@@ -1189,11 +1199,13 @@ export const HFAT2ColumnsExport = [
     field: "H2F8_0",
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H2F8?.split("_")?.[0],
   },
   {
     field: "H2F8_1",
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?(if yes, How often per week)",
+    valueGetter: (params) => params.data?.H2F8?.split("_")?.[1],
   },
   {
     field: "H2F9",
@@ -1216,21 +1228,26 @@ export const HFAT2ColumnsExport = [
     field: "H2G4_0",
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (choice = PMJAY)",
+    valueGetter: (params) => (params.data?.H2G4 == "PMJAY" ? "PMJAY" : ""),
   },
   {
     field: "H2G4_1",
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (choice = RKS)",
+    valueGetter: (params) => (params.data?.H2G4 == "RKS" ? "RKS" : ""),
   },
   {
     field: "H2G4_2",
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (choice = other)",
+    valueGetter: (params) =>
+      params.data?.H2G4?.split("_")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "H2G4_3",
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (Other specify)",
+    valueGetter: (params) => params.data?.H2G4?.split("_")?.[1],
   },
   {
     field: "H2G5",
@@ -1251,11 +1268,13 @@ export const HFAT2ColumnsExport = [
   {
     field: "H2H4_0",
     headerName: "2H.2.1 Do you have a Quality Improvement Committee?",
+    valueGetter: (params) => params.data?.H2H4?.split(":")?.[0],
   },
   {
     field: "H2H4_1",
     headerName:
-      "2H.2.1 Do you have a Quality Improvement Committee?( if yes, collect detail of Committee)",
+      "2H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
+    valueGetter: (params) => params.data?.H2H4?.split(":")?.[1],
   },
   {
     field: "H2H5",
@@ -1336,9 +1355,11 @@ export const HFAT2ColumnsExport = [
     field: "H2I1_8",
     headerName:
       "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=other)",
+    valueGetter: (params) =>
+      params.data?.H2I1?.[8]?.length > 0 ? "Other" : "",
   },
   {
-    field: "H2I1_9",
+    field: "H2I1_8",
     headerName:
       "2I.1 What types of registers are maintained at the CHC? (Other specify)",
   },
@@ -1473,3 +1494,4 @@ export const HFAT2ColumnsExport = [
       "2J.2 Dose this facility have any policies and procedures which guide the transferout/referral of stable and unstable with documentation?",
   },
 ];
+export const HFAT2ColumnsExport = generateColumns(columns);

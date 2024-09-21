@@ -1,15 +1,18 @@
-// Column Definitions: Defines the columns to be displayed.
-
-export const HFAT2Columns = [
+import generateColumns from "./../generateColumns";
+const columns = [
   {
-    field: "id",
+    field: "_id",
     headerName: "Record ID",
     checkboxSelection: true,
     headerCheckboxSelection: true,
     width: 250,
   },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },
-  { field: "date", headerName: "Date:" },
+  {
+    field: "date",
+    headerName: "Date:",
+    valueGetter: (params) => params.data?.HFAT2_DATE,
+  },
   { field: "H2A2", headerName: "2A.2 : State:" },
   { field: "H2A3", headerName: "2A.3 : Block Name:" },
   { field: "H2A4", headerName: "2A.4 : Healthcare Facility Name" },
@@ -22,10 +25,10 @@ export const HFAT2Columns = [
   {
     headerName: "2A.9 : GPS",
     children: [
-      { headerName: "latitude", field: "H2A9_0" },
-      { headerName: "longitude", field: "H2A9_1" },
-      { headerName: "district", field: "H2A9_2" },
-      { headerName: "state", field: "H2A9_3" },
+      { headerName: "latitude", field: "H2A9_latitude" },
+      { headerName: "longitude", field: "H2A9_longitude" },
+      { headerName: "district", field: "H2A9_district" },
+      { headerName: "state", field: "H2A9_state" },
     ],
   },
   { field: "H2A10", headerName: "2A.10 : What type of CHC is this?" },
@@ -171,10 +174,12 @@ export const HFAT2Columns = [
       {
         headerName: "Other",
         field: "H2B8_6",
+        valueGetter: (params) =>
+          params.data?.H2B8?.[6]?.length > 0 ? "Other" : "",
       },
       {
         headerName: "Other Specify",
-        field: "H2B8_7",
+        field: "H2B8_6",
       },
     ],
   },
@@ -199,15 +204,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_0_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_0_availability247",
+            field: "table1_0_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_0_onSiteAvailability",
+            field: "table1_0_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_0_onCallAvailability",
+            field: "table1_0_OnCall",
           },
         ],
       },
@@ -218,15 +223,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_1_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_1_availability247",
+            field: "table1_1_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_1_onSiteAvailability",
+            field: "table1_1_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_1_onCallAvailability",
+            field: "table1_1_OnCall",
           },
         ],
       },
@@ -237,15 +242,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_2_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_2_availability247",
+            field: "table1_2_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_2_onSiteAvailability",
+            field: "table1_2_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_2_onCallAvailability",
+            field: "table1_2_OnCall",
           },
         ],
       },
@@ -256,15 +261,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_3_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_3_availability247",
+            field: "table1_3_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_3_onSiteAvailability",
+            field: "table1_3_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_3_onCallAvailability",
+            field: "table1_3_OnCall",
           },
         ],
       },
@@ -275,15 +280,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_4_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_4_availability247",
+            field: "table1_4_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_4_onSiteAvailability",
+            field: "table1_4_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_4_onCallAvailability",
+            field: "table1_4_OnCall",
           },
         ],
       },
@@ -294,15 +299,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_5_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_5_availability247",
+            field: "table1_5_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_5_onSiteAvailability",
+            field: "table1_5_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_5_onCallAvailability",
+            field: "table1_5_OnCall",
           },
         ],
       },
@@ -313,15 +318,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_6_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_6_availability247",
+            field: "table1_6_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_6_onSiteAvailability",
+            field: "table1_6_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_6_onCallAvailability",
+            field: "table1_6_OnCall",
           },
         ],
       },
@@ -332,15 +337,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_7_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_7_availability247",
+            field: "table1_7_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_7_onSiteAvailability",
+            field: "table1_7_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_7_onCallAvailability",
+            field: "table1_7_OnCall",
           },
         ],
       },
@@ -351,15 +356,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_8_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_8_availability247",
+            field: "table1_8_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_8_onSiteAvailability",
+            field: "table1_8_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_8_onCallAvailability",
+            field: "table1_8_OnCall",
           },
         ],
       },
@@ -370,15 +375,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_9_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_9_availability247",
+            field: "table1_9_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_9_onSiteAvailability",
+            field: "table1_9_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_9_onCallAvailability",
+            field: "table1_9_OnCall",
           },
         ],
       },
@@ -389,15 +394,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_10_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_10_availability247",
+            field: "table1_10_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_10_onSiteAvailability",
+            field: "table1_10_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_10_onCallAvailability",
+            field: "table1_10_OnCall",
           },
         ],
       },
@@ -408,15 +413,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_11_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_11_availability247",
+            field: "table1_11_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_11_onSiteAvailability",
+            field: "table1_11_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_11_onCallAvailability",
+            field: "table1_11_OnCall",
           },
         ],
       },
@@ -427,15 +432,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_12_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_12_availability247",
+            field: "table1_12_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_12_onSiteAvailability",
+            field: "table1_12_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_12_onCallAvailability",
+            field: "table1_12_OnCall",
           },
         ],
       },
@@ -446,15 +451,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_13_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_13_availability247",
+            field: "table1_13_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_13_onSiteAvailability",
+            field: "table1_13_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_13_onCallAvailability",
+            field: "table1_13_OnCall",
           },
         ],
       },
@@ -465,15 +470,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_14_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_14_availability247",
+            field: "table1_14_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_14_onSiteAvailability",
+            field: "table1_14_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_14_onCallAvailability",
+            field: "table1_14_OnCall",
           },
         ],
       },
@@ -484,15 +489,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_15_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_15_availability247",
+            field: "table1_15_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_15_onSiteAvailability",
+            field: "table1_15_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_15_onCallAvailability",
+            field: "table1_15_OnCall",
           },
         ],
       },
@@ -507,15 +512,15 @@ export const HFAT2Columns = [
           { headerName: "Number", field: "table1_16_Number" },
           {
             headerName: "availability 24 X 7",
-            field: "table1_16_availability247",
+            field: "table1_16_Availability",
           },
           {
             headerName: "onSiteAvailability",
-            field: "table1_16_onSiteAvailability",
+            field: "table1_16_OnSite",
           },
           {
             headerName: "onCallAvailability",
-            field: "table1_16_onCallAvailability",
+            field: "table1_16_OnCall",
           },
         ],
       },
@@ -583,21 +588,25 @@ export const HFAT2Columns = [
       {
         headerName: "Other",
         field: "H2C3_12",
+        valueGetter: (params) =>
+          params.data?.H2C3?.[12]?.length > 0 ? "Other" : "",
       },
       {
         headerName: "Other Specify",
-        field: "H2C3_13",
+        field: "H2C3_12",
       },
     ],
   },
   {
-    field: "H2C4_0",
+    field: "H2C4",
     headerName: "2C.4  Frequency of training on emergency care in a year?",
+    valueGetter: (params) => params.data?.H2C4?.split(":")[0],
   },
   {
     field: "H2C4_1",
     headerName:
-      "2C.4  Frequency of training on emergency care in a year? (other specify)",
+    "2C.4  Frequency of training on emergency care in a year? (other specify)",
+    valueGetter: (params) => params.data?.H2C4?.split(":")[1],
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },
   {
@@ -841,23 +850,23 @@ export const HFAT2Columns = [
     children: [
       {
         headerName: "Adult (> 18Years)",
-        field: "table2_Adult",
+        field: "table2_0_Adult",
       },
       {
         headerName: "Pediatric",
-        field: "table2_Pediatric",
+        field: "table2_0_Pediatric",
       },
       {
         headerName: "Brought dead",
-        field: "table2_Broughtdead",
+        field: "table2_0_Broughtdead",
       },
       {
         headerName: "Death after arrival",
-        field: "table2_Deathafterarrival",
+        field: "table2_0_Deathafterarrival",
       },
       {
         headerName: "MLC",
-        field: "table2_MLC",
+        field: "table2_0_MLC",
       },
     ],
   },
@@ -1032,14 +1041,16 @@ export const HFAT2Columns = [
       "2F.7 Whether Medical Officer In charge (MO/IC) uses or reviews the data for quality improvement",
   },
   {
-    field: "H2F8_0",
+    field: "H2F8",
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H2F8?.split("_")?.[0],
   },
   {
     field: "H2F8_1",
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?(if yes, How often per week)",
+    valueGetter: (params) => params.data?.H2F8?.split("_")?.[1],
   },
   {
     field: "H2F9",
@@ -1062,20 +1073,25 @@ export const HFAT2Columns = [
     headerName: "2G.4 Health Protection Schemes Covering Emergency Care System",
     children: [
       {
-        field: "H2G4_0",
+        field: "H2G4",
         headerName: "PMJAY",
+        valueGetter: (params) => (params.data?.H2G4 == "PMJAY" ? "PMJAY" : ""),
       },
       {
         field: "H2G4_1",
         headerName: "RKS",
+        valueGetter: (params) => (params.data?.H2G4 == "RKS" ? "RKS" : ""),
       },
       {
         field: "H2G4_2",
         headerName: "Other",
+        valueGetter: (params) =>
+          params.data?.H2G4?.split("_")?.[1]?.length > 0 ? "Other" : "",
       },
       {
         field: "H2G4_3",
         headerName: "Other specify",
+        valueGetter: (params) => params.data?.H2G4?.split("_")?.[1],
       },
     ],
   },
@@ -1098,11 +1114,13 @@ export const HFAT2Columns = [
   {
     field: "H2H4_0",
     headerName: "2H.2.1 Do you have a Quality Improvement Committee?",
+    valueGetter: (params) => params.data?.H2H4?.split(":")?.[0],
   },
   {
     field: "H2H4_1",
     headerName:
-      "2H.2.1 Do you have a Quality Improvement Committee?( if yes, collect detail of Committee)",
+      "2H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
+    valueGetter: (params) => params.data?.H2H4?.split(":")?.[1],
   },
   {
     field: "H2H5",
@@ -1184,9 +1202,11 @@ export const HFAT2Columns = [
       {
         field: "H2I1_8",
         headerName: "Other",
+        valueGetter: (params) =>
+          params.data?.H2I1?.[8]?.length > 0 ? "Other" : "",
       },
       {
-        field: "H2I1_9",
+        field: "H2I1_8",
         headerName: "Other Specify",
       },
     ],
@@ -1357,3 +1377,4 @@ export const HFAT2Columns = [
       "2J.2 Dose this facility have any policies and procedures which guide the transferout/referral of stable and unstable with documentation?",
   },
 ];
+export const HFAT2Columns = generateColumns(columns);

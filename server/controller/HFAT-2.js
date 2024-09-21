@@ -65,6 +65,7 @@ export const HFAT2Get = async (req, res, next) => {
   try {
     const adminId = req.user.id;
     const state = req.user.sitename;
+    const role = req.user.role;
 
     if (!adminId || !state) {
       return next(new ErrorHandler("both id and state are required"));
@@ -99,7 +100,13 @@ export const HFAT2Get = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    const HFAT2Data = await HFAT2.find({ uniqueCode: { $regex: regex } });
+    // const HFAT2Data = await HFAT2.find({ uniqueCode: { $regex: regex } });
+    var HFAT2Data;
+    if (role === "superadmin") {
+      HFAT2Data = await HFAT2.find();
+    } else {
+      HFAT2Data = await HFAT2.find({ uniqueCode: { $regex: regex } });
+    }
 
     if (!HFAT2Data) {
       return next(new ErrorHandler("data not found"));

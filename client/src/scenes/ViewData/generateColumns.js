@@ -16,7 +16,10 @@ const generateColumns = (columns) => {
             return params.data?.[column.field.split("_")[0]]?.[
               column.field.split("_")[1]
             ]?.[column.field.split("_")[2]];
-          } else if (column.field.includes("_")) {
+          } else if (
+            column.field.includes("_") &&
+            !column.field.startsWith("_")
+          ) {
             if (Array.isArray(params.data?.[column.field.split("_")[0]])) {
               return params.data?.[column.field.split("_")[0]]?.[
                 column.field.split("_")[1]

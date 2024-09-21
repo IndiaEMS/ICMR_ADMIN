@@ -55,6 +55,7 @@ const Dashboard = () => {
     } catch (error) {
       console.log(error);
       localStorage.removeItem("token");
+      localStorage.removeItem("user");
       navigate("/login");
       setError(error.message);
     } finally {

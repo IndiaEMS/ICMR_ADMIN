@@ -79,9 +79,10 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
-      setColumns(HFAT2Columns);
+      setColumns(HFAT2ColumnsExport);
       setExportColumns(HFAT2ColumnsExport);
-      setRows(HFAT2Rows(data));
+      setRows(data);
+      // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
       setColumns(HFAT3Columns);
@@ -149,6 +150,9 @@ const ViewData = ({ formName }) => {
       setLoading(false);
     } catch (error) {
       console.log(error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/login");
     }
   };
 
