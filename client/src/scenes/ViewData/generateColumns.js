@@ -9,24 +9,25 @@ const generateColumns = (columns) => {
       return {
         field: column.field,
         headerName: column.headerName,
+        valueFormatter: column.valueFormatter,
         valueGetter: (params) => {
           if (column.valueGetter) {
             return column.valueGetter(params);
-          } else if (column.field.startsWith("table")) {
-            return params.data?.[column.field.split("_")[0]]?.[
-              column.field.split("_")[1]
-            ]?.[column.field.split("_")[2]];
+          } else if (column.field?.startsWith("table")) {
+            return params.data?.[column.field?.split("_")[0]]?.[
+              column.field?.split("_")[1]
+            ]?.[column.field?.split("_")[2]];
           } else if (
-            column.field.includes("_") &&
-            !column.field.startsWith("_")
+            column.field?.includes("_") &&
+            !column.field?.startsWith("_")
           ) {
-            if (Array.isArray(params.data?.[column.field.split("_")[0]])) {
-              return params.data?.[column.field.split("_")[0]]?.[
-                column.field.split("_")[1]
+            if (Array.isArray(params.data?.[column.field?.split("_")[0]])) {
+              return params.data?.[column.field?.split("_")[0]]?.[
+                column.field?.split("_")[1]
               ];
             } else {
-              return params.data?.[column.field.split("_")[0]]?.[
-                column.field.split("_")[1]
+              return params.data?.[column.field?.split("_")[0]]?.[
+                column.field?.split("_")[1]
               ];
             }
           } else {

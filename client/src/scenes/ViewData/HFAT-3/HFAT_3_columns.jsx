@@ -1,146 +1,144 @@
-// Column Definitions: Defines the columns to be displayed.
-export const HFAT3Columns = [
+import generateColumns from "../generateColumns";
+
+const columns = [
+  // {
+  //   field: "_id",
+  //   headerName: "Record ID",
+  //   checkboxSelection: true,
+  //   headerCheckboxSelection: true,
+  // },
+  // { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
+  // {
+  //   field: "date",
+  //   headerName: "Date:",
+  //   valueGetter: (params) => params.data?.HFAT3_DATE,
+  // },
+  // { field: "H3A2", headerName: "3A.2 State:" },
+  // { field: "H3A3", headerName: "3A.3 Block Name:" },
+  // { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
+  // { field: "H3A5", headerName: "3A.5 Healthcare Facility Address" },
+  // { field: "H3A6", headerName: "3A.6 Name of the Medical Officer" },
+  // { field: "H3A7", headerName: "3A.7 Contact Number of the Medical Officer:" },
+  // { field: "H3A8", headerName: "3A.8 Email ID:" },
+  // // { field: "H3A9_0", headerName: "3A.9 GPS Coordinates:" },
+  // // { field: "H3A9_1", headerName: "3A.9 GPS Coordinates" },
+  // {
+  //   headerName: "3A.9 : GPS",
+  //   children: [
+  //     { headerName: "latitude", field: "H3A9_latitude" },
+  //     { headerName: "longitude", field: "H3A9_longitude" },
+  //     { headerName: "district", field: "H3A9_district" },
+  //     { headerName: "state", field: "H3A9_state" },
+  //   ],
+  // },
+  // {
+  //   field: "H3A10",
+  //   headerName: "3A.10 What type of Health Care Facility is this?",
+  // },
+  // { field: "H3A11", headerName: "3A.11 This facility is coming under:" },
+  // { field: "H3B1", headerName: "3B.1 Is the PHC 24/7?" },
+  // {
+  //   field: "H3B2",
+  //   headerName: "3B.2 How many observation beds are available in the PHC?",
+  // },
+  // {
+  //   field: "H3B3",
+  //   headerName: "3B.3 Are dedicated beds available for emergency care?",
+  // },
+  // {
+  //   field: "H3B4",
+  //   headerName: "3B.4 How many beds are earmarked for emergency care?",
+  // },
+  // {
+  //   field: "H3B5",
+  //   headerName:
+  //     "3B.5 What is the average number of patients presenting to OPD in a day/ everyday?",
+  // },
+  // {
+  //   field: "H3B6",
+  //   headerName:
+  //     "3B.6 What is the average daily number of patients presenting with emergency conditions? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
+  // },
   {
-    field: "id",
-    headerName: "Record ID",
-    checkboxSelection: true,
-    headerCheckboxSelection: true,
-  },
-  { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
-  { field: "date", headerName: "Date:" },
-  { field: "H3A2", headerName: "3A.2 State:" },
-  { field: "H3A3", headerName: "3A.3 Block Name:" },
-  { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
-  { field: "H3A5", headerName: "3A.5 Healthcare Facility Address" },
-  { field: "H3A6", headerName: "3A.6 Name of the Medical Officer" },
-  { field: "H3A7", headerName: "3A.7 Contact Number of the Medical Officer:" },
-  { field: "H3A8", headerName: "3A.8 Email ID:" },
-  // { field: "H3A9_0", headerName: "3A.9 GPS Coordinates:" },
-  // { field: "H3A9_1", headerName: "3A.9 GPS Coordinates" },
-  {
-    headerName: "3A.9 : GPS",
+    headerName:
+      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible)",
     children: [
-      { headerName: "latitude", field: "H3A9_0" },
-      { headerName: "longitude", field: "H3A9_1" },
-      { headerName: "district", field: "H3A9_2" },
-      { headerName: "state", field: "H3A9_3" },
-    ],
-  },
-  {
-    field: "H3A10",
-    headerName: "3A.10 What type of Health Care Facility is this?",
-  },
-  { field: "H3A11", headerName: "3A.11 This facility is coming under:" },
-  { field: "H3B1", headerName: "3B.1 Is the PHC 24/7?" },
-  {
-    field: "H3B2",
-    headerName: "3B.2 How many observation beds are available in the PHC?",
-  },
-  {
-    field: "H3B3",
-    headerName: "3B.3 Are dedicated beds available for emergency care?",
-  },
-  {
-    field: "H3B4",
-    headerName: "3B.4 How many beds are earmarked for emergency care?",
-  },
-  {
-    field: "H3B5",
-    headerName:
-      "3B.5 What is the average number of patients presenting to OPD in a day/ everyday?",
-  },
-  {
-    field: "H3B6",
-    headerName:
-      "3B.6 What is the average daily number of patients presenting with emergency conditions? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
-  },
-  {
-    childrens: [
+      { field: "H3B7_0", headerName: "Emergency Registration Counter" },
+      { field: "H3B7_1", headerName: "Waiting Area for patients/attendants" },
+      { field: "H3B7_2", headerName: "Plaster Room/Suturing Room/Minor OT" },
+      { field: "H3B7_3", headerName: "Point of Care Lab" },
+      { field: "H3B7_4", headerName: "Area to Keep Dead Bodies" },
       {
+        field: "H3B7_5",
+        headerName: "Demarcate Duty Rooms for Doctors and Nurses",
+      },
+      { field: "H3B7_6", headerName: "Computerized Registration" },
+      { field: "H3B7_7", headerName: "Triage Area" },
+      { field: "H3B7_8", headerName: "Resuscitation Area" },
+      { field: "H3B7_9", headerName: "Decontamination Facility" },
+      { field: "H3B7_10", headerName: "Security Services" },
+      { field: "H3B7_11", headerName: "Designated Parking Area for Ambulance" },
+      {
+        field: "H3B7_12",
+        headerName: "Smooth Entry for Wheelchair Trolley and Stretcher Bay",
+      },
+      {
+        field: "H3B7_13",
+        headerName: "IT infrastructure for providing teleconsultation services",
+      },
+      {
+        field: "H3B7_14",
         headerName:
-          "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible)",
-        childrens: [
-          { field: "H3B7_0", choice: "Emergency Registration Counter" },
-          { field: "H3B7_1", choice: "Waiting Area for patients/attendants" },
-          { field: "H3B7_2", choice: "Plaster Room/Suturing Room/Minor OT" },
-          { field: "H3B7_3", choice: "Point of Care Lab" },
-          { field: "H3B7_4", choice: "Area to Keep Dead Bodies" },
-          {
-            field: "H3B7_5",
-            choice: "Demarcate Duty Rooms for Doctors and Nurses",
-          },
-          { field: "H3B7_6", choice: "Computerized Registration" },
-          { field: "H3B7_7", choice: "Triage Area" },
-          { field: "H3B7_8", choice: "Resuscitation Area" },
-          { field: "H3B7_9", choice: "Decontamination Facility" },
-          { field: "H3B7_10", choice: "Security Services" },
-          { field: "H3B7_11", choice: "Designated Parking Area for Ambulance" },
-          {
-            field: "H3B7_12",
-            choice: "Smooth Entry for Wheelchair Trolley and Stretcher Bay",
-          },
-          {
-            field: "H3B7_13",
-            choice: "IT infrastructure for providing teleconsultation services",
-          },
-          {
-            field: "H3B7_14",
-            choice:
-              "There is the provision of adequate illumination at the entrance & access road to PHC especially at night.",
-          },
-          {
-            field: "H3B7_15",
-            choice: "Availability of Wheelchair or stretcher for easy Access",
-          },
-          {
-            field: "H3B7_16",
-            choice: "Ward is easily accessible from the OPD",
-          },
-        ],
+          "There is the provision of adequate illumination at the entrance & access road to PHC especially at night.",
+      },
+      {
+        field: "H3B7_15",
+        headerName: "Availability of Wheelchair or stretcher for easy Access",
+      },
+      {
+        field: "H3B7_16",
+        headerName: "Ward is easily accessible from the OPD",
       },
     ],
   },
+
   {
-    childrens: [
+    headerName:
+      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments?",
+    children: [
       {
+        field: "H3B8_0",
+        headerName: "Services Provided Clearly Defined and Displayed",
+      },
+      {
+        field: "H3B8_1",
         headerName:
-          "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments?",
-        childrens: [
-          {
-            field: "H3B8_0",
-            choice: "Services Provided Clearly Defined and Displayed",
-          },
-          {
-            field: "H3B8_1",
-            choice:
-              "The name of the facility is prominently displayed in front of the hospital building",
-          },
-          { field: "H3B8_2", choice: "Display of citizens charter" },
-          {
-            field: "H3B8_3",
-            choice: "Direction to PHC is displayed from the Access Road.",
-          },
-          {
-            field: "H3B8_4",
-            choice:
-              "Facility layout with Directions to different departments displayed.",
-          },
-          {
-            field: "H3B8_5",
-            choice:
-              "Name of the facility is prominently displayed in front of the hospital building.",
-          },
-          {
-            field: "H3B8_6",
-            choice:
-              "All functional areas identified by their respective signage.",
-          },
-          {
-            field: "H3B8_7",
-            choice:
-              "Availability of complaint box and display of process for grievance re-addressed and whom to contact is displayed",
-          },
-        ],
+          "The name of the facility is prominently displayed in front of the hospital building",
+      },
+      { field: "H3B8_2", headerName: "Display of citizens charter" },
+      {
+        field: "H3B8_3",
+        headerName: "Direction to PHC is displayed from the Access Road.",
+      },
+      {
+        field: "H3B8_4",
+        headerName:
+          "Facility layout with Directions to different departments displayed.",
+      },
+      {
+        field: "H3B8_5",
+        headerName:
+          "Name of the facility is prominently displayed in front of the hospital building.",
+      },
+      {
+        field: "H3B8_6",
+        headerName:
+          "All functional areas identified by their respective signage.",
+      },
+      {
+        field: "H3B8_7",
+        headerName:
+          "Availability of complaint box and display of process for grievance re-addressed and whom to contact is displayed",
       },
     ],
   },
@@ -525,9 +523,11 @@ export const HFAT3Columns = [
       {
         field: "H3C3_12",
         headerName: "Other",
+        valueGetter: (params) =>
+          params.data?.H3C3?.[12]?.length > 0 ? "Other" : "",
       },
       {
-        field: "H3C3_13",
+        field: "H3C3_12",
         headerName: "Other Specify",
       },
     ],
@@ -537,12 +537,14 @@ export const HFAT3Columns = [
       "3C.4 : If Yes, Frequency of training on emergency care in a year?",
     children: [
       {
-        field: "H3C4_0",
+        field: "H3C4",
         headerName: "Frequency of training on emergency care in a year?",
+        valueGetter: (params) => params.data?.H3C4?.split(":")[0],
       },
       {
-        field: "H3C4_1",
+        field: "H3C4",
         headerName: "Other Specify",
+        valueGetter: (params) => params.data?.H3C4?.split(":")[1],
       },
     ],
   },
@@ -787,23 +789,23 @@ export const HFAT3Columns = [
     headerName: "3E.1 : Numbers of Patients who Visited ED in Last One Month",
     children: [
       {
-        field: "table2_Adult",
+        field: "table2_0_Adult",
         headerName: "Adult (> 18 Years)",
       },
       {
-        field: "table2_Pediatric",
+        field: "table2_0_Pediatric",
         headerName: "Pediatric",
       },
       {
-        field: "table2_Broughtdead",
+        field: "table2_0_Broughtdead",
         headerName: "Brought dead",
       },
       {
-        field: "table2_Deathafterarrival",
+        field: "table2_0_Deathafterarrival",
         headerName: "Death after arrival",
       },
       {
-        field: "table2_MLC",
+        field: "table2_0_MLC",
         headerName: "MLC (Medico-Legal Cases)",
       },
     ],
@@ -1005,14 +1007,17 @@ export const HFAT3Columns = [
       "3F.6 Whether Medical Officer In charge (MO/IC) uses or reviews the data for quality improvement",
   },
   {
-    field: "H3F7_0",
+    field: "H3F7",
     headerName:
       "3F.7 Do you get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H3F7?.split(":")[0],
+    valueFormatter: (params) => params.value?.split("(")[0],
   },
   {
-    field: "H3F7_1",
+    field: "H3F7",
     headerName:
       "3F.7 If Yes , How often per week get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H3F7?.split(":")[1],
   },
   {
     field: "H3F8",
@@ -1032,14 +1037,16 @@ export const HFAT3Columns = [
     headerName: "3G.3 Whether any fund is available for emergency care?",
   },
   {
-    field: "H3G4_0",
+    field: "H3G4",
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system?",
+    valueGetter: (params) => params.data?.H3G4?.split(":")[0],
   },
   {
-    field: "H3G4_1",
+    field: "H3G4",
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system? (Other specify)",
+    valueGetter: (params) => params.data?.H3G4?.split(":")[1],
   },
   {
     field: "H3G5",
@@ -1063,11 +1070,16 @@ export const HFAT3Columns = [
   },
   { field: "H3H3", headerName: "3H.1.3 Do you have any evacuation plan?" },
   {
-    field: "H3H4_0",
+    field: "H3H4",
     headerName:
       "3H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
+    valueGetter: (params) => params.data?.H3H4?.split(":")[0],
   },
-  { field: "H3H4_1", headerName: "3H.2.1 If Yes ,Provide Details" },
+  {
+    field: "H3H4_1",
+    headerName: "3H.2.1 If Yes ,Provide Details",
+    valueGetter: (params) => params.data?.H3H4?.split(":")[1],
+  },
   {
     field: "H3H5",
     headerName: "3H.2.2 How frequently does this committee meet in a year?",
@@ -1096,9 +1108,11 @@ export const HFAT3Columns = [
       {
         field: "H3H8_2",
         headerName: "Other",
+        valueGetter: (params) =>
+          params.data?.H3H8?.[2]?.length > 0 ? "Other" : "",
       },
       {
-        field: "H3H8_3",
+        field: "H3H8_2",
         headerName: "Other Specify",
       },
     ],
@@ -1329,3 +1343,5 @@ export const HFAT3Columns = [
       "3J.2Do you any documented SOP/STW guiding the referral linkages?",
   },
 ];
+
+export const HFAT3Columns = generateColumns(columns);

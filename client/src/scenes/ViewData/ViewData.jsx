@@ -79,7 +79,7 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
-      setColumns(HFAT2ColumnsExport);
+      setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
       // setRows(HFAT2Rows(data));
@@ -108,7 +108,8 @@ const ViewData = ({ formName }) => {
       setTitle("Ambulance");
       setColumns(AmbulanceColumns);
       setExportColumns(AmbulanceColumnsExport);
-      setRows(AmbulanceRows(data));
+      // setRows(AmbulanceRows(data));
+      setRows(data);
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));

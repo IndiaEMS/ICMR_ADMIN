@@ -1,14 +1,29 @@
-export const AmbulanceColumns = [
-  { field: "AMBid", headerName: "Record ID" },
-  { field: "form", headerName: "Form name" },
-  { field: "formUniqueCode", headerName: "Form Unique Code" },
+import generateColumns from "../generateColumns";
+
+export const columns = [
+  {
+    field: "AMBid",
+    headerName: "Record ID",
+    valueGetter: (params) => params.data?._id,
+  },
+  {
+    field: "form",
+    headerName: "Form name",
+    valueGetter: (params) => params.data?.formUniqueCode?.split(":")?.[0],
+  },
+  {
+    field: "formUniqueCode",
+    headerName: "Form Unique Code",
+    valueGetter: (params) => params.data?.formUniqueCode?.split(":")?.[1],
+  },
   { field: "AMB2", headerName: "Name of the data Collector" },
   { field: "AMB1", headerName: "State " },
+  { field: "uniqueCode", headerName: "AMB Unique Code" },
   { field: "AMB3", headerName: "Date" },
-  { field: "AMB4_0", headerName: "GPS_1" },
-  { field: "AMB4_1", headerName: "GPS_2" },
-  { field: "AMB4_2", headerName: "District" },
-  { field: "AMB4_3", headerName: "State" },
+  { field: "AMB4_latitude", headerName: "GPS_1" },
+  { field: "AMB4_longitude", headerName: "GPS_2" },
+  { field: "AMB4_district", headerName: "District" },
+  { field: "AMB4_state", headerName: "State" },
   { field: "AMB5", headerName: "1. Name of the Ambulance Service?" },
   {
     field: "AMB6",
@@ -45,18 +60,19 @@ export const AmbulanceColumns = [
         field: "AMB12_3",
         headerName: "Nurse",
       },
-      {
-        field: "AMB12_4",
-        headerName: "Other",
-      },
-      {
-        field: "AMB12_5",
-        headerName: "Other Specify",
-      },
+      // {
+      //   field: "AMB12_4",
+      //   headerName: "Other",
+      //   valueGetter: (params) => params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
+      // },
+      // {
+      //   field: "AMB12_4",
+      //   headerName: "Other Specify",
+      // },
     ],
   },
   {
-    field: "AMB13_0",
+    field: "AMB13",
     headerName: "9.1.Which Suction apparatus and accessories is available",
   },
   // {
@@ -80,7 +96,7 @@ export const AmbulanceColumns = [
   //     "9.1.Which Suction apparatus and accessories is available (choice=None of the above)",
   // },
   {
-    field: "AMB14_0",
+    field: "AMB14",
     headerName: "9.2. Which type of Portable oxygen equipment/installed",
   },
   // {
@@ -114,169 +130,169 @@ export const AmbulanceColumns = [
       {
         headerName: "Monitor",
         children: [
-          { field: "AMB16_0_Available", headerName: "Available" },
-          { field: "AMB16_0_Functional", headerName: "Functional" },
-          { field: "AMB16_0_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_0_Available", headerName: "Available" },
+          { field: "table1_0_Functional", headerName: "Functional" },
+          { field: "table1_0_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "ECG Machine",
         children: [
-          { field: "AMB16_1_Available", headerName: "Available" },
-          { field: "AMB16_1_Functional", headerName: "Functional" },
-          { field: "AMB16_1_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_1_Available", headerName: "Available" },
+          { field: "table1_1_Functional", headerName: "Functional" },
+          { field: "table1_1_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Pulse Oxymeter",
         children: [
-          { field: "AMB16_2_Available", headerName: "Available" },
-          { field: "AMB16_2_Functional", headerName: "Functional" },
-          { field: "AMB16_2_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_2_Available", headerName: "Available" },
+          { field: "table1_2_Functional", headerName: "Functional" },
+          { field: "table1_2_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Glucometer",
         children: [
-          { field: "AMB16_3_Available", headerName: "Available" },
-          { field: "AMB16_3_Functional", headerName: "Functional" },
-          { field: "AMB16_3_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_3_Available", headerName: "Available" },
+          { field: "table1_3_Functional", headerName: "Functional" },
+          { field: "table1_3_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Defibrillator",
         children: [
-          { field: "AMB16_4_Available", headerName: "Available" },
-          { field: "AMB16_4_Functional", headerName: "Functional" },
-          { field: "AMB16_4_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_4_Available", headerName: "Available" },
+          { field: "table1_4_Functional", headerName: "Functional" },
+          { field: "table1_4_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Defibrillator pads - disposable",
         children: [
-          { field: "AMB16_5_Available", headerName: "Available" },
-          { field: "AMB16_5_Functional", headerName: "Functional" },
-          { field: "AMB16_5_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_5_Available", headerName: "Available" },
+          { field: "table1_5_Functional", headerName: "Functional" },
+          { field: "table1_5_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Sphygrnomanometer, Non-mercurial- Paediatric cuff",
         children: [
-          { field: "AMB16_6_Available", headerName: "Available" },
-          { field: "AMB16_6_Functional", headerName: "Functional" },
-          { field: "AMB16_6_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_6_Available", headerName: "Available" },
+          { field: "table1_6_Functional", headerName: "Functional" },
+          { field: "table1_6_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Sphygrnomanometer, Non-mercurial- Adult cuff",
         children: [
-          { field: "AMB16_7_Available", headerName: "Available" },
-          { field: "AMB16_7_Functional", headerName: "Functional" },
-          { field: "AMB16_7_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_7_Available", headerName: "Available" },
+          { field: "table1_7_Functional", headerName: "Functional" },
+          { field: "table1_7_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Stethoscope Paediatric",
         children: [
-          { field: "AMB16_8_Available", headerName: "Available" },
-          { field: "AMB16_8_Functional", headerName: "Functional" },
-          { field: "AMB16_8_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_8_Available", headerName: "Available" },
+          { field: "table1_8_Functional", headerName: "Functional" },
+          { field: "table1_8_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Stethoscope Adult",
         children: [
-          { field: "AMB16_9_Available", headerName: "Available" },
-          { field: "AMB16_9_Functional", headerName: "Functional" },
-          { field: "AMB16_9_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_9_Available", headerName: "Available" },
+          { field: "table1_9_Functional", headerName: "Functional" },
+          { field: "table1_9_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Endotracheal tubes Paediatric",
         children: [
-          { field: "AMB16_10_Available", headerName: "Available" },
-          { field: "AMB16_10_Functional", headerName: "Functional" },
-          { field: "AMB16_10_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_10_Available", headerName: "Available" },
+          { field: "table1_10_Functional", headerName: "Functional" },
+          { field: "table1_10_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Endotracheal tubes Adult",
         children: [
-          { field: "AMB16_11_Available", headerName: "Available" },
-          { field: "AMB16_11_Functional", headerName: "Functional" },
-          { field: "AMB16_11_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_11_Available", headerName: "Available" },
+          { field: "table1_11_Functional", headerName: "Functional" },
+          { field: "table1_11_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Laryngeal Mask Airways Paediatric",
         children: [
-          { field: "AMB16_12_Available", headerName: "Available" },
-          { field: "AMB16_12_Functional", headerName: "Functional" },
-          { field: "AMB16_12_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_12_Available", headerName: "Available" },
+          { field: "table1_12_Functional", headerName: "Functional" },
+          { field: "table1_12_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Laryngeal Mask Airways Adult",
         children: [
-          { field: "AMB16_13_Available", headerName: "Available" },
-          { field: "AMB16_13_Functional", headerName: "Functional" },
-          { field: "AMB16_13_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_13_Available", headerName: "Available" },
+          { field: "table1_13_Functional", headerName: "Functional" },
+          { field: "table1_13_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Nebulizer with nebulizer kit",
         children: [
-          { field: "AMB16_14_Available", headerName: "Available" },
-          { field: "AMB16_14_Functional", headerName: "Functional" },
-          { field: "AMB16_14_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_14_Available", headerName: "Available" },
+          { field: "table1_14_Functional", headerName: "Functional" },
+          { field: "table1_14_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Laryngoscope Set Paediatric",
         children: [
-          { field: "AMB16_15_Available", headerName: "Available" },
-          { field: "AMB16_15_Functional", headerName: "Functional" },
-          { field: "AMB16_15_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_15_Available", headerName: "Available" },
+          { field: "table1_15_Functional", headerName: "Functional" },
+          { field: "table1_15_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Laryngoscope Set Adult",
         children: [
-          { field: "AMB16_16_Available", headerName: "Available" },
-          { field: "AMB16_16_Functional", headerName: "Functional" },
-          { field: "AMB16_16_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_16_Available", headerName: "Available" },
+          { field: "table1_16_Functional", headerName: "Functional" },
+          { field: "table1_16_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Communication Device",
         children: [
-          { field: "AMB16_17_Available", headerName: "Available" },
-          { field: "AMB16_17_Functional", headerName: "Functional" },
-          { field: "AMB16_17_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_17_Available", headerName: "Available" },
+          { field: "table1_17_Functional", headerName: "Functional" },
+          { field: "table1_17_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Syringe Infusion Pump",
         children: [
-          { field: "AMB16_18_Available", headerName: "Available" },
-          { field: "AMB16_18_Functional", headerName: "Functional" },
-          { field: "AMB16_18_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_18_Available", headerName: "Available" },
+          { field: "table1_18_Functional", headerName: "Functional" },
+          { field: "table1_18_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "Transport Ventilators",
         children: [
-          { field: "AMB16_19_Available", headerName: "Available" },
-          { field: "AMB16_19_Functional", headerName: "Functional" },
-          { field: "AMB16_19_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_19_Available", headerName: "Available" },
+          { field: "table1_19_Functional", headerName: "Functional" },
+          { field: "table1_19_LastUsed", headerName: "When was it last used?" },
         ],
       },
       {
         headerName: "GPS System",
         children: [
-          { field: "AMB16_20_Available", headerName: "Available" },
-          { field: "AMB16_20_Functional", headerName: "Functional" },
-          { field: "AMB16_20_LastUsed", headerName: "When was it last used?" },
+          { field: "table1_20_Available", headerName: "Available" },
+          { field: "table1_20_Functional", headerName: "Functional" },
+          { field: "table1_20_LastUsed", headerName: "When was it last used?" },
         ],
       },
     ],
@@ -287,141 +303,144 @@ export const AmbulanceColumns = [
       "9.5 : Whether these Emergency Medications are available or not?",
     children: [
       {
-        field: "AMB17_0_Available",
+        field: "table2_0_Available",
         headerName: "Adrenaline Ampoules - Available",
       },
       {
-        field: "AMB17_1_Available",
+        field: "table2_1_Available",
         headerName: "Anti Snake Venom Vial - Available",
       },
       {
-        field: "AMB17_2_Available",
+        field: "table2_2_Available",
         headerName: "Atropine Ampoules - Available",
       },
       {
-        field: "AMB17_3_Available",
+        field: "table2_3_Available",
         headerName: "Buscopan / Hyoscine Ampoules - Available",
       },
       {
-        field: "AMB17_4_Available",
+        field: "table2_4_Available",
         headerName: "Methylergonovine Inj - Available",
       },
       {
-        field: "AMB17_5_Available",
+        field: "table2_5_Available",
         headerName: "Frusemide / Lasix Ampoules - Available",
       },
       {
-        field: "AMB17_6_Available",
+        field: "table2_6_Available",
         headerName: "Hydrocort 2ml Vial - Available",
       },
       {
-        field: "AMB17_7_Available",
+        field: "table2_7_Available",
         headerName: "Magnesium Sulfate Ampoules - Available",
       },
-      { field: "AMB17_8_Available", headerName: "Midazolam Vial - Available" },
+      { field: "table2_8_Available", headerName: "Midazolam Vial - Available" },
       {
-        field: "AMB17_9_Available",
+        field: "table2_9_Available",
         headerName: "Mucain gel Syrup - Available",
       },
       {
-        field: "AMB17_10_Available",
+        field: "table2_10_Available",
         headerName: "Ondansetron Zofer Ampoules - Available",
       },
       {
-        field: "AMB17_11_Available",
+        field: "table2_11_Available",
         headerName: "Oxytocin Ampoules - Available",
       },
-      { field: "AMB17_12_Available", headerName: "ORS - Available" },
-      { field: "AMB17_13_Available", headerName: "Glucose - Available" },
+      { field: "table2_12_Available", headerName: "ORS - Available" },
+      { field: "table2_13_Available", headerName: "Glucose - Available" },
       {
-        field: "AMB17_14_Available",
+        field: "table2_14_Available",
         headerName: "Paracetamol Ampoules - Available",
       },
       {
-        field: "AMB17_15_Available",
+        field: "table2_15_Available",
         headerName: "Paracetamol Syrup - Available",
       },
       {
-        field: "AMB17_16_Available",
+        field: "table2_16_Available",
         headerName: "Pheniramine Maleate / Avil Ampoules - Available",
       },
       {
-        field: "AMB17_17_Available",
+        field: "table2_17_Available",
         headerName: "Ranitidine Ampoules - Available",
       },
       {
-        field: "AMB17_18_Available",
+        field: "table2_18_Available",
         headerName: "Tablet Activated Charcoal / Powder - Available",
       },
       {
-        field: "AMB17_19_Available",
+        field: "table2_19_Available",
         headerName: "Tablet Aspirin / Dispirin - Available",
       },
       {
-        field: "AMB17_20_Available",
+        field: "table2_20_Available",
         headerName: "Tablet Clopidogrel (75mg) - Available",
       },
       {
-        field: "AMB17_21_Available",
+        field: "table2_21_Available",
         headerName: "Tablet Isosorbide - Available",
       },
       {
-        field: "AMB17_22_Available",
+        field: "table2_22_Available",
         headerName: "Asthalin Respule - Available",
       },
       {
-        field: "AMB17_23_Available",
+        field: "table2_23_Available",
         headerName: "Budecort Repsule - Available",
       },
-      { field: "AMB17_24_Available", headerName: "Duolin Respule - Available" },
       {
-        field: "AMB17_25_Available",
+        field: "table2_24_Available",
+        headerName: "Duolin Respule - Available",
+      },
+      {
+        field: "table2_25_Available",
         headerName: "Lignocaine / Xylocaine Gel - Available",
       },
       {
-        field: "AMB17_26_Available",
+        field: "table2_26_Available",
         headerName: "Distil / Sterile Water - Available",
       },
       {
-        field: "AMB17_27_Available",
+        field: "table2_27_Available",
         headerName: "Fluid Normal Saline (NS) 100 ml & 500 ml - Available",
       },
-      { field: "AMB17_28_Available", headerName: "Betadine - Available" },
+      { field: "table2_28_Available", headerName: "Betadine - Available" },
       {
-        field: "AMB17_29_Available",
+        field: "table2_29_Available",
         headerName: "Dextrose 25% 100 ml - Available",
       },
       {
-        field: "AMB17_30_Available",
+        field: "table2_30_Available",
         headerName: "Disposable Delivery Kit - Available",
       },
       {
-        field: "AMB17_31_Available",
+        field: "table2_31_Available",
         headerName: "Disposable Hand Gloves - Available",
       },
       {
-        field: "AMB17_32_Available",
+        field: "table2_32_Available",
         headerName: "Disposable Face Masks - Available",
       },
-      { field: "AMB17_33_Available", headerName: "Cotton 500gm - Available" },
+      { field: "table2_33_Available", headerName: "Cotton 500gm - Available" },
       {
-        field: "AMB17_34_Available",
+        field: "table2_34_Available",
         headerName: "IV Cannula 18G 20G 22G & 24G - Available",
       },
       {
-        field: "AMB17_35_Available",
+        field: "table2_35_Available",
         headerName: "All Syringes 3ml, 5ml & 10 ml - Available",
       },
       {
-        field: "AMB17_36_Available",
+        field: "table2_36_Available",
         headerName: "IV Sets – Macro - Available",
       },
       {
-        field: "AMB17_37_Available",
+        field: "table2_37_Available",
         headerName: "IV Sets – Micro - Available",
       },
-      { field: "AMB17_38_Available", headerName: "Spirit - Available" },
-      { field: "AMB17_39_Available", headerName: "Betadine - Available" },
+      { field: "table2_38_Available", headerName: "Spirit - Available" },
+      { field: "table2_39_Available", headerName: "Betadine - Available" },
     ],
   },
 
@@ -502,8 +521,15 @@ export const AmbulanceColumns = [
       { field: "AMB19_4", headerName: "Emergency Medicine Checklist" },
       { field: "AMB19_5", headerName: "AED Checklist" },
       { field: "AMB19_6", headerName: "Patient Register" },
-      { field: "AMB19_7", headerName: "Other" },
-      { field: "AMB19_8", headerName: "Other Specify" },
+      {
+        field: "AMB19_7",
+        headerName: "Other",
+        valueGetter: (params) =>
+          params.data?.AMB19?.[7]?.length > 0 ? "Other" : "",
+      },
+      { field: "AMB19_7", headerName: "Other Specify" },
     ],
   },
 ];
+
+export const AmbulanceColumns = generateColumns(columns);

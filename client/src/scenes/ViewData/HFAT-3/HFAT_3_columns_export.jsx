@@ -1,14 +1,19 @@
+import generateColumns from "../generateColumns";
+
 // Column Definitions: Defines the columns to be displayed.
-export const HFAT3ColumnsExport = [
+const columns = [
   {
-    field: "id",
+    field: "_id",
     headerName: "Record ID",
     checkboxSelection: true,
     headerCheckboxSelection: true,
-    // valueFormatter: (params) => params.data._id,
   },
   { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
-  { field: "date", headerName: "Date:" },
+  {
+    field: "date",
+    headerName: "Date:",
+    valueGetter: (params) => params.data?.HFAT3_DATE,
+  },
   { field: "H3A2", headerName: "3A.2 State:" },
   { field: "H3A3", headerName: "3A.3 Block Name:" },
   { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
@@ -16,10 +21,10 @@ export const HFAT3ColumnsExport = [
   { field: "H3A6", headerName: "3A.6 Name of the Medical Officer" },
   { field: "H3A7", headerName: "3A.7 Contact Number of the Medical Officer:" },
   { field: "H3A8", headerName: "3A.8 Email ID:" },
-  { field: "H3A9_0", headerName: "3A.9 GPS Coordinates:" },
-  { field: "H3A9_1", headerName: "3A.9 GPS Coordinates" },
-  { field: "H3A9_2", headerName: "3A.9 District" },
-  { field: "H3A9_3", headerName: "3A.9 State" },
+  { field: "H3A9_latitude", headerName: "3A.9 GPS Coordinates:" },
+  { field: "H3A9_longitude", headerName: "3A.9 GPS Coordinates" },
+  { field: "H3A9_district", headerName: "3A.9 District" },
+  { field: "H3A9_state", headerName: "3A.9 State" },
   {
     field: "H3A10",
     headerName: "3A.10 What type of Health Care Facility is this?",
@@ -557,6 +562,8 @@ export const HFAT3ColumnsExport = [
     field: "H3C3_12",
     headerName:
       "3C.3 : If Yes to 3C.2, Which of the following emergency care trainings you have undergone? (choice = other)",
+    valueGetter: (params) =>
+      params.data?.H3C3?.[12]?.length > 0 ? "Other" : "",
   },
   {
     field: "H3C3_13",
@@ -564,14 +571,16 @@ export const HFAT3ColumnsExport = [
       "3C.3 : If Yes to 3C.2, Which of the following emergency care trainings you have undergone? (other specify)",
   },
   {
-    field: "H3C4_0",
+    field: "H3C4",
     headerName:
       "3C.4 : If Yes, Frequency of training on emergency care in a year?",
+    valueGetter: (params) => params.data?.H3C4?.split(":")[0],
   },
   {
-    field: "H3C4_1",
+    field: "H3C4",
     headerName:
       "3C.4 : Frequency of training on emergency care in a year? (other specify)",
+    valueGetter: (params) => params.data?.H3C4?.split(":")[1],
   },
   { field: "H3C5", headerName: "3C.5 When was the last training conducted?" },
   {
@@ -855,22 +864,22 @@ export const HFAT3ColumnsExport = [
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (Adult (> 18Years))",
   },
   {
-    field: "table2_Pediatric",
+    field: "table2_0_Pediatric",
     headerName:
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (Pediatric)",
   },
   {
-    field: "table2_Broughtdead",
+    field: "table2_0_Broughtdead",
     headerName:
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (Brought dead)",
   },
   {
-    field: "table2_Deathafterarrival",
+    field: "table2_0_Deathafterarrival",
     headerName:
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (Death after arrival)",
   },
   {
-    field: "table2_MLC",
+    field: "table2_0_MLC",
     headerName:
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (MLC)",
   },
@@ -1035,14 +1044,17 @@ export const HFAT3ColumnsExport = [
       "3F.6 Whether Medical Officer In charge (MO/IC) uses or reviews the data for quality improvement",
   },
   {
-    field: "H3F7_0",
+    field: "H3F7",
     headerName:
       "3F.7 Do you get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H3F7?.split(":")[0],
+    valueFormatter: (params) => params.value?.split("(")[0],
   },
   {
-    field: "H3F7_1",
+    field: "H3F7",
     headerName:
       "2F.7 If Yes , How often per week get Pre-Hospital Notification during an emergency?",
+    valueGetter: (params) => params.data?.H3F7?.split(":")[1],
   },
   {
     field: "H3F8",
@@ -1062,14 +1074,16 @@ export const HFAT3ColumnsExport = [
     headerName: "3G.3 Whether any fund is available for emergency care?",
   },
   {
-    field: "",
+    field: "H3G4",
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system?",
+    valueGetter: (params) => params.data?.H3G4?.split(":")[0],
   },
   {
-    field: "",
+    field: "H3G4",
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system? (Other specify)",
+    valueGetter: (params) => params.data?.H3G4?.split(":")[1],
   },
   {
     field: "H3G5",
@@ -1093,11 +1107,16 @@ export const HFAT3ColumnsExport = [
   },
   { field: "H3H3", headerName: "3H.1.3 Do you have any evacuation plan?" },
   {
-    field: "H3H4_0",
+    field: "H3H4",
     headerName:
       "3H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
+    valueGetter: (params) => params.data?.H3H4?.split(":")[0],
   },
-  { field: "H3H4_1", headerName: "3H.2.1 If Yes ,Provide Details" },
+  {
+    field: "H3H4",
+    headerName: "3H.2.1 If Yes ,Provide Details",
+    valueGetter: (params) => params.data?.H3H4?.split(":")[1],
+  },
 
   {
     field: "H3H5",
@@ -1124,9 +1143,11 @@ export const HFAT3ColumnsExport = [
   {
     field: "H3H8_2",
     headerName: "3H.2.5 Types of audits conducted? (choice = other)",
+    valueGetter: (params) =>
+      params.data?.H3H8?.[2]?.length > 0 ? "Other" : "",
   },
   {
-    field: "H3H8_3",
+    field: "H3H8_2",
     headerName: "3H.2.5 Types of audits conducted? (Other Specify)",
   },
   {
@@ -1325,3 +1346,5 @@ export const HFAT3ColumnsExport = [
       "3J.2Do you any documented SOP/STW guiding the referral linkages?",
   },
 ];
+
+export const HFAT3ColumnsExport = generateColumns(columns);
