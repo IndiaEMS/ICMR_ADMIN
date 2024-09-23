@@ -87,7 +87,7 @@ export const HFAT3Get = async (req, res, next) => {
       { value: "", label: "All" },
       { value: "GJBRC", label: "Gujarat" },
       { value: "ORPUR", label: "Odisha" },
-      { value: "MPBHS", label: "Madhya Pradesh" },
+      { value: "MPBHS", label: "Bhopal" },
       { value: "PBLDH", label: "Ludhiana" },
       { value: "PYPDY", label: "Pondicherry" },
     ];
@@ -225,7 +225,7 @@ export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
       { value: "", label: "All" },
       { value: "GJBRC", label: "Gujarat" },
       { value: "ORPUR", label: "Odisha" },
-      { value: "MPBHS", label: "Madhya Pradesh" },
+      { value: "MPBHS", label: "Bhopal" },
       { value: "PBLDH", label: "Ludhiana" },
       { value: "PYPDY", label: "Pondicherry" },
     ];

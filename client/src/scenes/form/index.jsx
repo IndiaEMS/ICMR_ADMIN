@@ -32,13 +32,7 @@ import { tokens } from "../../theme";
 const url = import.meta.env.VITE_SERVER;
 
 const Form = () => {
-  const state = [
-    "Gujarat",
-    "Odisha",
-    "Madhya Pradesh",
-    "Ludhiana",
-    "pondicherry",
-  ];
+  const state = ["Gujarat", "Odisha", "Bhopal", "Ludhiana", "pondicherry"];
   // const [selectedState, setSelectedState] = useState(initialValues.state);
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const theme = useTheme();

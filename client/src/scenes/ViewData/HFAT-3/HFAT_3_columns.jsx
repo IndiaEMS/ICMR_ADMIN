@@ -1,64 +1,64 @@
 import generateColumns from "../generateColumns";
 
 const columns = [
-  // {
-  //   field: "_id",
-  //   headerName: "Record ID",
-  //   checkboxSelection: true,
-  //   headerCheckboxSelection: true,
-  // },
-  // { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
-  // {
-  //   field: "date",
-  //   headerName: "Date:",
-  //   valueGetter: (params) => params.data?.HFAT3_DATE,
-  // },
-  // { field: "H3A2", headerName: "3A.2 State:" },
-  // { field: "H3A3", headerName: "3A.3 Block Name:" },
-  // { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
-  // { field: "H3A5", headerName: "3A.5 Healthcare Facility Address" },
-  // { field: "H3A6", headerName: "3A.6 Name of the Medical Officer" },
-  // { field: "H3A7", headerName: "3A.7 Contact Number of the Medical Officer:" },
-  // { field: "H3A8", headerName: "3A.8 Email ID:" },
-  // // { field: "H3A9_0", headerName: "3A.9 GPS Coordinates:" },
-  // // { field: "H3A9_1", headerName: "3A.9 GPS Coordinates" },
-  // {
-  //   headerName: "3A.9 : GPS",
-  //   children: [
-  //     { headerName: "latitude", field: "H3A9_latitude" },
-  //     { headerName: "longitude", field: "H3A9_longitude" },
-  //     { headerName: "district", field: "H3A9_district" },
-  //     { headerName: "state", field: "H3A9_state" },
-  //   ],
-  // },
-  // {
-  //   field: "H3A10",
-  //   headerName: "3A.10 What type of Health Care Facility is this?",
-  // },
-  // { field: "H3A11", headerName: "3A.11 This facility is coming under:" },
-  // { field: "H3B1", headerName: "3B.1 Is the PHC 24/7?" },
-  // {
-  //   field: "H3B2",
-  //   headerName: "3B.2 How many observation beds are available in the PHC?",
-  // },
-  // {
-  //   field: "H3B3",
-  //   headerName: "3B.3 Are dedicated beds available for emergency care?",
-  // },
-  // {
-  //   field: "H3B4",
-  //   headerName: "3B.4 How many beds are earmarked for emergency care?",
-  // },
-  // {
-  //   field: "H3B5",
-  //   headerName:
-  //     "3B.5 What is the average number of patients presenting to OPD in a day/ everyday?",
-  // },
-  // {
-  //   field: "H3B6",
-  //   headerName:
-  //     "3B.6 What is the average daily number of patients presenting with emergency conditions? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
-  // },
+  {
+    field: "_id",
+    headerName: "Record ID",
+    checkboxSelection: true,
+    headerCheckboxSelection: true,
+  },
+  { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
+  {
+    field: "date",
+    headerName: "Date:",
+    valueGetter: (params) => params.data?.HFAT3_DATE,
+  },
+  { field: "H3A2", headerName: "3A.2 State:" },
+  { field: "H3A3", headerName: "3A.3 Block Name:" },
+  { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
+  { field: "H3A5", headerName: "3A.5 Healthcare Facility Address" },
+  { field: "H3A6", headerName: "3A.6 Name of the Medical Officer" },
+  { field: "H3A7", headerName: "3A.7 Contact Number of the Medical Officer:" },
+  { field: "H3A8", headerName: "3A.8 Email ID:" },
+  // { field: "H3A9_0", headerName: "3A.9 GPS Coordinates:" },
+  // { field: "H3A9_1", headerName: "3A.9 GPS Coordinates" },
+  {
+    headerName: "3A.9 : GPS",
+    children: [
+      { headerName: "latitude", field: "H3A9_latitude" },
+      { headerName: "longitude", field: "H3A9_longitude" },
+      { headerName: "district", field: "H3A9_district" },
+      { headerName: "state", field: "H3A9_state" },
+    ],
+  },
+  {
+    field: "H3A10",
+    headerName: "3A.10 What type of Health Care Facility is this?",
+  },
+  { field: "H3A11", headerName: "3A.11 This facility is coming under:" },
+  { field: "H3B1", headerName: "3B.1 Is the PHC 24/7?" },
+  {
+    field: "H3B2",
+    headerName: "3B.2 How many observation beds are available in the PHC?",
+  },
+  {
+    field: "H3B3",
+    headerName: "3B.3 Are dedicated beds available for emergency care?",
+  },
+  {
+    field: "H3B4",
+    headerName: "3B.4 How many beds are earmarked for emergency care?",
+  },
+  {
+    field: "H3B5",
+    headerName:
+      "3B.5 What is the average number of patients presenting to OPD in a day/ everyday?",
+  },
+  {
+    field: "H3B6",
+    headerName:
+      "3B.6 What is the average daily number of patients presenting with emergency conditions? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
+  },
   {
     headerName:
       "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible)",
