@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { AppContext } from "../../context/user";
 import { useSelector } from "react-redux";
 const settings = ["Logout"];
+const url = import.meta.env.VITE_SERVER;
+
 
 const Topbar = () => {
   // const { state } = useContext(AppContext);
@@ -42,7 +44,7 @@ const Topbar = () => {
 
   const handleLogout = async () => {
     try {
-      const { data } = await axios.post("http://localhost:3000/logout", {
+      const { data } = await axios.post(`${url}/logout`, {
         method: "POST",
         credentials: "include", // Include cookies if necessary
       });
@@ -54,6 +56,7 @@ const Topbar = () => {
         console.log("Logout successful");
         // token clean
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         navigate("/login");
         // You might want to clear any client-side authentication state here
         // window.location.href = "/login"; // Redirect to login or home page
