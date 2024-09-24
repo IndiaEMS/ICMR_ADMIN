@@ -184,7 +184,7 @@ const ViewData = ({ formName }) => {
       setRows(data); // Show all rows if no state is selected
     } else {
       // Filter rows where any field in the row might contain the state value
-      const filteredRows = data.filter((row) => {
+      const filteredRows = data?.filter((row) => {
         return Object.values(row).some(
           (cellValue) =>
             typeof cellValue === "string" && cellValue.startsWith(selectedState)

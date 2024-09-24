@@ -97,7 +97,7 @@ export const AutopsyGetController = async (req, res, next) => {
 
     res.status(200).json({
       success: true,
-      data: Autopsy,
+      data: AutopsyData,
     });
   } catch (error) {
     next(error);
