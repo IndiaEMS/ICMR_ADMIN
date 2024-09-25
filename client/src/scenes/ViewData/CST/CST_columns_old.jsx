@@ -1,3 +1,157 @@
+// const generateColumns = (maxMembers, columns) => {
+//   return Array.from({ length: maxMembers }, (_, index) => {
+//     return columns.map((column) => ({
+//       field: column.field,
+//       headerName: column.headerName,
+//       valueGetter: (params) => {
+//         // console.log(column.field);
+
+//         const member = params?.data?.Emergency_Data?.[index];
+//         // console.log(Object.keys(member ?? {}));
+
+//         if (column.field.startsWith("C")) {
+//           console.log("PartC");
+//           // console.log("PartC : ", member?.PartCLoop);
+//           member?.PartCLoop?.forEach((partC) => {
+//             console.log(Object.keys(partC ?? {}));
+//             return generatePartCColumns(1, PartCcolumns, partC);
+//           });
+//           // console.log(Object.keys(member ?? []));
+//         } else if (column.valueGetter) {
+//           return column.valueGetter(member);
+//         } else {
+//           if (Array.isArray(member?.[column.field.split("_")[0]])) {
+//             return member?.[column.field.split("_")[0]]?.[
+//               column.field.split("_")[1]
+//             ];
+//           } else {
+//             return member ? member[column.field] : "";
+//           }
+//         }
+//       },
+//     }));
+//   }).flat();
+// };
+
+const generateColumns = (
+  maxMembers,
+  PartBcolumns,
+  PartCcolumns,
+  PartDcolumns,
+  PartEcolumns,
+  PartFcolumns
+) => {
+  const generatePartCColumns = (columns, memberIndex) => {
+    return PartCcolumns.flatMap((partCColumn, partCIndex) => ({
+      // field: `${partCColumn.field}_PartC_${partCIndex + 1}_Member_${
+      //   memberIndex + 1
+      // }`,
+      // headerName: `${partCColumn.headerName} (PartC ${partCIndex + 1} Member ${
+      //   memberIndex + 1
+      // })`,
+      field: partCColumn.field,
+      headerName: partCColumn.headerName,
+      valueGetter: (params) => {
+        const currentMember = params?.data?.Emergency_Data?.[memberIndex];
+        const currentPartC = currentMember?.PartCLoop?.[partCIndex];
+        console.log(currentPartC[partCColumn.field]);
+        // console.log(
+        //   currentPartC && Array.isArray(currentPartC[partCColumn.field])
+        // );
+        return currentPartC ? currentPartC[partCColumn.field] : "";
+
+        // if (Array.isArray(currentPartC[partCColumn.field])) {
+        //   return currentPartC[partCColumn.field.split("_")[0]]?.[
+        //     columns.field?.split?.[1]
+        //   ];
+        // } else {
+        //   return currentPartC ? currentPartC[partCColumn.field] : "";
+        // }
+      },
+    }));
+  };
+
+  return Array.from({ length: maxMembers }, (_, memberIndex) => {
+    // Generate columns for each part in sequence for the current member
+    const memberColumns = [
+      ...PartBcolumns.map((column) => ({
+        // field: `${column.field}_Member_${memberIndex + 1}`,
+        // headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          return member ? member[column.field] : "";
+        },
+      })),
+      ...generatePartCColumns(PartCcolumns, memberIndex),
+      // ...PartDcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
+      // ...PartEcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
+      // ...PartFcolumns.map((column) => ({
+      //   field: `${column.field}_Member_${memberIndex + 1}`,
+      //   headerName: `${column.headerName} (Member ${memberIndex + 1})`,
+      //   valueGetter: (params) => {
+      //     const member = params?.data?.Emergency_Data?.[memberIndex];
+      //     return member ? member[column.field] : "";
+      //   },
+      // })),
+    ];
+
+    return memberColumns;
+  }).flat();
+};
+
+const generatePartCColumns = (maxMembers, columns, data) => {
+  return data.flatMap((d, memberIndex) => {
+    // Check if Emergency_Data is defined and is an array
+    const emergencyData = d?.Emergency_Data ?? [];
+
+    return emergencyData.flatMap((ed, emergencyIndex) => {
+      // Check if PartCLoop is defined and is an array
+      const partCLoop = ed?.PartCLoop ?? [];
+
+      // If PartCLoop is empty, return an empty array for this entry
+      if (!Array.isArray(partCLoop) || partCLoop.length === 0) {
+        return [];
+      }
+
+      // Generate columns for each PartCLoop entry
+      return partCLoop.flatMap((partC, partCIndex) => {
+        return columns.map((column) => ({
+          field: `${column.field}_PartC_${partCIndex + 1}_Member_${
+            memberIndex + 1
+          }`, // Create unique field names
+          headerName: `${column.headerName} (PartC ${partCIndex + 1} Member ${
+            memberIndex + 1
+          })`,
+          valueGetter: (params) => {
+            // Ensure value is being pulled from the correct member's row
+            const currentMember = params.data?.Emergency_Data?.[emergencyIndex];
+            const currentPartC = currentMember?.PartCLoop?.[partCIndex];
+
+            // Return the value for the specific column field in the current PartCLoop object
+            return currentPartC ? currentPartC[column.field] : "";
+          },
+        }));
+      });
+    });
+  });
+};
+
 const generateMemberColumns = (maxMembers, columns, table_name) => {
   return Array.from({ length: maxMembers }, (_, index) => {
     return columns.map((column) => ({
@@ -30,32 +184,42 @@ const MemberColumns = [
 ];
 
 export const CSTColumns = (data) => {
-  let memberLength = Math.max(
+  let maxMembers = Math.max(
     1,
     ...(data ?? []).map((row) => {
       return row?.AC3_table?.length || 1;
     })
   );
-
   let DeathMembers = Math.max(
     1,
     ...(data ?? []).map((row) => {
       return row?.AC15_table?.length || 1;
     })
   );
+  let PartBLoopLength = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.Emergency_Data?.length || 1;
+    })
+  );
+  let PartCLoopLength = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.Emergency_Data?.PartCLoop?.length || 1;
+    })
+  );
 
+  // maxMembers = data?.Emergency_Data?.length ?? 1;
   const generateMemeberColumns = generateMemberColumns(
-    memberLength,
+    maxMembers,
     MemberColumns,
     "AC3_table"
   );
-
   const generateDeathMemeberColumns = generateMemberColumns(
     DeathMembers,
     MemberColumns,
     "AC15_table"
   );
-
   return [
     {
       headerName: "Record ID",
@@ -66,9 +230,17 @@ export const CSTColumns = (data) => {
       valueGetter: (params) => params.data._id,
     },
 
-    ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
+    // ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
+    ...generateColumns(
+      maxMembers,
+      PartBcolumns,
+      PartCcolumns,
+      PartDcolumns,
+      PartEcolumns,
+      PartFcolumns
+    ),
     // ...generateColumns(PartBLoopLength, PartBcolumns),
-    // ...generatePartCColumns(PartBLoopLength, PartCcolumns),
+    // ...generatePartCColumns(PartBLoopLength, PartCcolumns, data),
     // ...generateColumns(PartBLoopLength, PartDcolumns),
     // ...generateColumns(PartBLoopLength, PartEcolumns),
     // ...generateColumns(PartBLoopLength, PartFcolumns),
@@ -89,7 +261,8 @@ const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
     },
     {
       field: "AB1",
-      headerName: "AB.1 Block",
+      headerName:
+        "AB.1 Block [Drop Down Menu of Blocks for Respective District]",
     },
     { field: "AB2", headerName: "AB.2 Type of PSU:" },
     { field: "AB3", headerName: "AB.3 Name of PSU (Town/Village):" },
@@ -160,6 +333,11 @@ const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
       headerName:
         "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
     },
+    // {
+    //   field: "AC6_2",
+    //   headerName:
+    //     "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    // },
     {
       field: "AC7_1",
       headerName:
@@ -384,202 +562,6 @@ const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
     },
   ];
 };
-
-const PartCcolumns = [
-  {
-    field: "C1",
-    headerName:
-      "C.1 Who took the decision to refer/ shift the patient to another facility?",
-    // valueGetter: (params) => params?.C1?.split(":")[0],
-  },
-  {
-    field: "C1",
-    headerName:
-      "C.1 Who took the decision to refer/ shift the patient to another facility? (Other Specify)",
-    // valueGetter: (params) => params?.C1?.split(":")[1],
-  },
-  {
-    field: "C2_0",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Serious illness requiring higher centre)",
-  },
-  {
-    field: "C2_1",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of doctor)",
-  },
-  {
-    field: "C2_2",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of specialist )",
-  },
-  {
-    field: "C2_3",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Medicines unavailable)",
-  },
-  {
-    field: "C2_4",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Admission facility unavailable)",
-  },
-  {
-    field: "C2_5",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of bed)",
-  },
-  {
-    field: "C2_6",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Inappropriate staff behaviour)",
-  },
-  {
-    field: "C2_7",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Others)",
-    valueGetter: (params) => params?.C2_7?.split(":")[0],
-  },
-  {
-    field: "C2_7_other_specify",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (Other Specify)",
-    valueGetter: (params) => params?.C2_7?.split(":")[1],
-  },
-  { field: "C3", headerName: "C.3 Which facility were you referred?" },
-  {
-    field: "C4",
-    headerName:
-      "C.4 If referred by a health facility, was a referral slip given?",
-  },
-  {
-    field: "C5",
-    headerName:
-      "C.5 How did you or the patient reach the referred health care facility?",
-    valueGetter: (params) => params?.C5?.split(":")[0],
-  },
-  {
-    field: "C5_other_specify",
-    headerName:
-      "C.5 How did you or the patient reach the referred health care facility? (Other Specify)",
-    valueGetter: (params) => params?.C5?.split(":")[1],
-  },
-  {
-    field: "C6",
-    headerName:
-      "C.6 What type of transport was used to reach the referred health care facility?",
-    valueGetter: (params) => params?.C6?.split(":")[0],
-  },
-  {
-    field: "C6_other_specify",
-    headerName:
-      "C.6 What type of transport was used to reach the referred health care facility? (Other Specify)",
-    valueGetter: (params) => params?.C6?.split(":")[1],
-  },
-  {
-    field: "C7",
-    headerName:
-      "C.7 If Govt. Ambulance, Which ambulance service you opted for?",
-    valueGetter: (params) => params?.C7?.split(":")[0],
-  },
-  {
-    field: "C7_other_specify",
-    headerName:
-      "C.7 If Govt. Ambulance, Which ambulance service you opted for? (Other Specify)",
-    valueGetter: (params) => params?.C7?.split(":")[1],
-  },
-  {
-    field: "C8",
-    headerName:
-      "C.8 Were there any problems in arranging for transport of the patient?",
-    valueGetter: (params) => params?.C8?.split(":")[0],
-  },
-  {
-    field: "C8_other_specify",
-    headerName:
-      "C.8 Were there any problems in arranging for transport of the patient? (Other Specify)",
-    valueGetter: (params) => params?.C8?.split(":")[1],
-  },
-  {
-    field: "C9",
-    headerName:
-      "C.9 How much time the ambulance/ any transport took to reach the referring facility? (In Min/Hour)",
-    valueGetter: (params) =>
-      `${params?.C9_1 ?? ""} ${params?.C9_2 ? ":" : ""} ${params?.C9_2 ?? ""}`,
-  },
-  {
-    field: "C10",
-    headerName:
-      "C.10 How much time the ambulance/ any transport took to reach the referred facility? (In Min/Hour)",
-    valueGetter: (params) =>
-      `${params?.C10_1 ?? ""} ${params?.C10_2 ? ":" : ""} ${
-        params?.C10_2 ?? ""
-      }`,
-  },
-  {
-    field: "C11",
-    headerName: "C.11 Did the patient go to the referred facility?",
-  },
-  {
-    field: "C12",
-    headerName: "C.12 Which type of facility did you or the patient shifted?",
-    valueGetter: (params) => params?.C12?.split(":")[0],
-  },
-  {
-    field: "C12",
-    headerName:
-      "C.12 Which type of facility did you or the patient shifted? (Other Specify)",
-    valueGetter: (params) => params?.C12?.split(":")[1],
-  },
-  {
-    field: "C13",
-    headerName: "C.13 What was the name of the facility the patient shifted?",
-  },
-  {
-    field: "C14",
-    headerName:
-      "C.14 Who suggested you visit the above mentioned facility for further emergency care?",
-    valueGetter: (params) => params?.C14?.split(":")[0],
-  },
-  {
-    field: "C14",
-    headerName:
-      "C.14 Who suggested you visit the above mentioned facility for further emergency care? (Other Specify)",
-    valueGetter: (params) => params?.C14?.split(":")[1],
-  },
-  {
-    field: "C15",
-    headerName:
-      "C.15 How long after reaching the referral HCF (in emergency) was the patient attended?",
-  },
-  {
-    field: "C16",
-    headerName: "C.16 Who attended the patient at the referral HCF?",
-  },
-  {
-    field: "C17",
-    headerName: "C.17 Was any treatment started at the referral HCF?",
-  },
-  {
-    field: "C18",
-    headerName:
-      "C.18 Were any laboratory &/or radiology investigations done at the HCF?",
-  },
-  {
-    field: "C19",
-    headerName:
-      "C.19 How much time was spent in investigations at referral HCF?",
-  },
-  {
-    field: "C20",
-    headerName:
-      "C.20 What was the final outcome of visiting the referral facility?",
-  },
-  {
-    field: "C21",
-    headerName:
-      "C.21 What was the final diagnosis on consultation with the doctor or mentioned in the final discharge summary?",
-  },
-];
 
 const PartBcolumns = [
   {
@@ -874,7 +856,204 @@ const PartBcolumns = [
     headerName:
       "B.35 What was the final diagnosis on consultation with the doctor or mentioned in the final discharge summary?",
   },
-  // ...generateColumns(2, PartCcolumns),
+];
+
+const PartCcolumns = [
+  {
+    field: "C1",
+    headerName:
+      "C.1 Who took the decision to refer/ shift the patient to another facility?",
+    valueGetter: (params) => params?.C1?.split(":")[0],
+  },
+  {
+    field: "C1",
+    headerName:
+      "C.1 Who took the decision to refer/ shift the patient to another facility? (Other Specify)",
+    valueGetter: (params) => params?.C1?.split(":")[0],
+  },
+  {
+    field: "C2_0",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Serious illness requiring higher centre)",
+    valueGetter: (params) => params?.C2?.[0],
+  },
+  {
+    field: "C2_1",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of doctor)",
+    valueGetter: (params) => params?.C2?.[1],
+  },
+  {
+    field: "C2_2",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of specialist )",
+  },
+  {
+    field: "C2_3",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Medicines unavailable)",
+  },
+  {
+    field: "C2_4",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Admission facility unavailable)",
+  },
+  {
+    field: "C2_5",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of bed)",
+  },
+  {
+    field: "C2_6",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Inappropriate staff behaviour)",
+  },
+  {
+    field: "C2_7",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Others)",
+    valueGetter: (params) => params?.C2_7?.split(":")[0],
+  },
+  {
+    field: "C2_7_other_specify",
+    headerName:
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (Other Specify)",
+    valueGetter: (params) => params?.C2_7?.split(":")[1],
+  },
+  { field: "C3", headerName: "C.3 Which facility were you referred?" },
+  {
+    field: "C4",
+    headerName:
+      "C.4 If referred by a health facility, was a referral slip given?",
+  },
+  {
+    field: "C5",
+    headerName:
+      "C.5 How did you or the patient reach the referred health care facility?",
+    valueGetter: (params) => params?.C5?.split(":")[0],
+  },
+  {
+    field: "C5_other_specify",
+    headerName:
+      "C.5 How did you or the patient reach the referred health care facility? (Other Specify)",
+    valueGetter: (params) => params?.C5?.split(":")[1],
+  },
+  {
+    field: "C6",
+    headerName:
+      "C.6 What type of transport was used to reach the referred health care facility?",
+    valueGetter: (params) => params?.C6?.split(":")[0],
+  },
+  {
+    field: "C6_other_specify",
+    headerName:
+      "C.6 What type of transport was used to reach the referred health care facility? (Other Specify)",
+    valueGetter: (params) => params?.C6?.split(":")[1],
+  },
+  {
+    field: "C7",
+    headerName:
+      "C.7 If Govt. Ambulance, Which ambulance service you opted for?",
+    valueGetter: (params) => params?.C7?.split(":")[0],
+  },
+  {
+    field: "C7_other_specify",
+    headerName:
+      "C.7 If Govt. Ambulance, Which ambulance service you opted for? (Other Specify)",
+    valueGetter: (params) => params?.C7?.split(":")[1],
+  },
+  {
+    field: "C8",
+    headerName:
+      "C.8 Were there any problems in arranging for transport of the patient?",
+    valueGetter: (params) => params?.C8?.split(":")[0],
+  },
+  {
+    field: "C8_other_specify",
+    headerName:
+      "C.8 Were there any problems in arranging for transport of the patient? (Other Specify)",
+    valueGetter: (params) => params?.C8?.split(":")[1],
+  },
+  {
+    field: "C9",
+    headerName:
+      "C.9 How much time the ambulance/ any transport took to reach the referring facility? (In Min/Hour)",
+    valueGetter: (params) =>
+      `${params?.C9_1 ?? ""} ${params?.C9_2 ? ":" : ""} ${params?.C9_2 ?? ""}`,
+  },
+  {
+    field: "C10",
+    headerName:
+      "C.10 How much time the ambulance/ any transport took to reach the referred facility? (In Min/Hour)",
+    valueGetter: (params) =>
+      `${params?.C10_1 ?? ""} ${params?.C10_2 ? ":" : ""} ${
+        params?.C10_2 ?? ""
+      }`,
+  },
+  {
+    field: "C11",
+    headerName: "C.11 Did the patient go to the referred facility?",
+  },
+  {
+    field: "C12",
+    headerName: "C.12 Which type of facility did you or the patient shifted?",
+    valueGetter: (params) => params?.C12?.split(":")[0],
+  },
+  {
+    field: "C12",
+    headerName:
+      "C.12 Which type of facility did you or the patient shifted? (Other Specify)",
+    valueGetter: (params) => params?.C12?.split(":")[1],
+  },
+  {
+    field: "C13",
+    headerName: "C.13 What was the name of the facility the patient shifted?",
+  },
+  {
+    field: "C14",
+    headerName:
+      "C.14 Who suggested you visit the above mentioned facility for further emergency care?",
+    valueGetter: (params) => params?.C14?.split(":")[0],
+  },
+  {
+    field: "C14",
+    headerName:
+      "C.14 Who suggested you visit the above mentioned facility for further emergency care? (Other Specify)",
+    valueGetter: (params) => params?.C14?.split(":")[1],
+  },
+  {
+    field: "C15",
+    headerName:
+      "C.15 How long after reaching the referral HCF (in emergency) was the patient attended?",
+  },
+  {
+    field: "C16",
+    headerName: "C.16 Who attended the patient at the referral HCF?",
+  },
+  {
+    field: "C17",
+    headerName: "C.17 Was any treatment started at the referral HCF?",
+  },
+  {
+    field: "C18",
+    headerName:
+      "C.18 Were any laboratory &/or radiology investigations done at the HCF?",
+  },
+  {
+    field: "C19",
+    headerName:
+      "C.19 How much time was spent in investigations at referral HCF?",
+  },
+  {
+    field: "C20",
+    headerName:
+      "C.20 What was the final outcome of visiting the referral facility?",
+  },
+  {
+    field: "C21",
+    headerName:
+      "C.21 What was the final diagnosis on consultation with the doctor or mentioned in the final discharge summary?",
+  },
 ];
 
 const PartDcolumns = [
@@ -952,13 +1131,13 @@ const PartDcolumns = [
     field: "D1_14",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = other)",
-    valueGetter: (params) => params?.D?.[14]?.split(":")[0],
+    valueGetter: (params) => params?.D1[14]?.split(":")[0],
   },
   {
     field: "D1_14_other_specify",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (other specify)",
-    valueGetter: (params) => params?.D1?.[14]?.split(":")[1],
+    valueGetter: (params) => params?.D1[14]?.split(":")[1],
   },
   {
     field: "D2_0",
@@ -1014,13 +1193,13 @@ const PartDcolumns = [
     field: "D2_10",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Others)",
-    valueGetter: (params) => params?.D2?.[10]?.split(":")[0],
+    valueGetter: (params) => params?.D2[10]?.split(":")[0],
   },
   {
     field: "D2_10_other_specify",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Other specify)",
-    valueGetter: (params) => params?.D2?.[10]?.split(":")[1],
+    valueGetter: (params) => params?.D2[10]?.split(":")[1],
   },
   {
     field: "D2_11",
@@ -1071,13 +1250,13 @@ const PartDcolumns = [
     field: "D3_8",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Others)",
-    valueGetter: (params) => params?.D3?.[8]?.split(":")[0],
+    valueGetter: (params) => params?.D3[8]?.split(":")[0],
   },
   {
     field: "D3_8_other_specify",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (other specify)",
-    valueGetter: (params) => params?.D3?.[8]?.split(":")[1],
+    valueGetter: (params) => params?.D3[8]?.split(":")[1],
   },
   {
     field: "D4_0",
@@ -1108,13 +1287,13 @@ const PartDcolumns = [
     field: "D4_5",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Others)",
-    valueGetter: (params) => params?.D4?.[5]?.split(":")[0],
+    valueGetter: (params) => params?.D4[5]?.split(":")[0],
   },
   {
     field: "D4_5_other_specify",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (other specify)",
-    valueGetter: (params) => params?.D4?.[5]?.split(":")[1],
+    valueGetter: (params) => params?.D4[5]?.split(":")[1],
   },
 ];
 
@@ -1265,14 +1444,14 @@ const PartFcolumns = [
     field: "F10_6",
     headerName:
       "F.10 What type of Transport facility available at home: (choice = Others)",
-    valueGetter: (params) => params?.F10,
+    valueGetter: (params) => params?.F10?.split(":")[0],
   },
-  // {
-  //   field: "F10_os",
-  //   headerName:
-  //     "F.10 What type of Transport facility available at home: (Other Specify)",
-  //   valueGetter: (params) => params?.F10?.split(":")[1],
-  // },
+  {
+    field: "F10_os",
+    headerName:
+      "F.10 What type of Transport facility available at home: (Other Specify)",
+    valueGetter: (params) => params?.F10?.split(":")[1],
+  },
   {
     field: "F11",
     headerName: "F.11 Do you have any medical insurance?",
