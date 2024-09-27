@@ -1,3 +1,142 @@
+// const generateColumns = (maxMembers, columns) => {
+//   console.log(maxMembers,maxMembers);
+
+//   return Array.from({ length: maxMembers }, (_, index) => {
+//     return columns.map((column) => ({
+//       field: column.field,
+//       headerName: `${index} ${column.headerName}`,
+//       valueGetter: (params) => {
+//         // console.log(column.field);
+
+//         const member = params?.data?.Emergency_Data?.[index];
+//         // console.log(Object.keys(member ?? {}));
+
+//         if (column.valueGetter) {
+//           return column.valueGetter(member);
+//         } else {
+//           if (Array.isArray(member?.[column.field.split("_")[0]])) {
+//             return member?.[column.field.split("_")[0]]?.[
+//               column.field.split("_")[1]
+//             ];
+//           } else {
+//             return member ? member[column.field] : "";
+//           }
+//         }
+//       },
+//     }));
+//   }).flat();
+// };
+
+const generateColumns = (
+  maxMembers,
+  PartBcolumns,
+  PartCcolumns,
+  PartDcolumns,
+  PartEcolumns,
+  PartFcolumns
+) => {
+  const generatePartCColumns = (columns, memberIndex) => {
+    return PartCcolumns.flatMap((columns, partCIndex) => ({
+      field: columns.field,
+      headerName: columns.headerName,
+      valueGetter: (params) => {
+        const currentMember = params?.data?.Emergency_Data?.[memberIndex];
+        const currentPartC = currentMember?.PartCLoop?.[partCIndex];
+        // return currentPartC ? currentPartC?.[columns?.field] : "";
+
+        if (Array.isArray(currentPartC?.[columns.field])) {
+          return currentPartC?.[columns.field.split("_")[0]]?.[
+            columns.field?.split?.[1]
+          ];
+        } else {
+          return currentPartC ? currentPartC?.[columns.field] : "";
+        }
+      },
+    }));
+  };
+
+  return Array.from({ length: maxMembers }, (_, memberIndex) => {
+    // Generate columns for each part in sequence for the current member
+    const memberColumns = [
+      ...PartBcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+      ...generatePartCColumns(PartCcolumns, memberIndex),
+      ...PartDcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+      ...PartEcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+      ...PartFcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+    ];
+
+    return memberColumns;
+  }).flat();
+};
+
 const generateMemberColumns = (maxMembers, columns, table_name) => {
   return Array.from({ length: maxMembers }, (_, index) => {
     return columns.map((column) => ({
@@ -44,6 +183,13 @@ export const CSTColumns = (data) => {
     })
   );
 
+  let PartBLoopLength = Math.max(
+    1,
+    ...(data ?? []).map((row) => {
+      return row?.Emergency_Data?.length || 1;
+    })
+  );
+
   const generateMemeberColumns = generateMemberColumns(
     memberLength,
     MemberColumns,
@@ -67,7 +213,14 @@ export const CSTColumns = (data) => {
     },
 
     ...PartAcolumns(generateMemeberColumns, generateDeathMemeberColumns),
-    // ...generateColumns(PartBLoopLength, PartBcolumns),
+    ...generateColumns(
+      PartBLoopLength,
+      PartBcolumns,
+      PartCcolumns,
+      PartDcolumns,
+      PartEcolumns,
+      PartFcolumns
+    ),
     // ...generatePartCColumns(PartBLoopLength, PartCcolumns),
     // ...generateColumns(PartBLoopLength, PartDcolumns),
     // ...generateColumns(PartBLoopLength, PartEcolumns),
@@ -687,11 +840,14 @@ const PartBcolumns = [
   {
     field: "B14",
     headerName: "B.14 Who first recognized the symptoms to be serious?",
+    valueGetter: (params) =>
+      params?.B14?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "B14",
     headerName:
       "B.14 Who first recognized the symptoms to be serious? (other specify)",
+    valueGetter: (params) => params?.B14?.split(":")[1],
   },
   {
     field: "B15",
@@ -712,20 +868,27 @@ const PartBcolumns = [
     field: "B17",
     headerName:
       "B.17 Who suggested you visit the healthcare facility for emergency care?",
+    valueGetter: (params) =>
+      params?.B17?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "B17",
     headerName:
       "B.17 Who suggested you visit the healthcare facility for emergency care? (Other Specify)",
+    valueGetter: (params) =>
+      params?.B17?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "B18",
     headerName:
-      "B.18 How much time did it take to decide to seek care or call an ambulance or any transport after recognizing the symptom? (In Min/Hour)",
-    valueGetter: (params) =>
-      `${params?.B18_1 ?? ""} ${params?.B18_2 ? ":" : ""} ${
-        params?.B18_2 ?? ""
-      }`,
+      "B.18 How much time did it take to decide to seek care or call an ambulance or any transport after recognizing the symptom? (Hour)",
+    valueGetter: (params) => params?.B18_1,
+  },
+  {
+    field: "B18",
+    headerName:
+      "B.18 How much time did it take to decide to seek care or call an ambulance or any transport after recognizing the symptom? (In Min)",
+    valueGetter: (params) => params?.B18_2,
   },
   {
     field: "B19",
@@ -776,20 +939,26 @@ const PartBcolumns = [
   {
     field: "B23",
     headerName:
-      "B.23 How much time the ambulance/ any transport took to reach the point of incident? (In Min/Hour)",
-    valueGetter: (params) =>
-      `${params?.B23_1 ?? ""} ${params?.B23_2 ? ":" : ""} ${
-        params?.B23_2 ?? ""
-      }`,
+      "B.23 How much time the ambulance/ any transport took to reach the point of incident? (Hour)",
+    valueGetter: (params) => params?.B23_1,
+  },
+  {
+    field: "B23",
+    headerName:
+      "B.23 How much time the ambulance/ any transport took to reach the point of incident? (Min)",
+    valueGetter: (params) => params?.B23_2,
   },
   {
     field: "B24",
     headerName:
-      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (in minutes/ hours)",
-    valueGetter: (params) =>
-      `${params?.B24_1 ?? ""} ${params?.B24_2 ? ":" : ""} ${
-        params?.B24_2 ?? ""
-      }`,
+      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (hours)",
+    valueGetter: (params) => params?.B24_1,
+  },
+  {
+    field: "B24",
+    headerName:
+      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (hours)",
+    valueGetter: (params) => params?.B24_2,
   },
   {
     field: "B25",
@@ -952,13 +1121,14 @@ const PartDcolumns = [
     field: "D1_14",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = other)",
-    valueGetter: (params) => params?.D?.[14]?.split(":")[0],
+    valueGetter: (params) =>
+      params?.D1?.[14]?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "D1_14_other_specify",
     headerName:
       "D.1 Why did you NOT seek medical care at the facility during the emergency? (other specify)",
-    valueGetter: (params) => params?.D1?.[14]?.split(":")[1],
+    valueGetter: (params) => params?.D1?.[14]?.split(":")?.[1],
   },
   {
     field: "D2_0",
@@ -1014,13 +1184,14 @@ const PartDcolumns = [
     field: "D2_10",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Others)",
-    valueGetter: (params) => params?.D2?.[10]?.split(":")[0],
+    valueGetter: (params) =>
+      params?.D2?.[10]?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "D2_10_other_specify",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Other specify)",
-    valueGetter: (params) => params?.D2?.[10]?.split(":")[1],
+    valueGetter: (params) => params?.D2?.[10]?.split(":")?.[1],
   },
   {
     field: "D2_11",
@@ -1071,13 +1242,14 @@ const PartDcolumns = [
     field: "D3_8",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Others)",
-    valueGetter: (params) => params?.D3?.[8]?.split(":")[0],
+    valueGetter: (params) =>
+      params?.D3?.[8]?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "D3_8_other_specify",
     headerName:
       "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (other specify)",
-    valueGetter: (params) => params?.D3?.[8]?.split(":")[1],
+    valueGetter: (params) => params?.D3?.[8]?.split(":")?.[1],
   },
   {
     field: "D4_0",
@@ -1108,13 +1280,14 @@ const PartDcolumns = [
     field: "D4_5",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Others)",
-    valueGetter: (params) => params?.D4?.[5]?.split(":")[0],
+    valueGetter: (params) =>
+      params?.D4?.[5]?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "D4_5_other_specify",
     headerName:
       "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (other specify)",
-    valueGetter: (params) => params?.D4?.[5]?.split(":")[1],
+    valueGetter: (params) => params?.D4?.[5]?.split(":")?.[1],
   },
 ];
 
@@ -1156,9 +1329,34 @@ const PartEcolumns = [
       "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = None)",
   },
   {
-    field: "E3",
+    field: "E3_a",
     headerName:
-      "E.3 How much amount was spent on the following while availing the emergency care service?",
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Drugs)",
+  },
+  {
+    field: "E3_b",
+    headerName:
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Consultation)",
+  },
+  {
+    field: "E3_c",
+    headerName:
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Diagnostics)",
+  },
+  {
+    field: "E3_d",
+    headerName:
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Implants and devices etc.)",
+  },
+  {
+    field: "E3_e",
+    headerName:
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Hospital stay)",
+  },
+  {
+    field: "E3_f",
+    headerName:
+      "E.3 How much amount was spent on the following while availing the emergency care service? (choice = Other (Specify))",
   },
   {
     field: "E4",
@@ -1166,9 +1364,29 @@ const PartEcolumns = [
       "E.4 What was the approximate overall money spent on the availing the emergency care service?",
   },
   {
-    field: "E5",
+    field: "E5_a",
     headerName:
-      "E.5 How much extra amount was spent on the following while availing the emergency care service?",
+      "E.5 How much extra amount was spent on the following while availing the emergency care service? (choice = Transportation)",
+  },
+  {
+    field: "E5_b",
+    headerName:
+      "E.5 How much extra amount was spent on the following while availing the emergency care service? (choice = Boarding/ lodging)",
+  },
+  {
+    field: "E5_c",
+    headerName:
+      "E.5 How much extra amount was spent on the following while availing the emergency care service? (choice = Nursing attendant)",
+  },
+  {
+    field: "E5_d",
+    headerName:
+      "E.5 How much extra amount was spent on the following while availing the emergency care service? (choice = Food)",
+  },
+  {
+    field: "E5_e",
+    headerName:
+      "E.5 How much extra amount was spent on the following while availing the emergency care service? (choice = Other (Specify))",
   },
   {
     field: "E6",
@@ -1186,9 +1404,54 @@ const PartEcolumns = [
       "E.8 What is the cost of lost productivity due to premature death on the availing the emergency care service?",
   },
   {
-    field: "E9",
+    field: "E9_a",
     headerName:
-      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered?",
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Personal Income)",
+  },
+  {
+    field: "E9_b",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice =  Household income excluding personal income)",
+  },
+  {
+    field: "E9_c",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Savings)",
+  },
+  {
+    field: "E9_d",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Loan from Bank)",
+  },
+  {
+    field: "E9_e",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Borrowed from friends/relatives)",
+  },
+  {
+    field: "E9_f",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Contribution from friends/relatives)",
+  },
+  {
+    field: "E9_g",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Selling assets/property/jewellery)",
+  },
+  {
+    field: "E9_h",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Insurance coverage)",
+  },
+  {
+    field: "E9_i",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Reimbursement from employer)",
+  },
+  {
+    field: "E9_j",
+    headerName:
+      "E.9 What were the sources through which you met the expenses for emergency care and what is the amount covered? (choice = Other (Specify))",
   },
   {
     field: "E10",
@@ -1265,7 +1528,6 @@ const PartFcolumns = [
     field: "F10_6",
     headerName:
       "F.10 What type of Transport facility available at home: (choice = Others)",
-    valueGetter: (params) => params?.F10,
   },
   // {
   //   field: "F10_os",
