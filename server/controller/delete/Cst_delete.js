@@ -2,7 +2,7 @@ import { CSTFORM } from "../../Database/CST.js";
 
 export const deleteCst = async (req, res) => {
     try {
-        const { ids } = req.body;  
+        const { ids } = req.body;
 
         if (!ids || !Array.isArray(ids) || ids.length === 0) {
             return res.status(400).json({

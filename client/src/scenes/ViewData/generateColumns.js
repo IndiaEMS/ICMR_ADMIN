@@ -9,6 +9,8 @@ const generateColumns = (columns) => {
       return {
         field: column.field,
         headerName: column.headerName,
+        checkboxSelection: column.checkboxSelection,
+    headerCheckboxSelection: column.headerCheckboxSelection,
         valueFormatter: column.valueFormatter,
         valueGetter: (params) => {
           if (column.valueGetter) {

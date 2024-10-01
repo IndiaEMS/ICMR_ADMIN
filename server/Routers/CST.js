@@ -10,6 +10,6 @@ router.post("/cstdata", jsonparser, CSTConroller);
 router.get("/CST", jsonparser,AuthenciatedUser, CSTGetController);
 // router.get("/HFAT-1/:state", jsonparser, CSTGetController);
 
-router.delete("/CST/delete", deleteCst);
+router.delete("/CST/delete",AuthenciatedUser, deleteCst);
 
 export default router;

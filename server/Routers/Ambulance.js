@@ -9,6 +9,6 @@ const jsonparser = bodyParser.json();
 router.post("/AMBULANCE", jsonparser, AMBULANCEController);
 router.get("/AMBULANCE", jsonparser,AuthenciatedUser, AMBULANCEGet);
 
-router.delete("/AMBULANCE/delete", ambulance_delete);
+router.delete("/AMBULANCE/delete",AuthenciatedUser, ambulance_delete);
 
 export default router;

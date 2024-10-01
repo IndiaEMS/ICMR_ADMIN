@@ -4,7 +4,7 @@ export const columns = [
     field: "_id",
     headerName: "Record ID",
     checkboxSelection: true,
-    headerCheckboxSelection: true,
+    headerCheckboxSelection: false,
     width: 250,
   },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },

@@ -19,6 +19,6 @@ router.delete("/HFAT-3", jsonparser, HFAT3Delete);
 // router.get("/HFAT-3/Csv", jsonparser, HFAT3DownloadCsv);
 // router.get("/HFAT-3/Excel", jsonparser, HFAT3DownloadExcel);
 
-router.delete("HFAT-3/delete", deleteHfat3)
+router.delete("HFAT-3/delete",AuthenciatedUser, deleteHfat3)
 
 export default router;

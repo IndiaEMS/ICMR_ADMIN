@@ -22,6 +22,6 @@ router.get("/HFAT-1/Download", jsonparser, HFAT1DownloadCsv);
 router.get("/HFAT-1/Excel", jsonparser, HFAT1DownloadExcel);
 router.delete("/HFAT-1", jsonparser, HFAT1Delete);
 
-router.delete("HFAT-1/delete", deleteHfat1);
+router.delete("HFAT-1/delete",AuthenciatedUser, deleteHfat1);
 
 export default router;

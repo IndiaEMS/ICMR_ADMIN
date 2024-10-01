@@ -6,7 +6,7 @@ const columns = [
     headerName: "Record ID",
     field: "id",
     checkboxSelection: true,
-    headerCheckboxSelection: true,
+    headerCheckboxSelection: false,
     width: 250,
     valueGetter: (params) => params.data?._id,
   },

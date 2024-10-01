@@ -5,7 +5,7 @@ const columns = [
     field: "_id",
     headerName: "Record ID",
     checkboxSelection: true,
-    headerCheckboxSelection: true,
+    headerCheckboxSelection: false,
   },
   { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
   {
