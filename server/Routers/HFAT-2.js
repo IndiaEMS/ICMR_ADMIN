@@ -9,6 +9,7 @@ import {
   HFAT2AndAMBULANCEGet,
 } from "../controller/HFAT-2.js";
 import { AuthenciatedUser } from "../Middleware/auth.js";
+import { deleteHfat2 } from "../controller/delete/Haft_2_delete.js";
 
 const router = express.Router();
 const jsonparser = bodyParser.json();
@@ -18,5 +19,7 @@ router.get("/HFAT-2WithAMB", jsonparser,AuthenciatedUser, HFAT2AndAMBULANCEGet);
 router.get("/HFAT-2/Download", jsonparser, HFAT2DownloadCsv);
 router.get("/HFAT-2/Excel", jsonparser, HFAT2DownloadExcel);
 router.delete("/HFAT-3", jsonparser, HFAT2Delete);
+
+router.delete("/HFAT-2/delete", deleteHfat2);
 
 export default router;
