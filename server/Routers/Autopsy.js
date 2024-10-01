@@ -5,10 +5,13 @@ import {
   AutopsyGetController,
 } from "../controller/Autopsy.js";
 import { AuthenciatedUser } from "../Middleware/auth.js";
+import { autopsy_delete } from "../controller/delete/Autopsy_delete.js";
 const router = express.Router();
 const jsonparser = bodyParser.json();
 
 router.post("/Autopsy", jsonparser, AutopsyController);
 router.get("/Autopsy", jsonparser,AuthenciatedUser ,AutopsyGetController);
+
+router.delete('/Autopsy/delete', autopsy_delete);
 
 export default router;
