@@ -2,6 +2,9 @@ const column = [
   {
     field: "id",
     headerName: "Record ID",
+    checkboxSelection: true,
+    headerCheckboxSelection: false,
+    width: 250,
     valueGetter: (params) => params.data._id,
   },
   { field: "FA1", headerName: "FA.1 : Name of the respondent:" },

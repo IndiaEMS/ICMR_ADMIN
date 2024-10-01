@@ -469,7 +469,7 @@ const Hfat_2_ViewData = () => {
           columnDefs={columnDefs}
           // defaultColDef={columns}
 
-          rowSelection={"multiple"}
+          rowSelection="multiple"
           // suppressRowClickSelection={true}
           // rowMultiSelectWithClick={true}
           // enableCellTextSelection={true}

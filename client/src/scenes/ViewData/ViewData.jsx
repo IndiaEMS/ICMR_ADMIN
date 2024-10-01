@@ -9,6 +9,7 @@ import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { DownloadOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../components/Header";
 import React, {
   useState,
@@ -54,8 +55,10 @@ const ViewData = ({ formName }) => {
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
   const [selectedState, setSelectedState] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
   const { user } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
+
 
   const adminState = user;
 
@@ -120,7 +123,7 @@ const ViewData = ({ formName }) => {
       setTitle("Verbal Autopsy Tool");
       setColumns(AutopsyColumnsExport);
       setExportColumns(AutopsyColumnsExport);
-      console.log(data);
+      // console.log(data);
       setRows(data);
 
       // setRows(CSTRows(data));
@@ -212,6 +215,44 @@ const ViewData = ({ formName }) => {
     }
   };
 
+  const handleDelete = async () => {
+    if (selectedRows.length === 0) {
+      alert("No rows selected for deletion!");
+      return;
+    }
+
+    const selectedIds = selectedRows.map((row) => row._id); // Assuming the rows have an 'id' field
+    
+    try {
+      // Make delete request
+      await axios.delete(`${url}/${formName}/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { ids: selectedIds }, // Sending the selected ids to be deleted
+      });
+
+      // Refresh the data after successful deletion
+      getData();
+      alert("Selected rows deleted successfully");
+    } catch (error) {
+      console.error("Error deleting rows:", error);
+      alert("Failed to delete rows");
+    }
+  };
+
+
+  const onSelectionChanged = (params) => {
+    const selectedNodes = params.api.getSelectedNodes();
+    const selectedData = selectedNodes.map((node) => node.data);
+    setSelectedRows(selectedData);
+
+    if (selectedData.length > 10) {
+      // Enforce the selection limit of 10
+      alert("Maximum 10 records can be selected at one time.");
+    }
+  };
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -240,11 +281,25 @@ const ViewData = ({ formName }) => {
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
+              mr: "10px",
             }}
             onClick={handleDownloadCSV}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
             Download in CSV
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+            }}
+            onClick={handleDelete}
+          >
+            <DeleteIcon sx={{ mr: "10px" }} />
+            Delete
           </Button>
         </Box>
       </Box>
@@ -411,6 +466,7 @@ const ViewData = ({ formName }) => {
           rowData={rows}
           columnDefs={cols ?? columns}
           rowSelection={"multiple"}
+          onSelectionChanged={onSelectionChanged}
           defaultColDef={{
             sortable: true,
             filter: true,

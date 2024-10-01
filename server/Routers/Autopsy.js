@@ -12,6 +12,6 @@ const jsonparser = bodyParser.json();
 router.post("/Autopsy", jsonparser, AutopsyController);
 router.get("/Autopsy", jsonparser,AuthenciatedUser ,AutopsyGetController);
 
-router.delete('/Autopsy/delete', autopsy_delete);
+router.delete('/Autopsy/delete',AuthenciatedUser , autopsy_delete);
 
 export default router;

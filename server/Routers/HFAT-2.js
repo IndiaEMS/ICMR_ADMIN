@@ -20,6 +20,6 @@ router.get("/HFAT-2/Download", jsonparser, HFAT2DownloadCsv);
 router.get("/HFAT-2/Excel", jsonparser, HFAT2DownloadExcel);
 router.delete("/HFAT-3", jsonparser, HFAT2Delete);
 
-router.delete("/HFAT-2/delete", deleteHfat2);
+router.delete("/HFAT-2/delete",AuthenciatedUser, deleteHfat2);
 
 export default router;

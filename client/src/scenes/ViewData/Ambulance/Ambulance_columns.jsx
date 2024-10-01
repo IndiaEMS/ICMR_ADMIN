@@ -4,6 +4,9 @@ export const columns = [
   {
     field: "AMBid",
     headerName: "Record ID",
+    checkboxSelection: true,
+    headerCheckboxSelection: false,
+    width: 250,
     valueGetter: (params) => params.data?._id,
   },
   {
