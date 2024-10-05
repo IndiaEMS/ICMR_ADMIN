@@ -179,7 +179,8 @@ export const columns = [
         ],
       },
       {
-        headerName: "Sphygrnomanometer, Non-mercurial- Paediatric cuff",
+        headerName:
+          "Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff",
         children: [
           { field: "table1_6_Available", headerName: "Available" },
           { field: "table1_6_Functional", headerName: "Functional" },
@@ -187,7 +188,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Sphygrnomanometer, Non-mercurial- Adult cuff",
+        headerName: "Stethoscope (Adult)",
         children: [
           { field: "table1_7_Available", headerName: "Available" },
           { field: "table1_7_Functional", headerName: "Functional" },
@@ -195,7 +196,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Stethoscope Paediatric",
+        headerName: "Stethoscope (Paediatric)",
         children: [
           { field: "table1_8_Available", headerName: "Available" },
           { field: "table1_8_Functional", headerName: "Functional" },
@@ -203,7 +204,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Stethoscope Adult",
+        headerName: "Endotracheal tubes (Adult)",
         children: [
           { field: "table1_9_Available", headerName: "Available" },
           { field: "table1_9_Functional", headerName: "Functional" },
@@ -211,7 +212,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Endotracheal tubes Paediatric",
+        headerName: "Endotracheal tubes (Paediatric)",
         children: [
           { field: "table1_10_Available", headerName: "Available" },
           { field: "table1_10_Functional", headerName: "Functional" },
@@ -219,7 +220,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Endotracheal tubes Adult",
+        headerName: "Laryngeal Mask Airway (Paediatric)",
         children: [
           { field: "table1_11_Available", headerName: "Available" },
           { field: "table1_11_Functional", headerName: "Functional" },
@@ -227,7 +228,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Laryngeal Mask Airways Paediatric",
+        headerName: "Laryngeal Mask Airways(Adult)",
         children: [
           { field: "table1_12_Available", headerName: "Available" },
           { field: "table1_12_Functional", headerName: "Functional" },
@@ -235,7 +236,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Laryngeal Mask Airways Adult",
+        headerName: "Nebulizer with nebulizer kit",
         children: [
           { field: "table1_13_Available", headerName: "Available" },
           { field: "table1_13_Functional", headerName: "Functional" },
@@ -243,7 +244,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Nebulizer with nebulizer kit",
+        headerName: "Laryngoscope Set (Adult)",
         children: [
           { field: "table1_14_Available", headerName: "Available" },
           { field: "table1_14_Functional", headerName: "Functional" },
@@ -251,7 +252,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Laryngoscope Set Paediatric",
+        headerName: "Laryngoscope Set (Paediatric)",
         children: [
           { field: "table1_15_Available", headerName: "Available" },
           { field: "table1_15_Functional", headerName: "Functional" },
@@ -259,7 +260,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Laryngoscope Set Adult",
+        headerName: "Communication Device (eg. mobile, Radio)",
         children: [
           { field: "table1_16_Available", headerName: "Available" },
           { field: "table1_16_Functional", headerName: "Functional" },
@@ -267,7 +268,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Communication Device",
+        headerName: "Syringe Infusion Pump",
         children: [
           { field: "table1_17_Available", headerName: "Available" },
           { field: "table1_17_Functional", headerName: "Functional" },
@@ -275,7 +276,7 @@ export const columns = [
         ],
       },
       {
-        headerName: "Syringe Infusion Pump",
+        headerName: "Transport Ventilators",
         children: [
           { field: "table1_18_Available", headerName: "Available" },
           { field: "table1_18_Functional", headerName: "Functional" },
@@ -283,21 +284,21 @@ export const columns = [
         ],
       },
       {
-        headerName: "Transport Ventilators",
+        headerName: "GPS System",
         children: [
           { field: "table1_19_Available", headerName: "Available" },
           { field: "table1_19_Functional", headerName: "Functional" },
           { field: "table1_19_LastUsed", headerName: "When was it last used?" },
         ],
       },
-      {
-        headerName: "GPS System",
-        children: [
-          { field: "table1_20_Available", headerName: "Available" },
-          { field: "table1_20_Functional", headerName: "Functional" },
-          { field: "table1_20_LastUsed", headerName: "When was it last used?" },
-        ],
-      },
+      // {
+      //   headerName: "GPS System",
+      //   children: [
+      //     { field: "table1_20_Available", headerName: "Available" },
+      //     { field: "table1_20_Functional", headerName: "Functional" },
+      //     { field: "table1_20_LastUsed", headerName: "When was it last used?" },
+      //   ],
+      // },
     ],
   },
 
