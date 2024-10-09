@@ -18,16 +18,16 @@ export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  
+  const [isLoading, setIsLoading] = useState(false);
 
   const url = import.meta.env.VITE_SERVER;
-  
 
   const handleSubmit = async (e) => {
+    setIsLoading(true);
     e.preventDefault();
-    console.log(username, password);
+    // console.log(username, password);
 
     try {
       const response = await axios.post(`${url}/login`, {
@@ -35,12 +35,12 @@ export default function AdminLogin() {
         password,
       });
 
-      console.log("RESPONSE",response);
+      // console.log("RESPONSE",response);
       const { user, token } = response.data;
-      
+
       if (user.role === "admin" || user.role === "superadmin") {
         dispatch(setUser(user));
-        dispatch(setToken(token))
+        dispatch(setToken(token));
         localStorage.setItem("token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(user));
         navigate("/");
@@ -50,13 +50,14 @@ export default function AdminLogin() {
     } catch (err) {
       setError("Invalid credentials");
     }
+    setIsLoading(false);
   };
 
   return (
     <Container component="main" maxWidth="xs">
       <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
         <Typography component="h1" variant="h5" align="center">
-          Admin Login
+          Admin Portal
         </Typography>
         {error && (
           <Typography color="error" align="center">
@@ -65,6 +66,19 @@ export default function AdminLogin() {
         )}
         <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
           <TextField
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+              },
+              "& .MuiInputLabel-root": {
+                color: "white",
+              },
+              "& .MuiInputBase-input": {
+                color: "white",
+              },
+              "& label.Mui-focused": { color: "white" },
+            }}
             variant="outlined"
             margin="normal"
             required
@@ -76,6 +90,19 @@ export default function AdminLogin() {
             autoFocus
           />
           <TextField
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                "&.Mui-focused fieldset": { borderColor: "white" },
+                "&:hover fieldset": { borderColor: "white" },
+              },
+              "& .MuiInputLabel-root": {
+                color: "white",
+              },
+              "& .MuiInputBase-input": {
+                color: "white",
+              },
+              "& label.Mui-focused": { color: "white" },
+            }}
             variant="outlined"
             margin="normal"
             required
@@ -87,8 +114,13 @@ export default function AdminLogin() {
             autoComplete="current-password"
           />
           <Grid container justifyContent="center" style={{ marginTop: "20px" }}>
-            <Button type="submit" variant="contained" color="primary">
-              Login
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isLoading}
+            >
+              {isLoading ? "Loading" : "Login"}
             </Button>
           </Grid>
         </form>
