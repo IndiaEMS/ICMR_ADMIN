@@ -61,30 +61,38 @@ const Form = () => {
   const [SubmitedMsg, setSubmittedMsg] = useState("");
   // const [dropdownItems, setDropDownItems] = useState([]);
 
-  const handleFormSubmit = async (values) => {
+  const handleFormSubmit = async (values, { resetForm }) => {
     try {
-      // console.log(values);
-      const { data } = await axios.post(`${url}/user`, values);
-      console.log(data);
+      setSubmittedMsg("");
+      const userPayload = {
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        sitename: values.sitename,
+        role: values.role,
+      };
+
+      const { data } = await axios.post(`${url}/user`, userPayload);
       if (data.error) {
         setSubmittedMsg(data.error);
         return;
       }
       setSubmittedMsg("User Created Successfully");
+      resetForm();
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       // setSubmittedMsg(error.response.data.message);
+      setSubmittedMsg("Something went wrong. Please try again later.");
     }
   };
 
-  // const handleDropdownChange = (event) => {
-  //   // console.log(event.target);
-  //   initialValues.state = event.target.value;
-  //   console.log(initialValues.state);
-  //   // initialValues[event.target.name] = event.target.value;
-
-  //   // setSelectedState(event.target);
-  // };
+  const initialValues = {
+    username: "",
+    email: "",
+    password: "",
+    sitename: "",
+    role: "user",
+  };
 
   return (
     <Box m="20px">
@@ -133,190 +141,140 @@ const Form = () => {
           handleBlur,
           handleChange,
           handleSubmit,
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <Box
-              display="grid"
-              gap="30px"
-              gridTemplateColumns="repeat(4, minmax(0, 1fr))"
-              sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+        }) => {
+          return (
+            <form onSubmit={handleSubmit}>
+              <Box
+                display="grid"
+                gap="30px"
+                gridTemplateColumns="repeat(4, minmax(0, 1fr))"
+                sx={{
+                  "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
 
-                "& .MuiFormLabel-root.Mui-focused": {
-                  color: colors.greenAccent[400],
-                },
-                // "& .MuiInputBase-input": { color: "red" },
-              }}
-            >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="User Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.username}
-                name="username"
-                error={!!touched.username && !!errors.username}
-                helperText={touched.username && errors.username}
-                sx={{ gridColumn: "span 3" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 3" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Password"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.password}
-                name="password"
-                error={!!touched.password && !!errors.password}
-                helperText={touched.password && errors.password}
-                sx={{ gridColumn: "span 3" }}
-              />
-              {/* <Box gridColumn="span 3">
-                <FormControl
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: colors.greenAccent[400],
+                  },
+                  // "& .MuiInputBase-input": { color: "red" },
+                }}
+              >
+                <TextField
                   fullWidth
                   variant="filled"
-                  error={!!touched.state && !!errors.state}
-                >
-                  <InputLabel id="demo-simple-select-label-state">
-                    State
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label-state"
-                    label="state"
-                    name="state"
-                    onBlur={handleBlur}
-                    onChange={(e) => {
-                      handleChange(e);
-                      setSelectedState(e.target.value);
-                    }}
-                    value={values.state}
-                  >
-                    <MenuItem value="" disabled>
-                      Select State Name
-                    </MenuItem>
-                    {state.map((site) => (
-                      <MenuItem key={site} value={site}>
-                        {site}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>
-                    {touched.state && errors.state}
-                  </FormHelperText>
-                </FormControl>
-              </Box> */}
-              <Box gridColumn="span 3">
-                <FormControl
+                  type="text"
+                  label="User Name"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.username}
+                  name="username"
+                  error={!!touched.username && !!errors.username}
+                  helperText={touched.username && errors.username}
+                  sx={{ gridColumn: "span 3" }}
+                />
+                <TextField
                   fullWidth
                   variant="filled"
-                  error={!!touched.sitename && !!errors.sitename}
-                >
-                  <InputLabel id="demo-simple-select-label">
-                    Site Name
-                  </InputLabel>
-                  <Select
-                    labelId="demo-simple-select-label"
+                  type="text"
+                  label="Email"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.email}
+                  name="email"
+                  error={!!touched.email && !!errors.email}
+                  helperText={touched.email && errors.email}
+                  sx={{ gridColumn: "span 3" }}
+                />
+                <TextField
+                  fullWidth
+                  variant="filled"
+                  type="text"
+                  label="Password"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.password}
+                  name="password"
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
+                  sx={{ gridColumn: "span 3" }}
+                />
+                <Box gridColumn="span 3">
+                  <FormControl
                     fullWidth
                     variant="filled"
-                    label="Site Name"
-                    onBlur={handleBlur}
-                    onChange={handleChange}
-                    value={values.sitename}
-                    name="sitename"
-                    // error={!!touched.sitename && !!errors.sitename}
-                    // helperText={touched.sitename && errors.sitename}
-                    sx={{ gridColumn: "span 3" }}
+                    error={!!touched.sitename && !!errors.sitename}
                   >
-                    <MenuItem value="" disabled>
-                      Select Site Name
-                    </MenuItem>
-                    {/* <MenuItem value="1">sss</MenuItem>
-                    <MenuItem value="2">sss</MenuItem>
-                    <MenuItem value="3">sss</MenuItem> */}
-                    {state.map((site) => (
-                      <MenuItem key={site} value={site}>
-                        {site}
+                    <InputLabel id="demo-simple-select-label">
+                      Site Name
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-label"
+                      fullWidth
+                      variant="filled"
+                      label="Site Name"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                      value={values.sitename}
+                      name="sitename"
+                      // error={!!touched.sitename && !!errors.sitename}
+                      // helperText={touched.sitename && errors.sitename}
+                      sx={{ gridColumn: "span 3" }}
+                    >
+                      <MenuItem value="" disabled>
+                        Select Site Name
                       </MenuItem>
-                    ))}
-                  </Select>
-                  <FormHelperText>
-                    {touched.sitename && errors.sitename}
-                  </FormHelperText>
-                </FormControl>
+                      {state.map((site) => (
+                        <MenuItem key={site} value={site}>
+                          {site}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                    <FormHelperText>
+                      {touched.sitename && errors.sitename}
+                    </FormHelperText>
+                  </FormControl>
+                </Box>
+
+                <Box gridColumn="span 4">
+                  <Typography variant="h5">User Type</Typography>
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={values.role === "user"}
+                        onChange={handleChange}
+                        value="user"
+                        name="role"
+                        color="secondary"
+                      />
+                    }
+                    label="User"
+                  />
+                  <FormControlLabel
+                    control={
+                      <Radio
+                        checked={values.role === "admin"}
+                        onChange={handleChange}
+                        value="admin"
+                        name="role"
+                        color="secondary"
+                      />
+                    }
+                    label="Admin"
+                  />
+                </Box>
               </Box>
 
-              {/* <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Site Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.sitename}
-                name="sitename"
-                error={!!touched.sitename && !!errors.sitename}
-                helperText={touched.sitename && errors.sitename}
-                sx={{ gridColumn: "span 3" }}
-              /> */}
-
-              <Box gridColumn="span 4">
-                <Typography variant="h5">User Type</Typography>
-                <FormControlLabel
-                  control={
-                    <Radio
-                      checked={values.role === "user"}
-                      onChange={handleChange}
-                      value="user"
-                      name="role"
-                      color="secondary"
-                      // i wan to change color of radio button
-                    />
-                  }
-                  label="User"
-                />
-                <FormControlLabel
-                  control={
-                    <Radio
-                      checked={values.role === "admin"}
-                      onChange={handleChange}
-                      value="admin"
-                      name="role"
-                      color="secondary"
-                    />
-                  }
-                  label="Admin"
-                />
+              <Box display="flex" mt="20px">
+                <Button
+                  type="submit"
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleFormSubmit}
+                >
+                  Create New User
+                </Button>
               </Box>
-            </Box>
-
-            <Box display="flex" mt="20px">
-              <Button
-                type="submit"
-                color="secondary"
-                variant="contained"
-                onClick={handleFormSubmit}
-              >
-                Create New User
-              </Button>
-            </Box>
-          </form>
-        )}
+            </form>
+          );
+        }}
       </Formik>
     </Box>
   );
@@ -326,17 +284,8 @@ const checkoutSchema = yup.object().shape({
   username: yup.string().required("required"),
   email: yup.string().email("invalid email").required("required"),
   password: yup.string().required("required"),
-  state: yup.string().required("required"),
+  // state: yup.string().required("required"),
   sitename: yup.string().required("required"),
 });
-
-const initialValues = {
-  username: "",
-  email: "",
-  password: "",
-  state: "",
-  sitename: "",
-  role: "user",
-};
 
 export default Form;

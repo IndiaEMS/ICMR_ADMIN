@@ -40,7 +40,7 @@ export const CreateUser = async (req, res, next) => {
   try {
     const jwt_secret = process.env.JWT_SECRET;
 
-    const { username, email, password, state, sitename, role } = req.body;
+    const { username, email, password, sitename, role } = req.body;
 
     User.findOne({ username: email })
       .then((result) => {
@@ -61,7 +61,7 @@ export const CreateUser = async (req, res, next) => {
             name: username,
             password: password,
             username: email,
-            sitename: `${sitename}, ${state}`,
+            sitename: sitename,
             role: role,
           });
 
