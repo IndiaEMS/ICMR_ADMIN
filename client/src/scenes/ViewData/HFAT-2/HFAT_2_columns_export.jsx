@@ -606,6 +606,7 @@ export const columns = [
     field: "table1_16_Manpower(other specify)",
     headerName:
       "2C.1 Tick the manpower available in your emergency department and provide (Others Specify) (Manpower)",
+    valueGetter: (params) => params.data?.table1?.[16]?.otherSpecify,
   },
   {
     field: "table1_16_Availability",
@@ -713,7 +714,7 @@ export const columns = [
     field: "H2C4_1",
     headerName:
       "2C.4  Frequency of training on emergency care in a year? (other specify)",
-      valueGetter: (params) => params.data?.H2C4?.split(":")[1],
+    valueGetter: (params) => params.data?.H2C4?.split(":")[1],
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },
   {

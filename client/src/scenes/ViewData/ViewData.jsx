@@ -1,23 +1,19 @@
 import axios from "axios";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 
-import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import { DownloadOutlined } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../components/Header";
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-  useRef,
-} from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { HFAT1Columns } from "./HFAT-1/HFAT_1_columns";
 import { HFAT1ColumnsExport } from "./HFAT-1/HFAT_1_columns_export";
@@ -31,15 +27,14 @@ import { AmbulanceColumnsExport } from "./Ambulance/Ambulance_columns_export";
 import { HFAT1Rows } from "./HFAT-1/HFAT_1_rows";
 import { HFAT2Rows } from "./HFAT-2/HFAT_2_rows";
 import { HFAT3Rows } from "./HFAT-3/HFAT_3_rows";
-import { AmbulanceRows } from "./Ambulance/Ambulance_rows";
 
 import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
 import { CSTColumns } from "./CST/CST_columns";
-import { CSTRows } from "./CST/CST_rows";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 import { useSelector } from "react-redux";
+import MapView from "./MapView";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -59,6 +54,8 @@ const ViewData = ({ formName }) => {
   const { user } = useSelector((state) => state.auth);
   const { token } = useSelector((state) => state.auth);
 
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [mapData, setMapData] = useState([]);
 
   const adminState = user;
 
@@ -78,6 +75,11 @@ const ViewData = ({ formName }) => {
       setColumns(HFAT1Columns);
       setExportColumns(HFAT1ColumnsExport);
       setRows(data);
+      setMapData(
+        rows
+          .filter((row) => row.A10 && row.A10.latitude && row.A10.longitude)
+          .map((row) => [row.A10.latitude, row.A10.longitude])
+      );
       // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
@@ -85,12 +87,22 @@ const ViewData = ({ formName }) => {
       setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
+      setMapData(
+        rows
+          .filter((row) => row.H2A9 && row.H2A9.latitude && row.H2A9.longitude)
+          .map((row) => [row.H2A9.latitude, row.H2A9.longitude])
+      );
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
       setColumns(HFAT3Columns);
       setExportColumns(HFAT3ColumnsExport);
       setRows(HFAT3Rows(data));
+      setMapData(
+        rows
+          .filter((row) => row.H3A9 && row.H3A9.latitude && row.H3A9.longitude)
+          .map((row) => [row.H3A9.latitude, row.H3A9.longitude])
+      );
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...AmbulanceColumns]);
@@ -222,7 +234,7 @@ const ViewData = ({ formName }) => {
     }
 
     const selectedIds = selectedRows.map((row) => row._id); // Assuming the rows have an 'id' field
-    
+
     try {
       // Make delete request
       await axios.delete(`${url}/${formName}/delete`, {
@@ -241,7 +253,6 @@ const ViewData = ({ formName }) => {
     }
   };
 
-
   const onSelectionChanged = (params) => {
     const selectedNodes = params.api.getSelectedNodes();
     const selectedData = selectedNodes.map((node) => node.data);
@@ -251,6 +262,19 @@ const ViewData = ({ formName }) => {
       // Enforce the selection limit of 10
       alert("Maximum 10 records can be selected at one time.");
     }
+  };
+
+  const handleOpenMap = () => {
+    const firstSelectedRow = selectedRows[0];
+    if (firstSelectedRow) {
+      const location = [firstSelectedRow.lat, firstSelectedRow.lng]; // assuming your row has lat/lng properties
+      setSelectedLocation(location);
+    }
+    setIsMapOpen(true);
+  };
+
+  const handleCloseMap = () => {
+    setIsMapOpen(false);
   };
 
   return (
@@ -303,7 +327,7 @@ const ViewData = ({ formName }) => {
           </Button>
         </Box>
       </Box>
-      <Box>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box>
           {user.role === "superadmin" && (
             <Box>
@@ -407,6 +431,24 @@ const ViewData = ({ formName }) => {
             pondicherry
           </Button> */}
         </Box>
+
+        {/* {mapData.length > 0 && (
+          <Box>
+            <Button
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                mr: "10px",
+              }}
+              onClick={handleOpenMap}
+            >
+              View In Map
+            </Button>
+          </Box>
+        )} */}
       </Box>
       <Box
         m="40px 0 0 0"
@@ -477,6 +519,18 @@ const ViewData = ({ formName }) => {
           paginationPageSize={20}
         />
       </Box>
+      <Dialog open={isMapOpen} onClose={handleCloseMap} maxWidth="lg" fullWidth>
+        <DialogTitle>View Location on Map</DialogTitle>
+        <DialogContent>
+          <Box style={{ height: "600px" }}>
+            <MapView
+              // mapData={ambulanceData}
+              mapData={mapData} // Assuming rows have lat/lng
+              selectedLocation={selectedState}
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
     </Box>
   );
 };

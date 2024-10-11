@@ -472,6 +472,7 @@ const columns = [
     field: "table1_11_Manpower_other specify",
     headerName:
       "3C.1 : Tick the manpower available in your emergency department and provide numbers (Other Specify)",
+    valueGetter: (params) => params.data?.table1?.[11]?.otherSpecify,
   },
   {
     field: "table1_11_Number",

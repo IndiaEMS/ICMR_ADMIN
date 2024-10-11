@@ -15,11 +15,10 @@ const userSchema = new mongoose.Schema({
   },
   sitename: {
     type: String,
-    
   },
   role: {
     type: String,
-    enum: ["user", "admin", "superadmin"],
+    enum: ["user", "admin", "superadmin", "analytics"],
     default: "user",
   },
 });

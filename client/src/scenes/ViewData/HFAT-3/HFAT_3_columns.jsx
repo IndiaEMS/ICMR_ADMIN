@@ -439,8 +439,9 @@ const columns = [
             field: "table1_11_Manpower",
           },
           {
-            headerName: "Other Specify",
+            headerName: "Manpower (Other Specify)",
             field: "table1_11_Manpower_other_specify",
+            valueGetter: (params) => params.data?.table1?.[11]?.otherSpecify,
           },
           {
             headerName: "Number",

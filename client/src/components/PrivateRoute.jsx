@@ -15,7 +15,11 @@ const isAuthenticated = () => {
       return false;
     }
 
-    return payload.role === "admin" || payload.role === "superadmin";
+    return (
+      payload.role === "admin" ||
+      payload.role === "superadmin" ||
+      payload.role === "analytics"
+    );
   } catch (error) {
     console.error("Error decoding token:", error);
     return false;

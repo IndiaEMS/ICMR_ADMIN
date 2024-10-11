@@ -104,150 +104,154 @@ const Sidebar = () => {
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
             <Item
               title="Dashboard"
-              to="/"
+              to="/admin"
               icon={<HomeOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
 
-            <Typography
-              variant="h6"
-              color={colors.grey[300]}
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              View
-            </Typography>
-            {userRole === "superadmin" && (
-              <Item
-                title="Manage Team"
-                to="/team"
-                icon={<PeopleOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-            )}
-            <MenuItem
-              icon={<ViewListIcon />}
-              onClick={() => setIsHfatOpen(!isHfatOpen)}
-              active={selected.startsWith("HFAT")}
-              style={{ color: colors.grey[100] }}
-              suffix={
-                !isCollapsed ? (
-                  isHfatOpen ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )
-                ) : null
-              }
-            >
-              <Typography>HFAT</Typography>
-            </MenuItem>
-            {isHfatOpen && (
-              <Box paddingLeft="10%">
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-1"
-                  to="ViewData/HFAT-1"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-2"
-                  to="ViewData/HFAT-2"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-3"
-                  to="ViewData/HFAT-3"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="Ambulance"
-                  to="ViewData/AMBULANCE"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              </Box>
-            )}
-            <Item
-              icon={<ViewListIcon />}
-              title="CST"
-              to="ViewData/CST"
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Autopsy"
-              to="ViewData/Autopsy"
-              icon={<ViewListIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <MenuItem
-              icon={<ViewListIcon />}
-              onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}
-              active={selected.startsWith("HFAT")}
-              style={{ color: colors.grey[100] }}
-              suffix={
-                !isCollapsed ? (
-                  isHfatAMBOpen ? (
-                    <KeyboardArrowDownIcon />
-                  ) : (
-                    <KeyboardArrowRightIcon />
-                  )
-                ) : null
-              }
-            >
-              <Typography>HFAT With Ambulance</Typography>
-            </MenuItem>
-            {isHfatAMBOpen && (
-              <Box paddingLeft="10%">
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-1"
-                  to="ViewData/HFAT-1WithAMB"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-2"
-                  to="ViewData/HFAT-2WithAMB"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-                <Item
-                  icon={<ViewListIcon />}
-                  title="HFAT-3"
-                  to="ViewData/HFAT-3WithAMB"
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              </Box>
-            )}
-
-            {userRole === "superadmin" && (
+            {userRole != "analytics" && (
               <>
                 <Typography
                   variant="h6"
                   color={colors.grey[300]}
                   sx={{ m: "15px 0 5px 20px" }}
                 >
-                  Pages
+                  View
                 </Typography>
+                {userRole === "superadmin" && (
+                  <Item
+                    title="Manage Team"
+                    to="/team"
+                    icon={<PeopleOutlinedIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                )}
+                <MenuItem
+                  icon={<ViewListIcon />}
+                  onClick={() => setIsHfatOpen(!isHfatOpen)}
+                  active={selected.startsWith("HFAT")}
+                  style={{ color: colors.grey[100] }}
+                  suffix={
+                    !isCollapsed ? (
+                      isHfatOpen ? (
+                        <KeyboardArrowDownIcon />
+                      ) : (
+                        <KeyboardArrowRightIcon />
+                      )
+                    ) : null
+                  }
+                >
+                  <Typography>HFAT</Typography>
+                </MenuItem>
+                {isHfatOpen && (
+                  <Box paddingLeft="10%">
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-1"
+                      to="ViewData/HFAT-1"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-2"
+                      to="ViewData/HFAT-2"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-3"
+                      to="ViewData/HFAT-3"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="Ambulance"
+                      to="ViewData/AMBULANCE"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </Box>
+                )}
                 <Item
-                  title="Create User"
-                  to="/form"
-                  icon={<PersonOutlinedIcon />}
+                  icon={<ViewListIcon />}
+                  title="CST"
+                  to="ViewData/CST"
                   selected={selected}
                   setSelected={setSelected}
                 />
+                <Item
+                  title="Autopsy"
+                  to="ViewData/Autopsy"
+                  icon={<ViewListIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <MenuItem
+                  icon={<ViewListIcon />}
+                  onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}
+                  active={selected.startsWith("HFAT")}
+                  style={{ color: colors.grey[100] }}
+                  suffix={
+                    !isCollapsed ? (
+                      isHfatAMBOpen ? (
+                        <KeyboardArrowDownIcon />
+                      ) : (
+                        <KeyboardArrowRightIcon />
+                      )
+                    ) : null
+                  }
+                >
+                  <Typography>HFAT With Ambulance</Typography>
+                </MenuItem>
+                {isHfatAMBOpen && (
+                  <Box paddingLeft="10%">
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-1"
+                      to="ViewData/HFAT-1WithAMB"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-2"
+                      to="ViewData/HFAT-2WithAMB"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-3"
+                      to="ViewData/HFAT-3WithAMB"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </Box>
+                )}
+
+                {userRole === "superadmin" && (
+                  <>
+                    <Typography
+                      variant="h6"
+                      color={colors.grey[300]}
+                      sx={{ m: "15px 0 5px 20px" }}
+                    >
+                      Pages
+                    </Typography>
+                    <Item
+                      title="Create User"
+                      to="/form"
+                      icon={<PersonOutlinedIcon />}
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </>
+                )}
               </>
             )}
           </Box>

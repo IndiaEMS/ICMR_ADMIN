@@ -6,7 +6,7 @@ const columns = [
     checkboxSelection: true,
     headerCheckboxSelection: false,
     width: 250,
-    checkbox:"single",
+    checkbox: "single",
     valueGetter: (params) => params.data._id,
   },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },
@@ -511,6 +511,7 @@ const columns = [
           {
             headerName: "Manpower (Other Specify)",
             field: "table1_16_Manpower_other_specify",
+            valueGetter: (params) => params.data?.table1?.[16]?.otherSpecify,
           },
           { headerName: "Number", field: "table1_16_Number" },
           {
@@ -608,7 +609,7 @@ const columns = [
   {
     field: "H2C4_1",
     headerName:
-    "2C.4  Frequency of training on emergency care in a year? (other specify)",
+      "2C.4  Frequency of training on emergency care in a year? (other specify)",
     valueGetter: (params) => params.data?.H2C4?.split(":")[1],
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },

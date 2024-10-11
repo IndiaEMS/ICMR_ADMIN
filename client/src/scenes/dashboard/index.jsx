@@ -30,6 +30,16 @@ const Dashboard = () => {
   const [counter, setCounter] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState();
+  const [selectedState, setSelectedState] = useState("");
+
+  const states = [
+    { value: "", label: "All" },
+    { value: "GJBRC", label: "Gujarat" },
+    { value: "ORPUR", label: "Odisha" },
+    { value: "MPBHS", label: "Bhopal" },
+    { value: "PBLDH", label: "Ludhiana" },
+    { value: "PYPDY", label: "Pondicherry" },
+  ];
 
   // useEffect(() => {
   //   const fetchData = async () => {
@@ -92,6 +102,35 @@ const Dashboard = () => {
             Download Reports
           </Button>
         </Box> */}
+      </Box>
+      <Box padding={"0px 0px 20px 0px"}>
+        {user.role == "superadmin" || user.role == "analytics" ? (
+          <Box>
+            {states.map((state) => (
+              <Button
+                key={state.value}
+                sx={{
+                  backgroundColor:
+                    selectedState === state.value
+                      ? colors.greenAccent[700]
+                      : colors.blueAccent[700],
+                  color: colors.grey[100],
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  padding: "10px 20px",
+                  mr: "10px",
+                }}
+                onClick={() => {
+                  setSelectedState(state.value);
+                }}
+              >
+                {state.label}
+              </Button>
+            ))}
+          </Box>
+        ) : (
+          <></>
+        )}
       </Box>
 
       <Box

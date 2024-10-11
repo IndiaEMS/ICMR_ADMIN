@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   TextField,
@@ -24,6 +24,13 @@ export default function AdminLogin() {
 
   const url = import.meta.env.VITE_SERVER;
 
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
+  //   if (token) {
+  //     navigate("/admin");
+  //   }
+  // }, []);
+
   const handleSubmit = async (e) => {
     setIsLoading(true);
     e.preventDefault();
@@ -38,12 +45,16 @@ export default function AdminLogin() {
       // console.log("RESPONSE",response);
       const { user, token } = response.data;
 
-      if (user.role === "admin" || user.role === "superadmin") {
+      if (
+        user.role === "admin" ||
+        user.role === "superadmin" ||
+        user.role === "analytics"
+      ) {
         dispatch(setUser(user));
         dispatch(setToken(token));
         localStorage.setItem("token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(user));
-        navigate("/");
+        navigate("/admin");
       } else {
         setError("Access Denied: Only Admins can log in");
       }

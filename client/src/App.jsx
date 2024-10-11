@@ -29,7 +29,11 @@ function App() {
 
     // Decode token and check role (you need to implement this based on your backend)
     const user = JSON.parse(atob(token.split(".")[1])); // Basic example
-    return user.role === "admin" || user.role === "superadmin";
+    return (
+      user.role === "admin" ||
+      user.role === "superadmin" ||
+      user.role === "analytics"
+    );
   };
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -41,9 +45,10 @@ function App() {
             {isAuthenticated() && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/login" element={<AdminLogin />} />
+              <Route path="/" element={<AdminLogin />} />
 
               <Route
-                path="/"
+                path="/admin"
                 element={
                   <PrivateRoute>
                     <Dashboard />
