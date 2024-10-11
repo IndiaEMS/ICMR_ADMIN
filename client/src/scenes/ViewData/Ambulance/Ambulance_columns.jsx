@@ -64,15 +64,15 @@ export const columns = [
         field: "AMB12_3",
         headerName: "Nurse",
       },
-      // {
-      //   field: "AMB12_4",
-      //   headerName: "Other",
-      //   valueGetter: (params) => params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
-      // },
-      // {
-      //   field: "AMB12_4",
-      //   headerName: "Other Specify",
-      // },
+      {
+        field: "AMB12_4",
+        headerName: "Other",
+        valueGetter: (params) => params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
+      },
+      {
+        field: "AMB12_4",
+        headerName: "Other Specify",
+      },
     ],
   },
   {
@@ -516,6 +516,16 @@ export const columns = [
         //   { field: "AMB18_6", headerName: "Last Used" },
         // ],
       },
+      {
+        headerName: "None of the Above",
+        field: "AMB18_7",
+        // children: [
+        //   { field: "AMB18_6", headerName: "Available" },
+        //   { field: "AMB18_6", headerName: "Functional" },
+        //   { field: "AMB18_6", headerName: "Last Used" },
+        // ],
+      },
+
     ],
   },
 

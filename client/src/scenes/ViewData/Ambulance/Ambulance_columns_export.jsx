@@ -59,14 +59,15 @@ const columns = [
     field: "AMB12_3",
     headerName: "8. Staff on duty per ambulance (choice = nurse)",
   },
-  // {
-  //   field: "AMB12_4",
-  //   headerName: "8. Staff on duty per ambulance (choice = other)",
-  // },
-  // {
-  //   field: "AMB12_5",
-  //   headerName: "8. Staff on duty per ambulance (other specify)",
-  // },
+  {
+    field: "AMB12_4",
+    headerName: "8. Staff on duty per ambulance (choice = other)",
+    valueGetter: (params) => params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
+  },
+  {
+    field: "AMB12_4",
+    headerName: "8. Staff on duty per ambulance (other specify)",
+  },
   {
     field: "AMB13",
     headerName:
@@ -642,6 +643,11 @@ const columns = [
       "9.6 : Whether these Immobilizing equipment’s are available? (choice = Rigid cervical collars (small, medium, large)",
   },
   {
+    field: "AMB18_7",
+    headerName:
+      "9.6 : Whether these Immobilizing equipment’s are available? (choice = None of the Above)",
+  },
+  {
     field: "AMB19_0",
     headerName:
       "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Ambulance Cleaning Checklist)",
@@ -694,5 +700,3 @@ const AmbulanceColumnsExport = generateColumns(columns);
 const HFATAmbulanceColumnsExport = generateAMBColumns(columns);
 
 export { AmbulanceColumnsExport, HFATAmbulanceColumnsExport };
-
-
