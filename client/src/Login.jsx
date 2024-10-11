@@ -27,7 +27,7 @@ export default function AdminLogin() {
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
   //   if (token) {
-  //     navigate("/admin");
+  //     navigate("/");
   //   }
   // }, []);
 
@@ -54,7 +54,7 @@ export default function AdminLogin() {
         dispatch(setToken(token));
         localStorage.setItem("token", JSON.stringify(token));
         localStorage.setItem("user", JSON.stringify(user));
-        navigate("/admin");
+        navigate("/");
       } else {
         setError("Access Denied: Only Admins can log in");
       }

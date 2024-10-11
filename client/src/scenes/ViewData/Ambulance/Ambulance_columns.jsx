@@ -1,4 +1,5 @@
 import generateColumns from "../generateColumns";
+import generateAMBColumns from "../generateAMBColumns";
 
 export const columns = [
   {
@@ -536,4 +537,7 @@ export const columns = [
   },
 ];
 
-export const AmbulanceColumns = generateColumns(columns);
+const AmbulanceColumns = generateColumns(columns);
+const HFATAmbulanceColumns = generateAMBColumns(columns);
+
+export { AmbulanceColumns, HFATAmbulanceColumns };

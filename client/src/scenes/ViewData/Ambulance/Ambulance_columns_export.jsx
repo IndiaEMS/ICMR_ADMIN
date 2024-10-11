@@ -1,4 +1,5 @@
 import generateColumns from "../generateColumns";
+import generateAMBColumns from "../generateAMBColumns";
 
 const columns = [
   {
@@ -215,32 +216,32 @@ const columns = [
   {
     field: "table1_7_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Available)",
+      "9.4 : Whether it’s available or not (Stethoscope Adult - Available)",
   },
   {
     field: "table1_7_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Functional)",
+      "9.4 : Whether it’s available or not (Stethoscope Adult - Functional)",
   },
   {
     field: "table1_7_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - When was it last used?)",
+      "9.4 : Whether it’s available or not (Stethoscope Adult - When was it last used?)",
   },
   {
     field: "table1_8_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - Available)",
+      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Available)",
   },
   {
     field: "table1_8_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - Functional)",
+      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Functional)",
   },
   {
     field: "table1_8_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - When was it last used?)",
+      "9.4 : Whether it’s available or not (Stethoscope Paediatric - When was it last used?)",
   },
   {
     field: "table1_9_Available",
@@ -689,4 +690,9 @@ const columns = [
   },
 ];
 
-export const AmbulanceColumnsExport = generateColumns(columns);
+const AmbulanceColumnsExport = generateColumns(columns);
+const HFATAmbulanceColumnsExport = generateAMBColumns(columns);
+
+export { AmbulanceColumnsExport, HFATAmbulanceColumnsExport };
+
+

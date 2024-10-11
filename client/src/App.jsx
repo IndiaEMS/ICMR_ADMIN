@@ -45,10 +45,10 @@ function App() {
             {isAuthenticated() && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/login" element={<AdminLogin />} />
-              <Route path="/" element={<AdminLogin />} />
+              {/* <Route path="/" element={<AdminLogin />} /> */}
 
               <Route
-                path="/admin"
+                path="/"
                 element={
                   <PrivateRoute>
                     <Dashboard />

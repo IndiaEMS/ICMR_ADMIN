@@ -21,8 +21,14 @@ import { HFAT2Columns } from "./HFAT-2/HFAT_2_columns";
 import { HFAT2ColumnsExport } from "./HFAT-2/HFAT_2_columns_export";
 import { HFAT3Columns } from "./HFAT-3/HFAT_3_columns";
 import { HFAT3ColumnsExport } from "./HFAT-3/HFAT_3_columns_export";
-import { AmbulanceColumns } from "./Ambulance/Ambulance_columns";
-import { AmbulanceColumnsExport } from "./Ambulance/Ambulance_columns_export";
+import {
+  AmbulanceColumns,
+  HFATAmbulanceColumns,
+} from "./Ambulance/Ambulance_columns";
+import {
+  AmbulanceColumnsExport,
+  HFATAmbulanceColumnsExport,
+} from "./Ambulance/Ambulance_columns_export";
 
 import { HFAT1Rows } from "./HFAT-1/HFAT_1_rows";
 import { HFAT2Rows } from "./HFAT-2/HFAT_2_rows";
@@ -105,19 +111,22 @@ const ViewData = ({ formName }) => {
       );
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
-      setColumns([...HFAT1Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT1ColumnsExport, ...AmbulanceColumnsExport]);
+      setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      // console.log(data);
+
       setRows(HFAT1Rows(data));
-      // setRows(AmbulanceRows(data));
+      // setRows(AmbulanceRows(data.AmbulanceDetails));
     } else if (formName === "HFAT-2WithAMB") {
       setTitle("HFAT-2 with Ambulance");
-      setColumns([...HFAT2Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT2ColumnsExport, ...AmbulanceColumnsExport]);
+      setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      // console.log(data);
       setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3WithAMB") {
       setTitle("HFAT-3 with Ambulance");
-      setColumns([...HFAT3Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT3ColumnsExport, ...AmbulanceColumnsExport]);
+      setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT3ColumnsExport, ...HFATAmbulanceColumnsExport]);
       setRows(HFAT3Rows(data));
     } else if (formName === "AMBULANCE") {
       setTitle("Ambulance");

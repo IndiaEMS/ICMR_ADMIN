@@ -203,21 +203,70 @@ export const HFAT3Get = async (req, res, next) => {
 //   }
 // };
 
+// export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
+//   try {
+//     const adminId = req.user.id;
+//     const state = req.user.sitename;
+//     const role = req.user.role;
+
+//     if (!adminId || !state) {
+//       return next(new ErrorHandler("both id and state are required"));
+//     }
+
+//     const validateUser = await User.findById(adminId);
+
+//     if (!validateUser) {
+//       return next(new ErrorHandler("user is not authenticated"));
+//     }
+
+//     const stateCode = state?.trim();
+
+//     const states = [
+//       { value: "", label: "All" },
+//       { value: "GJBRC", label: "Gujarat" },
+//       { value: "ORPUR", label: "Odisha" },
+//       { value: "MPBHS", label: "Bhopal" },
+//       { value: "PBLDH", label: "Ludhiana" },
+//       { value: "PYPDY", label: "Pondicherry" },
+//     ];
+
+//     const matchedState = states.find((s) => s.label === stateCode);
+
+//     if (!matchedState) {
+//       return res.status(400).json({
+//         success: false,
+//         message: "State code not found",
+//       });
+//     }
+
+//     const regex = new RegExp(`^${matchedState.value}`);
+
+//     let HEAT3Data;
+//     if (role === "superadmin") {
+//       HEAT3Data = await HFAT3.find();
+//     } else {
+//       HEAT3Data = await HFAT3.find({ uniqueCode: { $regex: regex } });
+//     }
+
+//     if (!HEAT3Data || HEAT3Data.length === 0) {
+//       return res.status(404).json({ error: "Data not found" });
+//     }
+
+//     res.status(200).json({
+//       success: true,
+//       data: HEAT3Data,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+
 export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
   try {
-    const adminId = req.user.id;
+    const id = req.user.id;
     const state = req.user.sitename;
     const role = req.user.role;
-
-    if (!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"));
-    }
-
-    const validateUser = await User.findById(adminId);
-
-    if (!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"));
-    }
+    let HEAT3Data;
 
     const stateCode = state?.trim();
 
@@ -241,11 +290,67 @@ export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    let HEAT3Data;
     if (role === "superadmin") {
-      HEAT3Data = await HFAT3.find();
+      HEAT3Data = await HFAT3.aggregate([
+        {
+          $lookup: {
+            from: "ambulances", // The collection name in MongoDB for Ambulance
+            let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
+            pipeline: [
+              {
+                $addFields: {
+                  formUniqueCode: {
+                    $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
+                  },
+                },
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$formUniqueCode", "$$uniqueCode"] },
+                },
+              },
+            ],
+            as: "ambulanceDetails",
+          },
+        },
+        {
+          $unwind: {
+            path: "$ambulanceDetails", // Unwind the array
+            preserveNullAndEmptyArrays: true, // Keep documents even if the array is empty
+          },
+        },
+      ]);
     } else {
-      HEAT3Data = await HFAT3.find({ uniqueCode: { $regex: regex } });
+      HEAT3Data = await HFAT3.aggregate([
+        // { $match: { _id: mongoose.Types.ObjectId(id) } },
+        { $match: { uniqueCode: { $regex: regex } } },
+        {
+          $lookup: {
+            from: "ambulances", // The collection name in MongoDB for Ambulance
+            pipeline: [
+              {
+                $addFields: {
+                  formUniqueCode: {
+                    $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
+                  },
+                },
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$formUniqueCode", "$$uniqueCode"] },
+                },
+              },
+            ],
+            as: "ambulanceDetails",
+          },
+        },
+        {
+          $unwind: {
+            path: "$ambulanceDetails",
+            preserveNullAndEmptyArrays: true,
+          },
+        }, // Unwind the array to get a direct object
+      ]);
     }
 
     if (!HEAT3Data || HEAT3Data.length === 0) {
@@ -263,40 +368,38 @@ export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
 
 export const deleteHfat3 = async (req, res) => {
   try {
-      const { ids } = req.body;  
+    const { ids } = req.body;
 
-      if (!ids || !Array.isArray(ids) || ids.length === 0) {
-          return res.status(400).json({
-              success: false,
-              message: "Ids not found or not provided",
-          });
-      }
-
-      const deletedItems = await HFAT3.deleteMany({
-          _id: { $in: ids }, 
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Ids not found or not provided",
       });
+    }
 
-      if (deletedItems.deletedCount === 0) {
-          return res.status(404).json({
-              success: false,
-              message: "No HFAT3 records found with the provided ids",
-          });
-      }
+    const deletedItems = await HFAT3.deleteMany({
+      _id: { $in: ids },
+    });
 
-      return res.status(200).json({
-          success: true,
-          message: `${deletedItems.deletedCount} HFAT3 records deleted successfully`,
+    if (deletedItems.deletedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No HFAT3 records found with the provided ids",
       });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `${deletedItems.deletedCount} HFAT3 records deleted successfully`,
+    });
   } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-          success: false,
-          message: error.message,
-      });
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };
-
-
 
 export const HFAT3Delete = async (req, res, next) => {
   try {

@@ -567,7 +567,7 @@ const columns = [
       params.data?.H3C3?.[12]?.length > 0 ? "Other" : "",
   },
   {
-    field: "H3C3_13",
+    field: "H3C3_12",
     headerName:
       "3C.3 : If Yes to 3C.2, Which of the following emergency care trainings you have undergone? (other specify)",
   },
