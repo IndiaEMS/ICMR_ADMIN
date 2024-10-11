@@ -454,60 +454,67 @@ export const columns = [
     children: [
       {
         headerName: "Firm padding or commercial head immobilization device",
-        children: [
-          { field: "AMB18_0", headerName: "Available" },
-          { field: "AMB18_0", headerName: "Functional" },
-          { field: "AMB18_0", headerName: "Last Used" },
-        ],
+        field: "AMB18_0",
+        // children: [
+        //   { field: "AMB18_0", headerName: "Available" },
+        //   { field: "AMB18_0", headerName: "Functional" },
+        //   { field: "AMB18_0", headerName: "Last Used" },
+        // ],
       },
       {
         headerName:
           "Lower extremity traction devices (supporting slings, padding, traction strap)",
-        children: [
-          { field: "AMB18_1", headerName: "Available" },
-          { field: "AMB18_1", headerName: "Functional" },
-          { field: "AMB18_1", headerName: "Last Used" },
-        ],
+        field: "AMB18_1",
+        // children: [
+        //   { field: "AMB18_1", headerName: "Available" },
+        //   { field: "AMB18_1", headerName: "Functional" },
+        //   { field: "AMB18_1", headerName: "Last Used" },
+        // ],
       },
       {
         headerName: "Upper and Lower extremity immobilization devices",
-        children: [
-          { field: "AMB18_2", headerName: "Available" },
-          { field: "AMB18_2", headerName: "Functional" },
-          { field: "AMB18_2", headerName: "Last Used" },
-        ],
+        field: "AMB18_2",
+        // children: [
+        //   { field: "AMB18_2", headerName: "Available" },
+        //   { field: "AMB18_2", headerName: "Functional" },
+        //   { field: "AMB18_2", headerName: "Last Used" },
+        // ],
       },
       {
         headerName: "Joint above and joint below fracture immobilizing device",
-        children: [
-          { field: "AMB18_3", headerName: "Available" },
-          { field: "AMB18_3", headerName: "Functional" },
-          { field: "AMB18_3", headerName: "Last Used" },
-        ],
+        field: "AMB18_3",
+        // children: [
+        //   { field: "AMB18_3", headerName: "Available" },
+        //   { field: "AMB18_3", headerName: "Functional" },
+        //   { field: "AMB18_3", headerName: "Last Used" },
+        // ],
       },
       {
         headerName: "Resistant straps or cravats",
-        children: [
-          { field: "AMB18_4", headerName: "Available" },
-          { field: "AMB18_4", headerName: "Functional" },
-          { field: "AMB18_4", headerName: "Last Used" },
-        ],
+        field: "AMB18_4",
+        // children: [
+        //   { field: "AMB18_4", headerName: "Available" },
+        //   { field: "AMB18_4", headerName: "Functional" },
+        //   { field: "AMB18_4", headerName: "Last Used" },
+        // ],
       },
       {
         headerName: "Orthopaedic (scoop) stretcher/ Long back board",
-        children: [
-          { field: "AMB18_5", headerName: "Available" },
-          { field: "AMB18_5", headerName: "Functional" },
-          { field: "AMB18_5", headerName: "Last Used" },
-        ],
+        field: "AMB18_5",
+        // children: [
+        //   { field: "AMB18_5", headerName: "Available" },
+        //   { field: "AMB18_5", headerName: "Functional" },
+        //   { field: "AMB18_5", headerName: "Last Used" },
+        // ],
       },
       {
         headerName: "Rigid cervical collars (small, medium, large)",
-        children: [
-          { field: "AMB18_6", headerName: "Available" },
-          { field: "AMB18_6", headerName: "Functional" },
-          { field: "AMB18_6", headerName: "Last Used" },
-        ],
+        field: "AMB18_6",
+        // children: [
+        //   { field: "AMB18_6", headerName: "Available" },
+        //   { field: "AMB18_6", headerName: "Functional" },
+        //   { field: "AMB18_6", headerName: "Last Used" },
+        // ],
       },
     ],
   },
