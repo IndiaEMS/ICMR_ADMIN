@@ -246,32 +246,32 @@ const columns = [
   {
     field: "table1_9_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Available)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Available)",
   },
   {
     field: "table1_9_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Functional)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Functional)",
   },
   {
     field: "table1_9_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - When was it last used?)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - When was it last used?)",
   },
   {
     field: "table1_10_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Available)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Available)",
   },
   {
     field: "table1_10_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Functional)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Functional)",
   },
   {
     field: "table1_10_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - When was it last used?)",
+      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - When was it last used?)",
   },
   {
     field: "table1_11_Available",
@@ -321,32 +321,32 @@ const columns = [
   {
     field: "table1_14_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Available)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Available)",
   },
   {
     field: "table1_14_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Functional)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Functional)",
   },
   {
     field: "table1_14_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - When was it last used?)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - When was it last used?)",
   },
   {
     field: "table1_15_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Available)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Available)",
   },
   {
     field: "table1_15_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Functional)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Functional)",
   },
   {
     field: "table1_15_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - When was it last used?)",
+      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - When was it last used?)",
   },
   {
     field: "table1_16_Available",
