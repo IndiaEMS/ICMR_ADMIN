@@ -18,9 +18,8 @@ const MapView = ({ mapData, selectedLocation }) => {
     return null;
   };
 
-  console.log(mapData);
+  // console.log(mapData);
   return (
-    
     <MapContainer
       center={[20.5937, 78.9629]} // Default coordinates for India
       zoom={5}
@@ -35,19 +34,19 @@ const MapView = ({ mapData, selectedLocation }) => {
       {selectedLocation && <MoveMapToLocation location={selectedLocation} />}
 
       {/* Loop through the map data and create a circle marker for each coordinate */}
-      {mapData.map((coord, index) => (
+      {mapData?.map((coord, index) => (
         <CircleMarker
           key={index}
-          center={coord}
+          center={coord ?? [0, 0]} // Coordinates of the marker
           pathOptions={{ color: "blue", fillColor: "blue", fillOpacity: 0.8 }}
           radius={6} // Size of the dot
         >
           {/* Show popup only for the selected location */}
           {selectedLocation &&
-            selectedLocation[0] === coord[0] &&
-            selectedLocation[1] === coord[1] && (
+            selectedLocation?.[0] === coord?.[0] &&
+            selectedLocation?.[1] === coord?.[1] && (
               <Popup>
-                Location: {coord[0]}, {coord[1]}
+                Location: {coord?.[0]}, {coord?.[1]}
               </Popup>
             )}
         </CircleMarker>

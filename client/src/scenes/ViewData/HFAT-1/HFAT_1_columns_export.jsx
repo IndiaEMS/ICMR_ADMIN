@@ -104,7 +104,7 @@ const columns = [
     valueGetter: (params) => params.data?.B7?.split(":")[1],
   },
   {
-    field: "B8",
+    field: "B8_0",
     headerName:
       "1B.8 Which of these does the blood bank have among the following? (choice=Component facility)",
   },
