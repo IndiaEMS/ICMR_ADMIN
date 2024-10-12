@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
   name: {
-    type: String,
+    type: String, 
   },
   sitename: {
     type: String,

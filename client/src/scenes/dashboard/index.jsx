@@ -16,21 +16,22 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import PieChart from "../../components/dashboard/PieChart";
 import BarChart from "../../components/dashboard/BarChart";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const url = import.meta.env.VITE_SERVER;
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { token } = useSelector((state) => state.auth);
   const { user } = useSelector((state) => state.auth);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [counter, setCounter] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState();
-  const [selectedState, setSelectedState] = useState("");
+  const [error, setError] = useState(null);
+  const [selectedState, setSelectedState] = useState('');
 
   const states = [
     { value: "", label: "All" },
@@ -54,34 +55,69 @@ const Dashboard = () => {
   //   fetchData();
   // }, []);
 
+  // const fetchData = async () => {
+  //   try {
+  //     const { data } = await axios.get(`${url}/adminCount`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setCounter(data);
+  //   } catch (error) {
+  //     console.log(error);
+  //     localStorage.removeItem("token");
+  //     localStorage.removeItem("user");
+  //     navigate("/login");
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
+
   const fetchData = async () => {
     try {
-      const { data } = await axios.get(`${url}/adminCount`, {
+      const role = user?.role;
+      const apiUrl = role === 'superadmin' ? `${url}/superadminCount` : `${url}/adminCount`;
+  
+      // Ensure the selectedState is being set correctly
+      console.log("Fetching data for state:", selectedState);
+  
+      const { data } = await axios.get(apiUrl, {
+        params: {
+          newState: selectedState, 
+        },
         headers: {
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, 
         },
       });
+  
+      // Log the data received to help debug
+      console.log("Data received:", data);
+  
       setCounter(data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching data:", error);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      navigate("/login");
+      // navigate("/login");
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
-
+  
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [selectedState, user]);
+  
 
-  // console.log(counter);
+if (loading) return <div>Loading...</div>;
+if (error) return <div>Error: {error}</div>;
 
-  if (loading) {
-    return <div>Loading...</div>; // Display loading indicator
-  }
 
   return (
     <Box m="20px">
