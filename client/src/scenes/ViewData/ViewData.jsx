@@ -76,6 +76,9 @@ const ViewData = ({ formName }) => {
 
   useEffect(() => {
     setRows([]);
+    setMapData([]);
+    setColumns([]);
+    setExportColumns([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
       setColumns(HFAT1Columns);
@@ -83,8 +86,17 @@ const ViewData = ({ formName }) => {
       setRows(data);
       setMapData(
         rows
-          .filter((row) => row.A10 && row.A10.latitude && row.A10.longitude)
-          .map((row) => [row.A10.latitude, row.A10.longitude])
+          .filter(
+            (row) =>
+              row.A10 &&
+              row.A10.latitude &&
+              row.A10.longitude &&
+              !/[a-zA-Z°]/.test(row.A10.latitude) &&
+              !/[a-zA-Z°]/.test(row.A10.longitude) &&
+              /^-?\d+(\.\d+)?$/.test(row.A10.latitude) && // Check for valid number format
+              /^-?\d+(\.\d+)?$/.test(row.A10.longitude)
+          )
+          .map((row) => [row.A10?.latitude, row.A10?.longitude])
       );
       // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
@@ -95,8 +107,17 @@ const ViewData = ({ formName }) => {
       setRows(data);
       setMapData(
         rows
-          .filter((row) => row.H2A9 && row.H2A9.latitude && row.H2A9.longitude)
-          .map((row) => [row.H2A9.latitude, row.H2A9.longitude])
+          .filter(
+            (row) =>
+              row.H2A9 &&
+              row.H2A9.latitude &&
+              row.H2A9.longitude &&
+              !/[a-zA-Z°]/.test(row.H2A9.latitude) &&
+              !/[a-zA-Z°]/.test(row.H2A9.longitude) &&
+              /^-?\d+(\.\d+)?$/.test(row.H2A9.latitude) && // Check for valid number format
+              /^-?\d+(\.\d+)?$/.test(row.H2A9.longitude)
+          )
+          .map((row) => [row.H2A9?.latitude, row.H2A9?.longitude])
       );
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
@@ -106,8 +127,17 @@ const ViewData = ({ formName }) => {
       setRows(HFAT3Rows(data));
       setMapData(
         rows
-          .filter((row) => row.H3A9 && row.H3A9.latitude && row.H3A9.longitude)
-          .map((row) => [row.H3A9.latitude, row.H3A9.longitude])
+          .filter(
+            (row) =>
+              row.H3A9 &&
+              row.H3A9.latitude &&
+              row.H3A9.longitude &&
+              !/[a-zA-Z°]/.test(row.H3A9.latitude) &&
+              !/[a-zA-Z°]/.test(row.H3A9.longitude) &&
+              /^-?\d+(\.\d+)?$/.test(row.H3A9.latitude) && // Check for valid number format
+              /^-?\d+(\.\d+)?$/.test(row.H3A9.longitude)
+          )
+          .map((row) => [row.H3A9?.latitude, row.H3A9?.longitude])
       );
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
@@ -134,11 +164,37 @@ const ViewData = ({ formName }) => {
       setExportColumns(AmbulanceColumnsExport);
       // setRows(AmbulanceRows(data));
       setRows(data);
+      setMapData(
+        rows
+          .filter(
+            (row) =>
+              row.AMB4 &&
+              row.AMB4.latitude &&
+              row.AMB4.longitude &&
+              !/[a-zA-Z°]/.test(row.AMB4?.latitude) &&
+              !/[a-zA-Z°]/.test(row.AMB4?.longitude) &&
+              /^-?\d+(\.\d+)?$/.test(row.AMB4.latitude) && // Check for valid number format
+              /^-?\d+(\.\d+)?$/.test(row.AMB4.longitude)
+          )
+          .map((row) => [row.AMB4?.latitude, row.AMB4?.longitude])
+      );
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));
       setExportColumns(CSTColumns(data));
       setRows(data);
+      setMapData(
+        rows
+          .filter(
+            (row) =>
+              row.AB4 &&
+              row.AB4.latitude &&
+              row.AB4.longitude &&
+              !/[a-zA-Z°]/.test(row.AB4?.latitude) &&
+              !/[a-zA-Z°]/.test(row.AB4?.longitude)
+          )
+          .map((row) => [row.AB4.latitude, row.AB4.longitude])
+      );
       // setRows(CSTRows(data));
     } else if (formName === "Autopsy") {
       setTitle("Verbal Autopsy Tool");
@@ -441,7 +497,7 @@ const ViewData = ({ formName }) => {
           </Button> */}
         </Box>
 
-        {/* {mapData.length > 0 && (
+        {mapData.length > 0 && (
           <Box>
             <Button
               sx={{
@@ -457,7 +513,7 @@ const ViewData = ({ formName }) => {
               View In Map
             </Button>
           </Box>
-        )} */}
+        )}
       </Box>
       <Box
         m="40px 0 0 0"
@@ -530,11 +586,15 @@ const ViewData = ({ formName }) => {
       </Box>
       <Dialog open={isMapOpen} onClose={handleCloseMap} maxWidth="lg" fullWidth>
         <DialogTitle>View Location on Map</DialogTitle>
+        {/* subtitle */}
         <DialogContent>
           <Box style={{ height: "600px" }}>
+            <p>
+              <b>Note:</b> Invalid coordinates will not be shown on the map.
+            </p>
             <MapView
               // mapData={ambulanceData}
-              mapData={mapData} // Assuming rows have lat/lng
+              mapData={mapData ?? []} // Assuming rows have lat/lng
               selectedLocation={selectedState}
             />
           </Box>
