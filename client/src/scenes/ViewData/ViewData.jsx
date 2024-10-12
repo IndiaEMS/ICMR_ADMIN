@@ -589,9 +589,11 @@ const ViewData = ({ formName }) => {
           View Location on Map (<b>Note:</b> Invalid coordinates will not be
           shown on the map.)
         </DialogTitle>
-        {/* subtitle */}
         <DialogContent>
           <Box style={{ height: "600px" }}>
+            <p>
+              <b>Note:</b> Invalid coordinates will not be shown on the map.
+            </p>
             <MapView
               // mapData={ambulanceData}
               mapData={mapData ?? []} // Assuming rows have lat/lng
