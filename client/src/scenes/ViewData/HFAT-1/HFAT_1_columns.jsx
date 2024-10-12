@@ -964,7 +964,7 @@ const columns = [
         headerName: "Other",
         field: "C4_11",
         valueGetter: (params) =>
-          (params.data?.C4?.[11].length > 0 && "Other") || "",
+          (params.data?.C4?.[11]?.length > 0 && "Other") || "",
       },
       {
         headerName: "Other Specify",

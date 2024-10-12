@@ -783,7 +783,7 @@ const columns = [
     field: "table1_18_Manpower_other_specify",
     headerName:
       "1C.1 Tick the manpower available in your emergency department and provide (Other (please specify)) (Manpower) (Other Specify)",
-      valueGetter: (params) => params.data?.table1?.[18]?.otherSpecify,
+    valueGetter: (params) => params.data?.table1?.[18]?.otherSpecify,
   },
   {
     field: "table1_18_Number",
@@ -990,7 +990,7 @@ const columns = [
     headerName:
       "1C4. Which of the following emergency care trainings have you undergone? (choice = Other)",
     valueGetter: (params) =>
-      (params.data?.C4?.[11].length > 0 && "Other") || "",
+      (params.data?.C4?.[11]?.length > 0 && "Other") || "",
   },
   {
     field: "C4_12",
