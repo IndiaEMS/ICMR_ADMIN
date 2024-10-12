@@ -10,6 +10,7 @@ export const AuthenciatedUser = catchAsyncError(async (req, res, next) => {
 
     // console.log("TOKEN:", token);
     // console.log(process.env.JWT_SECRET)
+
     if (!token) {
         return next(new ErrorHandler("Please login to access this resource", 401));
     }

@@ -117,3 +117,153 @@ export const DashboardCounter = async (req, res) => {
     });
   }
 };
+
+export const changeSuperadminState = async (req, res) => {
+  try {
+    const superadminId = req.user.id;
+    const role = req.user.role;
+    const { newState } = req.query;
+
+
+    if (role !== "superadmin") {
+      return res.status(403).json({
+        success: false,
+        message: "Only superadmin can change the state",
+      });
+    }
+
+    if (newState === undefined) { 
+      return res.status(400).json({
+        success: false,
+        message: "Please provide a new state",
+      });
+    }
+
+    const states = [
+      { value: "", label: "All" },
+      { value: "GJBRC", label: "Gujarat" },
+      { value: "ORPUR", label: "Odisha" },
+      { value: "MPBHS", label: "Bhopal" },
+      { value: "PBLDH", label: "Ludhiana" },
+      { value: "PYPDY", label: "Pondicherry" },
+    ];
+
+    const matchedState = states.find((s) => s.value === newState);
+
+    console.log("matchedState", matchedState);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    await User.findByIdAndUpdate(superadminId, { sitename: newState });
+
+    const regex = new RegExp(`^${matchedState.value}`);
+    const HFAT1Count = await HFAT1.countDocuments({ uniqueCode: { $regex: regex } });
+    const HFAT2Count = await HFAT2.countDocuments({ uniqueCode: { $regex: regex } });
+    const HFAT3Count = await HFAT3.countDocuments({ uniqueCode: { $regex: regex } });
+    const AMBULANCECount = await AMBULANCE.countDocuments({ uniqueCode: { $regex: regex } });
+    const CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
+    const AutopsyCount = await Autopsy.countDocuments({ FA2: { $regex: regex } });
+
+    // Respond with success and the counts
+    return res.status(200).json({
+      success: true,
+      message: `State changed to ${newState}`,
+      HFAT1Count,
+      HFAT2Count,
+      HFAT3Count,
+      AMBULANCECount,
+      CSTCount,
+      AutopsyCount,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
+export const adminDashboardCounter = async (req, res) => {
+  try {
+    const adminId = req.user.id;
+    const state = req.user.sitename;
+    const role = req.user.role;
+
+    if (role !== "admin") {
+      return res.status(403).json({
+        success: false,
+        message: "Only admin can access this data",
+      });
+    }
+
+    if (!adminId || !state) {
+      return res.status(400).json({
+        success: false,
+        message: "Please provide adminId and state",
+      });
+    }
+
+    const stateCode = state.trim();
+
+    const states = [
+      { value: "GJBRC", label: "Gujarat" },
+      { value: "ORPUR", label: "Odisha" },
+      { value: "MPBHS", label: "Bhopal" },
+      { value: "PBLDH", label: "Ludhiana" },
+      { value: "PYPDY", label: "Pondicherry" },
+    ];
+
+    const matchedState = states.find((s) => s.label === stateCode);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    const regex = new RegExp(`^${matchedState.value}`);
+
+    const HFAT1Count = await HFAT1.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const HFAT2Count = await HFAT2.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const HFAT3Count = await HFAT3.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const AMBULANCECount = await AMBULANCE.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const CSTCount = await CSTFORM.countDocuments({
+      AA2: { $regex: regex },
+    });
+    const AutopsyCount = await Autopsy.countDocuments({
+      FA2: { $regex: regex },
+    });
+
+    return res.status(200).json({
+      success: true,
+      HFAT1Count,
+      HFAT2Count,
+      HFAT3Count,
+      AMBULANCECount,
+      CSTCount,
+      AutopsyCount,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
+  }
+};
+
