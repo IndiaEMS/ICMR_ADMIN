@@ -1,5 +1,6 @@
 import { CSTFORM } from "../Database/CST.js";
 import { User } from "../Database/user.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 
 export const CSTConroller = (req, res) => {
   const { CompleteForm } = req.body;
@@ -47,7 +48,7 @@ export const CSTConroller = (req, res) => {
 
 export const CSTGetController = async (req, res, next) => {
   try {
-    const adminId = req.user.id;
+    const adminId = req.user._id;
     const state = req.user.sitename;
     const role = req.user.role;
 
@@ -107,35 +108,35 @@ export const CSTGetController = async (req, res, next) => {
 
 export const deleteCst = async (req, res) => {
   try {
-      const { ids } = req.body;
+    const { ids } = req.body;
 
-      if (!ids || !Array.isArray(ids) || ids.length === 0) {
-          return res.status(400).json({
-              success: false,
-              message: "Ids not found or not provided",
-          });
-      }
-
-      const deletedItems = await CSTFORM.deleteMany({
-          _id: { $in: ids },
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({
+        success: false,
+        message: "Ids not found or not provided",
       });
+    }
 
-      if (deletedItems.deletedCount === 0) {
-          return res.status(404).json({
-              success: false,
-              message: "No CST forms found with the provided ids",
-          });
-      }
+    const deletedItems = await CSTFORM.deleteMany({
+      _id: { $in: ids },
+    });
 
-      return res.status(200).json({
-          success: true,
-          message: `${deletedItems.deletedCount} CST forms deleted successfully`,
+    if (deletedItems.deletedCount === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "No CST forms found with the provided ids",
       });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `${deletedItems.deletedCount} CST forms deleted successfully`,
+    });
   } catch (error) {
-      console.log(error);
-      return res.status(500).json({
-          success: false,
-          message: error.message,
-      });
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
   }
 };

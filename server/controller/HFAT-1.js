@@ -4,10 +4,9 @@ import { HFAT1 } from "../Database/HFAT-1.js";
 import { createObjectCsvWriter, createObjectCsvStringifier } from "csv-writer";
 const app = express();
 import ExcelJS from "exceljs";
-import { AMBULANCE } from "../Database/Ambulance.js";
-import { HFAT2 } from "../Database/HFAT-2.js";
-import { HFAT3 } from "../Database/HFAT-3.js";
+
 import { User } from "../Database/user.js";
+import ErrorHandler from "../utils/ErrorHandler.js";
 
 export const HFAT1Controller = async (req, res) => {
   var { completeform, table1, table2, table3, table4 } = req.body;

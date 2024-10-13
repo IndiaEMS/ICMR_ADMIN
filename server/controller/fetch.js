@@ -74,7 +74,7 @@ export const DashboardCounter = async (req, res) => {
     var CSTCount;
     var AutopsyCount;
 
-    if (role === "superadmin") {
+    if (role === "superadmin" || role === "analytics") {
       HFAT1Count = await HFAT1.countDocuments();
       HFAT2Count = await HFAT2.countDocuments();
       HFAT3Count = await HFAT3.countDocuments();
@@ -124,15 +124,14 @@ export const changeSuperadminState = async (req, res) => {
     const role = req.user.role;
     const { newState } = req.query;
 
-
-    if (role !== "superadmin") {
+    if (role != "superadmin" && role != "analytics") {
       return res.status(403).json({
         success: false,
-        message: "Only superadmin can change the state",
+        message: "Only Authorized user can change the state",
       });
     }
 
-    if (newState === undefined) { 
+    if (newState === undefined) {
       return res.status(400).json({
         success: false,
         message: "Please provide a new state",
@@ -150,7 +149,7 @@ export const changeSuperadminState = async (req, res) => {
 
     const matchedState = states.find((s) => s.value === newState);
 
-    console.log("matchedState", matchedState);
+    // console.log("matchedState", matchedState);
 
     if (!matchedState) {
       return res.status(400).json({
@@ -159,15 +158,25 @@ export const changeSuperadminState = async (req, res) => {
       });
     }
 
-    await User.findByIdAndUpdate(superadminId, { sitename: newState });
+    // await User.findByIdAndUpdate(superadminId, { sitename: newState });
 
     const regex = new RegExp(`^${matchedState.value}`);
-    const HFAT1Count = await HFAT1.countDocuments({ uniqueCode: { $regex: regex } });
-    const HFAT2Count = await HFAT2.countDocuments({ uniqueCode: { $regex: regex } });
-    const HFAT3Count = await HFAT3.countDocuments({ uniqueCode: { $regex: regex } });
-    const AMBULANCECount = await AMBULANCE.countDocuments({ uniqueCode: { $regex: regex } });
+    const HFAT1Count = await HFAT1.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const HFAT2Count = await HFAT2.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const HFAT3Count = await HFAT3.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
+    const AMBULANCECount = await AMBULANCE.countDocuments({
+      uniqueCode: { $regex: regex },
+    });
     const CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
-    const AutopsyCount = await Autopsy.countDocuments({ FA2: { $regex: regex } });
+    const AutopsyCount = await Autopsy.countDocuments({
+      FA2: { $regex: regex },
+    });
 
     // Respond with success and the counts
     return res.status(200).json({
@@ -266,4 +275,3 @@ export const adminDashboardCounter = async (req, res) => {
     });
   }
 };
-

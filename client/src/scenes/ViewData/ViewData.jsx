@@ -76,9 +76,9 @@ const ViewData = ({ formName }) => {
 
   useEffect(() => {
     setRows([]);
-    setMapData([]);
-    setColumns([]);
-    setExportColumns([]);
+    // setMapData([]);
+    // setColumns([]);
+    // setExportColumns([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
       setColumns(HFAT1Columns);
@@ -208,7 +208,15 @@ const ViewData = ({ formName }) => {
       console.log("No form found");
     }
     setCols(columns);
-  }, [formName, data]);
+  }, [data]);
+
+  useEffect(() => {
+    setRows([]);
+    setMapData([]);
+    setColumns([]);
+    setExportColumns([]);
+    getData();
+  }, [formName]);
 
   useEffect(() => {
     setCols(columns);
@@ -591,9 +599,6 @@ const ViewData = ({ formName }) => {
         </DialogTitle>
         <DialogContent>
           <Box style={{ height: "600px" }}>
-            <p>
-              <b>Note:</b> Invalid coordinates will not be shown on the map.
-            </p>
             <MapView
               // mapData={ambulanceData}
               mapData={mapData ?? []} // Assuming rows have lat/lng

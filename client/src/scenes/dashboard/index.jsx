@@ -31,7 +31,7 @@ const Dashboard = () => {
   const [counter, setCounter] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [selectedState, setSelectedState] = useState('');
+  const [selectedState, setSelectedState] = useState("");
 
   const states = [
     { value: "", label: "All" },
@@ -81,43 +81,44 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       const role = user?.role;
-      const apiUrl = role === 'superadmin' ? `${url}/superadminCount` : `${url}/adminCount`;
-  
+      const apiUrl =
+        role === "superadmin" || role === "analytics"
+          ? `${url}/superadminCount`
+          : `${url}/adminCount`;
+
       // Ensure the selectedState is being set correctly
       console.log("Fetching data for state:", selectedState);
-  
+
       const { data } = await axios.get(apiUrl, {
         params: {
-          newState: selectedState, 
+          newState: selectedState,
         },
         headers: {
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
       });
-  
+
       // Log the data received to help debug
       console.log("Data received:", data);
-  
+
       setCounter(data);
     } catch (error) {
       console.error("Error fetching data:", error);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
-      // navigate("/login");
+      navigate("/login");
       setError(error.message);
     } finally {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     fetchData();
   }, [selectedState, user]);
-  
 
-if (loading) return <div>Loading...</div>;
-if (error) return <div>Error: {error}</div>;
-
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <Box m="20px">

@@ -165,8 +165,6 @@ const getAmbulanceRow = (row) => {
 };
 
 export const AmbulanceRows = (data) => {
-  console.log("Comming");
-
   // for single row in HFAT
   if (!Array.isArray(data)) {
     return getAmbulanceRow(data);
