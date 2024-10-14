@@ -62,7 +62,8 @@ const columns = [
   {
     field: "AMB12_4",
     headerName: "8. Staff on duty per ambulance (choice = other)",
-    valueGetter: (params) => params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
+    valueGetter: (params) =>
+      params.data?.AMB12?.[4]?.length > 0 ? "Other" : "",
   },
   {
     field: "AMB12_4",
@@ -73,41 +74,78 @@ const columns = [
     headerName:
       "9.1.Which Suction apparatus and accessories is available (choice=Portable or Mounted Suction Machine)",
   },
+  {
+    field: "AMB13",
+    headerName:
+      "9.1.Which Suction apparatus and accessories is available (choice=Portable or Mounted Suction Machine)",
+    valueFormatter: (params) =>
+      params.value == "Portable or Mounted Suction Machine"
+        ? "Portable or Mounted Suction Machine"
+        : "",
+  },
+  {
+    field: "AMB13",
+    headerName:
+      "9.1.Which Suction apparatus and accessories is available (choice=Flexible suction catheters Fr. 5,8,12 and 14)",
+    valueFormatter: (params) => {
+      console.log(params);
+
+      return params.value == "Flexible suction catheters Fr. 5,8,12 and 14"
+        ? "Flexible suction catheters Fr. 5,8,12 and 14"
+        : "";
+    },
+  },
+  {
+    field: "AMB13",
+    headerName:
+      "9.1.Which Suction apparatus and accessories is available (choice=Both of the above)",
+    valueFormatter: (params) =>
+      params.value == "Both of the above" ? "Both of the above" : "",
+  },
+  {
+    field: "AMB13",
+    headerName:
+      "9.1.Which Suction apparatus and accessories is available (choice=None of the above)",
+    valueFormatter: (params) =>
+      params.value == "None of the above" ? "None of the above" : "",
+  },
   // {
-  //   field: "AMB13_1",
-  //   headerName:
-  //     "9.1.Which Suction apparatus and accessories is available (choice=Flexible suction catheters Fr. 5,8,12 and 14)",
-  // },
-  // {
-  //   field: "AMB13_2",
-  //   headerName:
-  //     "9.1.Which Suction apparatus and accessories is available (choice=Both of the above)",
-  // },
-  // {
-  //   field: "AMB13_3",
-  //   headerName:
-  //     "9.1.Which Suction apparatus and accessories is available (choice=None of the above)",
+  //   field: "AMB14",
+  //   headerName: "9.2. Which type of Portable oxygen equipment/installed",
   // },
   {
     field: "AMB14",
     headerName:
       "9.2. Which type of Portable oxygen equipment/installed (choice=Portable oxygen tank with regulator)",
+    valueFormatter: (params) =>
+      params.value == "Portable oxygen tank with regulator"
+        ? "Portable oxygen tank with regulator"
+        : "",
   },
-  // {
-  //   field: "AMB14_1",
-  //   headerName:
-  //     "9.2. Which type of Portable oxygen equipment/installed (choice=Oxygen mask No. 2,3 and 4 (for new-born, infant and adult))",
-  // },
-  // {
-  //   field: "AMB14_2",
-  //   headerName:
-  //     "9.2. Which type of Portable oxygen equipment/installed (choice=Both of the above)",
-  // },
-  // {
-  //   field: "AMB14_3",
-  //   headerName:
-  //     "9.2. Which type of Portable oxygen equipment/installed (choice=None of the above)",
-  // },
+  {
+    field: "AMB14",
+    headerName:
+      "9.2. Which type of Portable oxygen equipment/installed (choice=Oxygen mask No. 2,3 and 4 (for new-born, infant and adult))",
+    valueFormatter: (params) =>
+      params.value ==
+      "Oxygen mask No. 2,3 and 4 (for new-born, infant and adult)"
+        ? "Oxygen mask No. 2,3 and 4 (for new-born, infant and adult)"
+        : "",
+  },
+  {
+    field: "AMB14",
+    headerName:
+      "9.2. Which type of Portable oxygen equipment/installed (choice=Both of the above)",
+    valueFormatter: (params) =>
+      params.value == "Both of the above" ? "Both of the above" : "",
+  },
+  {
+    field: "AMB14",
+    headerName:
+      "9.2. Which type of Portable oxygen equipment/installed (choice=None of the above)",
+    valueFormatter: (params) =>
+      params.value == "None of the above" ? "None of the above" : "",
+  },
   {
     field: "AMB15",
     headerName:

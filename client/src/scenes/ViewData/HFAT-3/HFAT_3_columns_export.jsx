@@ -116,7 +116,7 @@ const columns = [
   {
     field: "H3B7_12",
     headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Smooth Entry for Wheelchair Trolley and Stretcher Bay)",
+      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Wheelchair Trolley and Stretcher Bay)",
   },
   {
     field: "H3B7_13",
@@ -126,7 +126,7 @@ const columns = [
   {
     field: "H3B7_14",
     headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=There is the provision of adequate illumination at the entrance & access road to PHC especially at night.)",
+      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Adequate illumination at the entrance & access road to PHC especially at night.)",
   },
   {
     field: "H3B7_15",
@@ -135,6 +135,11 @@ const columns = [
   },
   {
     field: "H3B7_16",
+    headerName:
+      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Ward is easily accessible from the OPD)",
+  },
+  {
+    field: "H3B7_17",
     headerName:
       "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Ward is easily accessible from the OPD)",
   },

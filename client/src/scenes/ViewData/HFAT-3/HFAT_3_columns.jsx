@@ -80,7 +80,7 @@ const columns = [
       { field: "H3B7_11", headerName: "Designated Parking Area for Ambulance" },
       {
         field: "H3B7_12",
-        headerName: "Smooth Entry for Wheelchair Trolley and Stretcher Bay",
+        headerName: "Wheelchair Trolley and Stretcher Bay",
       },
       {
         field: "H3B7_13",
@@ -89,7 +89,7 @@ const columns = [
       {
         field: "H3B7_14",
         headerName:
-          "There is the provision of adequate illumination at the entrance & access road to PHC especially at night.",
+          "Adequate illumination at the entrance & access road to PHC especially at night.",
       },
       {
         field: "H3B7_15",
@@ -98,6 +98,10 @@ const columns = [
       {
         field: "H3B7_16",
         headerName: "Ward is easily accessible from the OPD",
+      },
+      {
+        field: "H3B7_17",
+        headerName: "None of the Above",
       },
     ],
   },

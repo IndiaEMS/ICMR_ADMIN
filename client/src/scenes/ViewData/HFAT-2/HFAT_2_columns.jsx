@@ -1373,7 +1373,7 @@ const columns = [
   {
     field: "H2J1",
     headerName:
-      "2J.1 Does this facility have any policies and procedures which guide the transfer- out/referral of stable and unstable patients after stabilization to another facility with documentation?",
+      "2J.1 : Does this facility have policies and procedures which guide the referral of patients from other hospitals?",
   },
   {
     field: "H2J2",
