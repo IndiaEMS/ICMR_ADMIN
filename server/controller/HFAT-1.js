@@ -394,6 +394,8 @@ export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
+    console.log("role", role);
+
     if (role === "superadmin") {
       HEAT1Data = await HFAT1.aggregate([
         {
@@ -426,11 +428,11 @@ export const HFAT1AndAMBULANCEGet = async (req, res, next) => {
       ]);
     } else {
       HEAT1Data = await HFAT1.aggregate([
-        // { $match: { _id: mongoose.Types.ObjectId(id) } },
         { $match: { uniqueCode: { $regex: regex } } },
         {
           $lookup: {
             from: "ambulances", // The collection name in MongoDB for Ambulance
+            let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
             pipeline: [
               {
                 $addFields: {

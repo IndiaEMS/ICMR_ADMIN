@@ -327,6 +327,7 @@ export const HFAT3AndAMBULANCEGet = async (req, res, next) => {
         {
           $lookup: {
             from: "ambulances", // The collection name in MongoDB for Ambulance
+            let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
             pipeline: [
               {
                 $addFields: {

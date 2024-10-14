@@ -66,7 +66,7 @@ const Form = () => {
       setSubmittedMsg("");
       const userPayload = {
         username: values.username,
-        email: values.email,
+        email: values.email.toLowerCase().trim(),
         password: values.password,
         sitename: values.sitename,
         role: values.role,

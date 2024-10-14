@@ -38,8 +38,8 @@ export default function AdminLogin() {
 
     try {
       const response = await axios.post(`${url}/login`, {
-        username,
-        password,
+        username: username.toLowerCase().trim(),
+        password: password.trim(),
       });
 
       // console.log("RESPONSE",response);
