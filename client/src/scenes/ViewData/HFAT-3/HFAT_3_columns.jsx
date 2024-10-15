@@ -144,6 +144,10 @@ const columns = [
         headerName:
           "Availability of complaint box and display of process for grievance re-addressed and whom to contact is displayed",
       },
+      {
+        field: "H3B8_8",
+        headerName: "None of the above",
+      },
     ],
   },
   {
@@ -954,6 +958,10 @@ const columns = [
         field: "H3E3_2",
         headerName: "Medico-legal Reporting",
       },
+      {
+        field: "H3E3_3",
+        headerName: "None of the above",
+      },
     ],
   },
   {
@@ -1171,9 +1179,10 @@ const columns = [
       {
         field: "H3I1_9",
         headerName: "Other",
+        valueFormatter: (params) => (params.value?.length > 0 ? "Other" : ""),
       },
       {
-        field: "H3I1_10",
+        field: "H3I1_9",
         headerName: "Other specify",
       },
     ],
@@ -1183,29 +1192,47 @@ const columns = [
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply)",
     children: [
       {
-        field: "H3I2_1",
+        field: "H3I2_0",
         headerName: "Use of Standard guidelines for triage",
       },
       {
-        field: "H3I2_2",
+        field: "H3I2_1",
         headerName: "Post Exposure prophylaxis protocols.",
       },
       {
-        field: "H3I2_3",
+        field: "H3I2_2",
         headerName:
           "Protocols for communication among health care teams and with patients and relatives.",
       },
       {
-        field: "H3I2_4",
+        field: "H3I2_3",
         headerName: "Disaster management plan.",
+      },
+      {
+        field: "H3I4",
+        headerName: "None of the Above",
+        valueFormatter: (params) =>
+          params.value == "None of the Above" ? params.value : "",
       },
       {
         field: "H3I2_5",
         headerName: "Other",
+        valueGetter: (params) =>
+          params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
+            ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
+              ? "Other"
+              : ""
+            : "",
       },
       {
-        field: "H3I2_6",
+        field: "H3I2_5",
         headerName: "Other specify",
+        valueGetter: (params) =>
+          params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
+            ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
+              ? params.data.H3I2?.[H3I2.length - 1]
+              : ""
+            : "",
       },
     ],
   },

@@ -184,6 +184,11 @@ const columns = [
       "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Availability of complaint box and display of process for grievance re-addressed and whom to contact is displayed)",
   },
   {
+    field: "H3B8_8",
+    headerName:
+      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=None of the above)",
+  },
+  {
     field: "H3B9",
     headerName:
       "3B.9 Does this facility provide ambulance services? If Yes, please remember to complete the Ambulance Checklist after completing HFAT, else skip to 2B.10",
@@ -995,6 +1000,11 @@ const columns = [
       "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=Medico-legal Reporting)",
   },
   {
+    field: "H3E3_3",
+    headerName:
+      "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=None of the above)",
+  },
+  {
     field: "H3F1",
     headerName:
       "3F.1 Does the facility have a Hospital Management Information System (HMIS)",
@@ -1210,41 +1220,61 @@ const columns = [
     field: "H3I1_9",
     headerName:
       "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Other)",
+    valueFormatter: (params) => (params.value?.length > 0 ? "Other" : ""),
   },
   {
-    field: "H3I1_10",
+    field: "H3I1_9",
     headerName:
       "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (Other specify)",
   },
   {
-    field: "H3I2_1",
+    field: "H3I2_0",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Use of Standard guidelines for triage)",
   },
   {
-    field: "H3I2_2",
+    field: "H3I2_1",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Post Exposure prophylaxis protocols.)",
   },
   {
-    field: "H3I2_3",
+    field: "H3I2_2",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Protocols for communication among health care teams and with patients and relatives.)",
   },
   {
-    field: "H3I2_4",
+    field: "H3I2_3",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Disaster management plan.)",
+  },
+  {
+    field: "H3I2_4",
+    headerName:
+      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=None of the Above)",
+    valueFormatter: (params) =>
+      params.value == "None of the Above" ? params.value : "",
   },
   {
     field: "H3I2_5",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Other)",
+    valueGetter: (params) =>
+      params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
+        ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
+          ? "Other"
+          : ""
+        : "",
   },
   {
-    field: "H3I2_6",
+    field: "H3I2_5",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Other specify)",
+    valueGetter: (params) =>
+      params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
+        ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
+          ? params.data.H3I2?.[H3I2.length - 1]
+          : ""
+        : "",
   },
   {
     field: "table4_0_SOP",
