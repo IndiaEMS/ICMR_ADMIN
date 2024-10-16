@@ -1243,13 +1243,13 @@ export const columns = [
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (choice = other)",
     valueGetter: (params) =>
-      params.data?.H2G4?.split("_")?.[1]?.length > 0 ? "Other" : "",
+      params.data?.H2G4?.split(":")?.[1]?.length > 0 ? "Other" : "",
   },
   {
     field: "H2G4_3",
     headerName:
       "2G.4 If funds are available, which health protection schemes are covering your emergency care system? (Other specify)",
-    valueGetter: (params) => params.data?.H2G4?.split("_")?.[1],
+    valueGetter: (params) => params.data?.H2G4?.split(":")?.[1],
   },
   {
     field: "H2G5",
@@ -1303,9 +1303,10 @@ export const columns = [
   {
     field: "H2H8_2",
     headerName: "2H.2.5 Types of audits conducted? (choice = other)",
+    valueGetter: (params) => (params.data.H2H8?.[2]?.length > 0 ? "other" : ""),
   },
   {
-    field: "H2H8_3",
+    field: "H2H8_2",
     headerName: "2H.2.5 Types of audits conducted? (Other Specify)",
   },
   {

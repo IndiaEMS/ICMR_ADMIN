@@ -1090,12 +1090,12 @@ const columns = [
         field: "H2G4_2",
         headerName: "Other",
         valueGetter: (params) =>
-          params.data?.H2G4?.split("_")?.[1]?.length > 0 ? "Other" : "",
+          params.data?.H2G4?.split(":")?.[1]?.length > 0 ? "Other" : "",
       },
       {
         field: "H2G4_3",
         headerName: "Other specify",
-        valueGetter: (params) => params.data?.H2G4?.split("_")?.[1],
+        valueGetter: (params) => params.data?.H2G4?.split(":")?.[1],
       },
     ],
   },
@@ -1154,9 +1154,10 @@ const columns = [
       {
         field: "H2H8_2",
         headerName: "Other",
+        valueGetter: (params) => (params.data.H2H8?.[2]?.length > 0 ? "other" : ""),
       },
       {
-        field: "H2H8_3",
+        field: "H2H8_2",
         headerName: "Other Specify",
       },
     ],

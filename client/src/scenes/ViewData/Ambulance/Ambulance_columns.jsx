@@ -11,14 +11,24 @@ export const columns = [
     valueGetter: (params) => params.data?._id,
   },
   {
-    field: "form",
+    field: "formUniqueCode",
     headerName: "Form name",
-    valueGetter: (params) => params.data?.formUniqueCode?.split(":")?.[0],
+    valueGetter: (params) => {
+      if (params.data.ambulanceDetails != null) {
+        return params.data?.ambulanceDetails?.formUniqueCode?.split(":")?.[0];
+      }
+      return params.data?.formUniqueCode?.split(":")?.[0];
+    },
   },
   {
     field: "formUniqueCode",
     headerName: "Form Unique Code",
-    valueGetter: (params) => params.data?.formUniqueCode?.split(":")?.[1],
+    valueFormatter: (params) => {
+      if (params.data.ambulanceDetails != null) {
+        return params.data?.ambulanceDetails?.formUniqueCode?.split(":")?.[1];
+      }
+      return params.data?.formUniqueCode?.split(":")?.[1];
+    },
   },
   { field: "AMB2", headerName: "Name of the data Collector" },
   { field: "AMB1", headerName: "State " },

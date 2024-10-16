@@ -14,7 +14,6 @@ const generateAMBColumns = (columns) => {
         valueFormatter: column.valueFormatter,
         valueGetter: (params) => {
           if (column.field === "AMBid") {
-            console.log(params.data);
             return params.data?.ambulanceDetails?._id;
           } else if (column.field === "uniqueCode") {
             return params.data?.ambulanceDetails?.uniqueCode;

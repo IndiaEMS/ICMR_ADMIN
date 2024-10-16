@@ -288,67 +288,50 @@ export const HFAT2AndAMBULANCEGet = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
+    const lookupAmbulanceDetails = [
+      {
+        $lookup: {
+          from: "ambulances", // The collection name in MongoDB for Ambulance
+          let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
+          pipeline: [
+            {
+              $addFields: {
+                splitFormUniqueCode: {
+                  $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
+                },
+              },
+            },
+            {
+              $match: {
+                $expr: { $eq: ["$splitFormUniqueCode", "$$uniqueCode"] }, // Match the split formUniqueCode with uniqueCode
+              },
+            },
+          ],
+          as: "ambulanceDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$ambulanceDetails", // Unwind to convert array elements into individual documents
+          preserveNullAndEmptyArrays: true, // Keep documents without matching array elements
+        },
+      },
+      {
+        $addFields: {
+          "ambulanceDetails.originalFormUniqueCode": "$ambulanceDetails.formUniqueCode", // Keep the original formUniqueCode intact
+        },
+      },
+    ];
+
+    // Apply conditional logic based on the role
     if (role === "superadmin") {
       HEAT2Data = await HFAT2.aggregate([
-        {
-          $lookup: {
-            from: "ambulances", // The collection name in MongoDB for Ambulance
-            let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
-            pipeline: [
-              {
-                $addFields: {
-                  formUniqueCode: {
-                    $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
-                  },
-                },
-              },
-              {
-                $match: {
-                  $expr: { $eq: ["$formUniqueCode", "$$uniqueCode"] },
-                },
-              },
-            ],
-            as: "ambulanceDetails",
-          },
-        },
-        {
-          $unwind: {
-            path: "$ambulanceDetails", // Unwind the array
-            preserveNullAndEmptyArrays: true, // Keep documents even if the array is empty
-          },
-        },
+        ...lookupAmbulanceDetails, // Reuse lookup logic for superadmin
       ]);
     } else {
       HEAT2Data = await HFAT2.aggregate([
-        // { $match: { _id: mongoose.Types.ObjectId(id) } },
-        { $match: { uniqueCode: { $regex: regex } } },
-        {
-          $lookup: {
-            from: "ambulances", // The collection name in MongoDB for Ambulance
-            let: { uniqueCode: "$uniqueCode" }, // Define the variables to use in the pipeline
-            pipeline: [
-              {
-                $addFields: {
-                  formUniqueCode: {
-                    $arrayElemAt: [{ $split: ["$formUniqueCode", " : "] }, 1],
-                  },
-                },
-              },
-              {
-                $match: {
-                  $expr: { $eq: ["$formUniqueCode", "$$uniqueCode"] },
-                },
-              },
-            ],
-            as: "ambulanceDetails",
-          },
-        },
-        {
-          $unwind: {
-            path: "$ambulanceDetails",
-            preserveNullAndEmptyArrays: true,
-          },
-        }, // Unwind the array to get a direct object
+        { $match: { uniqueCode: { $regex: regex } } }, // Apply the regex filter for non-superadmin users
+        ...lookupAmbulanceDetails, // Reuse lookup logic for other roles
       ]);
     }
 
