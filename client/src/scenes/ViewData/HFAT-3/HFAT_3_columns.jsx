@@ -1209,17 +1209,20 @@ const columns = [
         headerName: "Disaster management plan.",
       },
       {
-        field: "H3I4",
+        field: "H3I2_4",
         headerName: "None of the Above",
-        valueFormatter: (params) =>
-          params.value == "None of the Above" ? params.value : "",
+        valueGetter: (params) =>
+          params.data.H3I2?.[4] === "None of the Above"
+            ? params.data.H3I2?.[4]
+            : "",
       },
       {
         field: "H3I2_5",
         headerName: "Other",
         valueGetter: (params) =>
-          params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
-            ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
+          params.data?.H3I2?.[params.data?.H3I2?.length - 1] !=
+          "None of the Above"
+            ? params.data?.H3I2?.[params.data?.H3I2?.length - 1]?.length > 0
               ? "Other"
               : ""
             : "",
@@ -1228,9 +1231,10 @@ const columns = [
         field: "H3I2_5",
         headerName: "Other specify",
         valueGetter: (params) =>
-          params.data.H3I2?.[H3I2.length - 1] != "None of the Above"
-            ? params.data.H3I2?.[H3I2.length - 1]?.length > 0
-              ? params.data.H3I2?.[H3I2.length - 1]
+          params.data.H3I2?.[params.data?.H3I2?.length - 1] !=
+          "None of the Above"
+            ? params.data.H3I2?.[params.data?.H3I2?.length - 1]?.length > 0
+              ? params.data.H3I2?.[params.data?.H3I2?.length - 1]
               : ""
             : "",
       },
