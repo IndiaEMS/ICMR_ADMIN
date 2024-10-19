@@ -18,11 +18,10 @@ import { useSelector } from "react-redux";
 const settings = ["Logout"];
 const url = import.meta.env.VITE_SERVER;
 
-
 const Topbar = () => {
   // const { state } = useContext(AppContext);
 
-  const {user} = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
 
   // console.log("USER...........",user);
 

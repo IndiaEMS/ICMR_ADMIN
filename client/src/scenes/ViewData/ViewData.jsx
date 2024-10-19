@@ -75,6 +75,7 @@ const ViewData = ({ formName }) => {
   ];
 
   useEffect(() => {
+    setLoading(true);
     setRows([]);
     // setMapData([]);
     // setColumns([]);
@@ -208,6 +209,7 @@ const ViewData = ({ formName }) => {
       console.log("No form found");
     }
     setCols(columns);
+    setLoading(false);
   }, [data]);
 
   useEffect(() => {
@@ -350,6 +352,8 @@ const ViewData = ({ formName }) => {
     setIsMapOpen(false);
   };
 
+  if (loading) return <div>Loading...</div>;
+
   return (
     <Box m="20px">
       <Box display="flex" justifyContent="space-between" alignItems="center">
@@ -363,6 +367,9 @@ const ViewData = ({ formName }) => {
               fontWeight: "bold",
               padding: "10px 20px",
               mr: "10px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
             }}
             onClick={() => {
               getData();
@@ -379,6 +386,9 @@ const ViewData = ({ formName }) => {
               fontWeight: "bold",
               padding: "10px 20px",
               mr: "10px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
             }}
             onClick={handleDownloadCSV}
           >
@@ -392,6 +402,9 @@ const ViewData = ({ formName }) => {
               fontSize: "14px",
               fontWeight: "bold",
               padding: "10px 20px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
             }}
             onClick={handleDelete}
           >
@@ -417,6 +430,9 @@ const ViewData = ({ formName }) => {
                     fontWeight: "bold",
                     padding: "10px 20px",
                     mr: "10px",
+                    "&:hover": {
+                      backgroundColor: colors.blueAccent[600],
+                    },
                   }}
                   onClick={() => {
                     setSelectedState(state.value);
@@ -515,6 +531,9 @@ const ViewData = ({ formName }) => {
                 fontWeight: "bold",
                 padding: "10px 20px",
                 mr: "10px",
+                "&:hover": {
+                  backgroundColor: colors.blueAccent[600],
+                },
               }}
               onClick={handleOpenMap}
             >

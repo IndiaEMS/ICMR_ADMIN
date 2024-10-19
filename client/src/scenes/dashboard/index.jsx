@@ -15,6 +15,7 @@ import ProgressCircle from "../../components/ProgressCircle";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import PieChart from "../../components/dashboard/PieChart";
+import IndividualPieChart from "../../components/dashboard/IndividualPieChart";
 import BarChart from "../../components/dashboard/BarChart";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -33,13 +34,88 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
   const [selectedState, setSelectedState] = useState("");
 
+  // const states = [
+  //   { value: "", label: "All" },
+  //   { value: "GJBRC", label: "Gujarat" },
+  //   { value: "ORPUR", label: "Odisha" },
+  //   { value: "MPBHS", label: "Bhopal" },
+  //   { value: "PBLDH", label: "Ludhiana" },
+  //   { value: "PYPDY", label: "Pondicherry" },
+  // ];
+
   const states = [
-    { value: "", label: "All" },
-    { value: "GJBRC", label: "Gujarat" },
-    { value: "ORPUR", label: "Odisha" },
-    { value: "MPBHS", label: "Bhopal" },
-    { value: "PBLDH", label: "Ludhiana" },
-    { value: "PYPDY", label: "Pondicherry" },
+    {
+      value: "",
+      label: "All",
+      target: {
+        HFAT1: 0,
+        HFAT2: 53,
+        HFAT3: 215,
+        CST: 6000,
+        AMBULANCE: 247,
+        Autopsy: 0,
+      },
+    },
+    {
+      value: "GJBRC",
+      label: "Gujarat",
+      target: {
+        HFAT1: 0,
+        HFAT2: 11,
+        HFAT3: 85,
+        CST: 6000,
+        AMBULANCE: 71,
+        Autopsy: 0,
+      },
+    },
+    {
+      value: "ORPUR",
+      label: "Odisha",
+      target: {
+        HFAT1: 0,
+        HFAT2: 17,
+        Autopsy: 0,
+        HFAT3: 44,
+        CST: 600,
+        AMBULANCE: 54,
+      },
+    },
+    {
+      value: "MPBHS",
+      label: "Bhopal",
+      target: {
+        HFAT1: 0,
+        HFAT2: 7,
+        Autopsy: 0,
+        HFAT3: 25,
+        CST: 6000,
+        AMBULANCE: 50,
+      },
+    },
+    {
+      value: "PBLDH",
+      label: "Ludhiana",
+      target: {
+        HFAT1: 0,
+        HFAT2: 16,
+        HFAT3: 31,
+        CST: 6000,
+        AMBULANCE: 50,
+        Autopsy: 0,
+      },
+    },
+    {
+      value: "PYPDY",
+      label: "Pondicherry",
+      target: {
+        HFAT1: 0,
+        HFAT2: 2,
+        HFAT3: 30,
+        CST: 6000,
+        AMBULANCE: 22,
+        Autopsy: 0,
+      },
+    },
   ];
 
   // useEffect(() => {
@@ -156,6 +232,10 @@ const Dashboard = () => {
                   fontWeight: "bold",
                   padding: "10px 20px",
                   mr: "10px",
+                  // hover
+                  "&:hover": {
+                    backgroundColor: colors.blueAccent[600],
+                  },
                 }}
                 onClick={() => {
                   setSelectedState(state.value);
@@ -184,7 +264,18 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.HFAT1Count ?? "0"}
+            // title={counter.HFAT1Count ?? "0"}
+            title={
+              `${counter.HFAT1Count}${
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT1 == 0
+                  ? ""
+                  : ` / ${
+                      states.find((state) => state.value === selectedState)
+                        ?.target.HFAT1
+                    }`
+              }` ?? "0"
+            }
             subtitle="HFAT-1"
             // progress={counter.HFAT1Count / 100}
             // increase="+2 New"
@@ -203,7 +294,18 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.HFAT2Count ?? "0"}
+            // title={counter.HFAT2Count ?? "0"}
+            title={
+              `${counter.HFAT2Count}${
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT2 == 0
+                  ? ""
+                  : ` / ${
+                      states.find((state) => state.value === selectedState)
+                        ?.target.HFAT2
+                    }`
+              }` ?? "0"
+            }
             subtitle="HFAT-2"
             // progress={counter.HFAT2Count / 100}
             // increase="+21 New"
@@ -222,7 +324,18 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.HFAT3Count ?? "0"}
+            // title={counter.HFAT3Count ?? "0"}
+            title={
+              `${counter.HFAT3Count}${
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT3 == 0
+                  ? ""
+                  : ` / ${
+                      states.find((state) => state.value === selectedState)
+                        ?.target.HFAT3
+                    }`
+              }` ?? "0"
+            }
             subtitle="HFAT-3"
             // progress={counter.HFAT3Count / 100}
             // increase="+5 New"
@@ -241,7 +354,18 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.AMBULANCECount ?? "0"}
+            // title={counter.AMBULANCECount ?? "0"}
+            title={
+              `${counter.AMBULANCECount}${
+                states.find((state) => state.value === selectedState)?.target
+                  .AMBULANCE == 0
+                  ? ""
+                  : ` / ${
+                      states.find((state) => state.value === selectedState)
+                        ?.target.AMBULANCE
+                    }`
+              }` ?? "0"
+            }
             subtitle="Ambulance"
             // progress={counter.AMBULANCECount / 10000}
             // increase="+43 New"
@@ -261,7 +385,18 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.CSTCount ?? "0"}
+            // title={counter.CSTCount ?? "0"}
+            title={
+              `${counter.CSTCount}${
+                states.find((state) => state.value === selectedState)?.target
+                  .CST == 0
+                  ? ""
+                  : ` / ${
+                      states.find((state) => state.value === selectedState)
+                        ?.target.CST
+                    }`
+              }` ?? "0"
+            }
             subtitle="CST"
             // progress={counter.AMBULANCECount / 10000}
             // increase="+43 New"
@@ -281,7 +416,17 @@ const Dashboard = () => {
           justifyContent="center"
         >
           <StatBox
-            title={counter.AutopsyCount ?? "0"}
+            // title={counter.AutopsyCount ?? "0"}
+            title={
+              `${counter.AutopsyCount}${
+                states.find((state) => state.value === selectedState)?.target
+                  ?.Autopsy == 0
+                  ? ""
+                  : ` / ${states.find(
+                      (state) => state.value === selected?.target?.Autopsy
+                    )}`
+              }` ?? "0"
+            }
             subtitle="Autopsy"
             // progress={counter.AMBULANCECount / 10000}
             // increase="+43 New"
@@ -394,6 +539,146 @@ const Dashboard = () => {
         </Box> */}
       </Box>
 
+      <Box
+        display="flex"
+        my="20px"
+        flexDirection="row"
+        justifyContent="space-between"
+        flexWrap="wrap"
+      >
+        <Box
+          p="10px"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          flexWrap="wrap"
+        >
+          {states.find((state) => state.value === selectedState)?.target
+            .HFAT1 <= 0 ? (
+            ""
+          ) : (
+            <IndividualPieChart
+              counter={counter.HFAT1Count ?? 0}
+              title={"HFAT-1"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT1
+              }
+            />
+          )}
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            {states.find((state) => state.value === selectedState)?.target
+              .HFAT2 <= 0 ? (
+              ""
+            ) : (
+              <IndividualPieChart
+                counter={counter.HFAT2Count ?? 0}
+                title={"HFAT-2"}
+                target={
+                  states.find((state) => state.value === selectedState)?.target
+                    .HFAT2
+                }
+              />
+            )}
+          </Box>
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            {states.find((state) => state.value === selectedState)?.target
+              .HFAT3 <= 0 ? (
+              ""
+            ) : (
+              <IndividualPieChart
+                counter={counter.HFAT3Count ?? 0}
+                title={"HFAT-3"}
+                target={
+                  states.find((state) => state.value === selectedState)?.target
+                    .HFAT3
+                }
+              />
+            )}
+          </Box>
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            {states.find((state) => state.value === selectedState)?.target
+              .AMBULANCE <= 0 ? (
+              ""
+            ) : (
+              <IndividualPieChart
+                counter={counter.AMBULANCECount ?? 0}
+                title={"Ambulance"}
+                target={
+                  states.find((state) => state.value === selectedState)?.target
+                    .AMBULANCE
+                }
+              />
+            )}
+          </Box>
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            {states.find((state) => state.value === selectedState)?.target
+              .CST <= 0 ? (
+              ""
+            ) : (
+              <IndividualPieChart
+                counter={counter.AMBULANCECount ?? 0}
+                title={"CST"}
+                target={
+                  states.find((state) => state.value === selectedState)?.target
+                    .CST
+                }
+              />
+            )}
+          </Box>
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+          >
+            {states.find((state) => state.value === selectedState)?.target
+              .Autopsy <= 0 ? (
+              ""
+            ) : (
+              <IndividualPieChart
+                counter={counter}
+                title={"Autopsy"}
+                target={
+                  states.find((state) => state.value === selectedState)?.target
+                    .Autopsy
+                }
+              />
+            )}
+          </Box>
+        </Box>
+      </Box>
       <Box
         display="flex"
         my="20px"

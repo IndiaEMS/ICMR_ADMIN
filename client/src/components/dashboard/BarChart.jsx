@@ -74,7 +74,7 @@ const BarChart = ({ counter }) => {
   };
 
   return (
-    <Box width="600px" height="400px" margin="0 auto">
+    <Box width="450px" height="150px" margin="0 auto">
       <Bar data={barData} options={options} />
     </Box>
   );
