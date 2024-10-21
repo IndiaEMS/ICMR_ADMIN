@@ -126,6 +126,13 @@ const ViewData = ({ formName }) => {
   };
 
   useEffect(() => {
+    // console.log(adminState);
+    if (adminState.role === "admin") {
+      setSelectedState(
+        states.find((state) => state.label === adminState.sitename)?.value
+      );
+    }
+
     setLoading(true);
     setRows([]);
     if (formName === "HFAT-1") {
@@ -229,22 +236,25 @@ const ViewData = ({ formName }) => {
   };
 
   useEffect(() => {
-    setMapData([]);
-    if (selectedState === "") {
-      setRows(data); // Show all rows if no state is selected
-      filterAndMapData(data);
-      setIsMapBtnDisabled(false);
-    } else {
-      // Filter rows where any field in the row might contain the state value
-      const filteredRows = data?.filter((row) => {
-        return Object.values(row).some(
-          (cellValue) =>
-            typeof cellValue === "string" && cellValue.startsWith(selectedState)
-        );
-      });
-      setRows(filteredRows);
-      filterAndMapData(filteredRows);
-      // setIsMapBtnDisabled(true);
+    if (adminState.role === "superadmin") {
+      setMapData([]);
+      if (selectedState === "") {
+        setRows(data); // Show all rows if no state is selected
+        filterAndMapData(data);
+        setIsMapBtnDisabled(false);
+      } else {
+        // Filter rows where any field in the row might contain the state value
+        const filteredRows = data?.filter((row) => {
+          return Object.values(row).some(
+            (cellValue) =>
+              typeof cellValue === "string" &&
+              cellValue.startsWith(selectedState)
+          );
+        });
+        setRows(filteredRows);
+        filterAndMapData(filteredRows);
+        // setIsMapBtnDisabled(true);
+      }
     }
   }, [selectedState, data]);
 

@@ -20,7 +20,6 @@ const MapView = ({ mapData, selectedLocation }) => {
     return null;
   };
 
-  // console.log(mapData);
   return (
     <MapContainer
       center={[20.5937, 78.9629]} // Default coordinates for India
@@ -33,6 +32,7 @@ const MapView = ({ mapData, selectedLocation }) => {
       />
 
       {/* Move the map to the selected location */}
+
       {selectedLocation && <MoveMapToLocation location={selectedLocation} />}
 
       {/* Loop through the map data and create a circle marker for each coordinate */}

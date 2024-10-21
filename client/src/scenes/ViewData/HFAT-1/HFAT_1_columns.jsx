@@ -10,12 +10,17 @@ const columns = [
     width: 250,
     valueGetter: (params) => params.data?._id,
   },
+  {
+    headerName: "Unique Code",
+    field: "uniqueCode",
+    valueGetter: (params) => params.data?.uniqueCode,
+  },
   { headerName: "1A.1. Assessor's Name", field: "A1" },
   { headerName: "1A.2. Date", field: "A2" },
   {
     headerName: "1A.3. Code",
     field: "A3",
-    valueGetter: (params) => params.data?.uniqueCode,
+    valueGetter: (params) => params.data?.A3,
   },
   { headerName: "1A.4. Block Name", field: "A4" },
   { headerName: "1A.5. Healthcare Facility Name", field: "A5" },

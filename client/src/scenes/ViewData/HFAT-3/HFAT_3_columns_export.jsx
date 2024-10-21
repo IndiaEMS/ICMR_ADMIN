@@ -8,13 +8,22 @@ const columns = [
     checkboxSelection: true,
     headerCheckboxSelection: true,
   },
+  {
+    field: "H3A2",
+    headerName: "Unique Code",
+  },
   { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
   {
     field: "date",
     headerName: "Date:",
-    valueGetter: (params) => params.data?.HFAT3_DATE,
+    valueFormatter: (params) => params.data?.HFAT3_DATE,
   },
-  { field: "H3A2", headerName: "3A.2 State:" },
+  {
+    field: "H3A2",
+    headerName: "3A.2 State:",
+    valueFormatter: (params) =>
+      `${params.value.split("_")[0]}_${params.value.split("_")[1]}`,
+  },
   { field: "H3A3", headerName: "3A.3 Block Name:" },
   { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
   { field: "H3A5", headerName: "3A.5 Healthcare Facility Address" },

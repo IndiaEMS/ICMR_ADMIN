@@ -7,6 +7,7 @@ export const columns = [
     headerCheckboxSelection: false,
     width: 250,
   },
+  { field: "uniqueCode", headerName: "Unique Code" },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },
   {
     field: "date",
@@ -15,7 +16,6 @@ export const columns = [
   },
   { field: "H2A2", headerName: "2A.2 : State:" },
   { field: "H2A3", headerName: "2A.3 : Block Name:" },
-  { field: "uniqueCode", headerName: "Unique Code" },
   { field: "H2A4", headerName: "2A.4 : Healthcare Facility Name" },
   { field: "H2A5", headerName: "2A.5 : Healthcare Facility Address" },
   { field: "H2A6", headerName: "2A.6 : Name of the MOIC" },

@@ -30,9 +30,9 @@ export const columns = [
       return params.data?.formUniqueCode?.split(":")?.[1];
     },
   },
+  { field: "uniqueCode", headerName: "AMB Unique Code" },
   { field: "AMB2", headerName: "Name of the data Collector" },
   { field: "AMB1", headerName: "State " },
-  { field: "uniqueCode", headerName: "AMB Unique Code" },
   { field: "AMB3", headerName: "Date" },
   { field: "AMB4_latitude", headerName: "GPS_1" },
   { field: "AMB4_longitude", headerName: "GPS_2" },
@@ -582,8 +582,7 @@ export const columns = [
       {
         field: "AMB19_7",
         headerName: "Other",
-        valueGetter: (params) =>
-          params.data?.AMB19?.[7]?.length > 0 ? "Other" : "",
+        valueFormatter: (params) => (params.value?.length > 0 ? "Other" : ""),
       },
       { field: "AMB19_7", headerName: "Other Specify" },
     ],
