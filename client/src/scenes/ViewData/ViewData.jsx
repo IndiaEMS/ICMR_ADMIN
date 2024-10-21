@@ -63,6 +63,8 @@ const ViewData = ({ formName }) => {
   const [isMapOpen, setIsMapOpen] = useState(false);
   const [mapData, setMapData] = useState([]);
 
+  const [isMapBtnDisabled, setIsMapBtnDisabled] = useState(false);
+
   const adminState = user;
 
   const states = [
@@ -74,31 +76,64 @@ const ViewData = ({ formName }) => {
     { value: "PYPDY", label: "Pondicherry" },
   ];
 
+  const filterAndMapData = (rows) => {
+    setMapData([]);
+    var field = "";
+    switch (formName) {
+      case "HFAT-1":
+        field = "A10";
+        break;
+      case "HFAT-2":
+        field = "H2A9";
+        break;
+      case "HFAT-3":
+        field = "H3A9";
+        break;
+      case "AMBULANCE":
+        field = "AMB4";
+        break;
+      case "CST":
+        field = "AB4";
+        break;
+      case "Autopsy":
+        field = "AB4";
+        break;
+      default:
+        field = "";
+        break;
+    }
+
+    if (field === "") return;
+
+    setMapData(
+      rows
+        .filter(
+          (row) =>
+            row[field] &&
+            row[field].latitude &&
+            row[field].longitude &&
+            !/[a-zA-Z°]/.test(row[field].latitude) &&
+            !/[a-zA-Z°]/.test(row[field].longitude) &&
+            /^-?\d+(\.\d+)?$/.test(row[field].latitude) && // Check for valid number format
+            /^-?\d+(\.\d+)?$/.test(row[field].longitude)
+        )
+        .map((row) => [
+          row[field]?.latitude,
+          row[field]?.longitude,
+          row.uniqueCode,
+        ])
+    );
+  };
+
   useEffect(() => {
     setLoading(true);
     setRows([]);
-    // setMapData([]);
-    // setColumns([]);
-    // setExportColumns([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
       setColumns(HFAT1Columns);
       setExportColumns(HFAT1ColumnsExport);
       setRows(data);
-      setMapData(
-        rows
-          .filter(
-            (row) =>
-              row.A10 &&
-              row.A10.latitude &&
-              row.A10.longitude &&
-              !/[a-zA-Z°]/.test(row.A10.latitude) &&
-              !/[a-zA-Z°]/.test(row.A10.longitude) &&
-              /^-?\d+(\.\d+)?$/.test(row.A10.latitude) && // Check for valid number format
-              /^-?\d+(\.\d+)?$/.test(row.A10.longitude)
-          )
-          .map((row) => [row.A10?.latitude, row.A10?.longitude])
-      );
+      filterAndMapData(data);
       // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
@@ -106,53 +141,24 @@ const ViewData = ({ formName }) => {
       setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
-      setMapData(
-        rows
-          .filter(
-            (row) =>
-              row.H2A9 &&
-              row.H2A9.latitude &&
-              row.H2A9.longitude &&
-              !/[a-zA-Z°]/.test(row.H2A9.latitude) &&
-              !/[a-zA-Z°]/.test(row.H2A9.longitude) &&
-              /^-?\d+(\.\d+)?$/.test(row.H2A9.latitude) && // Check for valid number format
-              /^-?\d+(\.\d+)?$/.test(row.H2A9.longitude)
-          )
-          .map((row) => [row.H2A9?.latitude, row.H2A9?.longitude])
-      );
+      filterAndMapData(data);
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
       setColumns(HFAT3Columns);
       setExportColumns(HFAT3ColumnsExport);
       setRows(HFAT3Rows(data));
-      setMapData(
-        rows
-          .filter(
-            (row) =>
-              row.H3A9 &&
-              row.H3A9.latitude &&
-              row.H3A9.longitude &&
-              !/[a-zA-Z°]/.test(row.H3A9.latitude) &&
-              !/[a-zA-Z°]/.test(row.H3A9.longitude) &&
-              /^-?\d+(\.\d+)?$/.test(row.H3A9.latitude) && // Check for valid number format
-              /^-?\d+(\.\d+)?$/.test(row.H3A9.longitude)
-          )
-          .map((row) => [row.H3A9?.latitude, row.H3A9?.longitude])
-      );
+      filterAndMapData(data);
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
-      // console.log(data);
 
       setRows(HFAT1Rows(data));
-      // setRows(AmbulanceRows(data.AmbulanceDetails));
     } else if (formName === "HFAT-2WithAMB") {
       setTitle("HFAT-2 with Ambulance");
       setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
-      // console.log(data);
       setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3WithAMB") {
       setTitle("HFAT-3 with Ambulance");
@@ -165,38 +171,13 @@ const ViewData = ({ formName }) => {
       setExportColumns(AmbulanceColumnsExport);
       // setRows(AmbulanceRows(data));
       setRows(data);
-      setMapData(
-        rows
-          .filter(
-            (row) =>
-              row.AMB4 &&
-              row.AMB4.latitude &&
-              row.AMB4.longitude &&
-              !/[a-zA-Z°]/.test(row.AMB4?.latitude) &&
-              !/[a-zA-Z°]/.test(row.AMB4?.longitude) &&
-              /^-?\d+(\.\d+)?$/.test(row.AMB4.latitude) && // Check for valid number format
-              /^-?\d+(\.\d+)?$/.test(row.AMB4.longitude)
-          )
-          .map((row) => [row.AMB4?.latitude, row.AMB4?.longitude])
-      );
+      filterAndMapData(data);
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));
       setExportColumns(CSTColumns(data));
       setRows(data);
-      setMapData(
-        rows
-          .filter(
-            (row) =>
-              row.AB4 &&
-              row.AB4.latitude &&
-              row.AB4.longitude &&
-              !/[a-zA-Z°]/.test(row.AB4?.latitude) &&
-              !/[a-zA-Z°]/.test(row.AB4?.longitude)
-          )
-          .map((row) => [row.AB4.latitude, row.AB4.longitude])
-      );
-      // setRows(CSTRows(data));
+      filterAndMapData(data);
     } else if (formName === "Autopsy") {
       setTitle("Verbal Autopsy Tool");
       setColumns(AutopsyColumnsExport);
@@ -228,7 +209,7 @@ const ViewData = ({ formName }) => {
 
   const getData = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       // console.log(`${url}/${formName}/${selectedState}`);
       const { data } = await axios.get(`${url}/${formName}`, {
         headers: {
@@ -238,7 +219,7 @@ const ViewData = ({ formName }) => {
       setData(data?.data);
       // console.log("DATA......................",data?.data);
 
-      setLoading(false);
+      // setLoading(false);
     } catch (error) {
       console.log(error);
       localStorage.removeItem("token");
@@ -247,31 +228,12 @@ const ViewData = ({ formName }) => {
     }
   };
 
-  // make a function to filter data based on state
-  // useEffect(() => {
-  //   if (selectedState === "") {
-  //     setRows(HFAT1Rows(data));
-  //   } else {
-  //     setRows(
-  //       HFAT1Rows(data).filter((row) => row["A3"].startsWith(selectedState))
-  //     );
-  //   }
-  // }, [selectedState, data]);
-
-  // useEffect(() => {
-  //   if (selectedState === "") {
-  //     setRows(data); // Show all rows if no state is selected
-  //   } else {
-  //     const filteredRows = data.filter((row) =>
-  //       row["A3"].startsWith(selectedState)
-  //     );
-  //     setRows(filteredRows);
-  //   }
-  // }, [selectedState, data]);
-
   useEffect(() => {
+    setMapData([]);
     if (selectedState === "") {
       setRows(data); // Show all rows if no state is selected
+      filterAndMapData(data);
+      setIsMapBtnDisabled(false);
     } else {
       // Filter rows where any field in the row might contain the state value
       const filteredRows = data?.filter((row) => {
@@ -281,6 +243,8 @@ const ViewData = ({ formName }) => {
         );
       });
       setRows(filteredRows);
+      filterAndMapData(filteredRows);
+      // setIsMapBtnDisabled(true);
     }
   }, [selectedState, data]);
 
@@ -521,7 +485,7 @@ const ViewData = ({ formName }) => {
           </Button> */}
         </Box>
 
-        {mapData.length > 0 && (
+        {mapData.length > 0 && !isMapBtnDisabled ? (
           <Box>
             <Button
               sx={{
@@ -540,6 +504,8 @@ const ViewData = ({ formName }) => {
               View In Map
             </Button>
           </Box>
+        ) : (
+          ""
         )}
       </Box>
       <Box

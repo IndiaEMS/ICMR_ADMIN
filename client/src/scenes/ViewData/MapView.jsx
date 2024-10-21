@@ -4,7 +4,9 @@ import {
   TileLayer,
   CircleMarker,
   Popup,
+  Tooltip,
   useMap,
+  Marker,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -31,7 +33,7 @@ const MapView = ({ mapData, selectedLocation }) => {
       />
 
       {/* Move the map to the selected location */}
-      {selectedLocation && <MoveMapToLocation location={selectedLocation} />}
+      {/* {selectedLocation && <MoveMapToLocation location={selectedLocation} />} */}
 
       {/* Loop through the map data and create a circle marker for each coordinate */}
       {mapData?.map((coord, index) => (
@@ -49,6 +51,9 @@ const MapView = ({ mapData, selectedLocation }) => {
                 Location: {coord?.[0]}, {coord?.[1]}
               </Popup>
             )}
+          <Tooltip>
+            Location: {coord?.[0]}, {coord?.[1]} {coord?.[2] && `(${coord[2]})`}
+          </Tooltip>
         </CircleMarker>
       ))}
     </MapContainer>
