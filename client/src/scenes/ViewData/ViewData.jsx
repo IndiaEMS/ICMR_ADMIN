@@ -69,11 +69,11 @@ const ViewData = ({ formName }) => {
 
   const states = [
     { value: "", label: "All" },
-    { value: "GJBRC", label: "Gujarat" },
-    { value: "ORPUR", label: "Odisha" },
-    { value: "MPBHS", label: "Bhopal" },
-    { value: "PBLDH", label: "Ludhiana" },
-    { value: "PYPDY", label: "Pondicherry" },
+    { value: "GJBRC", label: "Gujarat", coordinate: [22.309425, 72.13623] },
+    { value: "ORPUR", label: "Odisha", coordinate: [20.9517, 85.0985] },
+    { value: "MPBHS", label: "Bhopal", coordinate: [23.2599, 77.4126] },
+    { value: "PBLDH", label: "Ludhiana", coordinate: [30.901, 75.8573] },
+    { value: "PYPDY", label: "Pondicherry", coordinate: [11.9416, 79.8083] },
   ];
 
   const filterAndMapData = (rows) => {
@@ -587,7 +587,10 @@ const ViewData = ({ formName }) => {
             <MapView
               // mapData={ambulanceData}
               mapData={mapData ?? []} // Assuming rows have lat/lng
-              selectedLocation={selectedState}
+              selectedLocation={
+                states.find((state) => state.value === selectedState)
+                  ?.coordinate
+              }
             />
           </Box>
         </DialogContent>

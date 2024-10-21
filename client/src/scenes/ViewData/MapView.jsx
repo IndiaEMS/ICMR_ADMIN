@@ -15,7 +15,7 @@ const MapView = ({ mapData, selectedLocation }) => {
   const MoveMapToLocation = ({ location }) => {
     const map = useMap();
     if (location) {
-      map.setView(location, 10); // Move the map to the selected location and set zoom level
+      map.setView(location, 7); // Move the map to the selected location and set zoom level
     }
     return null;
   };
@@ -33,7 +33,7 @@ const MapView = ({ mapData, selectedLocation }) => {
       />
 
       {/* Move the map to the selected location */}
-      {/* {selectedLocation && <MoveMapToLocation location={selectedLocation} />} */}
+      {selectedLocation && <MoveMapToLocation location={selectedLocation} />}
 
       {/* Loop through the map data and create a circle marker for each coordinate */}
       {mapData?.map((coord, index) => (
