@@ -31,14 +31,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = () => {
+const Sidebar = ({ isSideBar,isCollapsed,setIsCollapsed }) => {
   // const { state } = useContext(AppContext);
   const { user } = useSelector((state) => state.auth);
   const userRole = user?.role ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  
   const [selected, setSelected] = useState("Dashboard");
   const [isHfatOpen, setIsHfatOpen] = useState(false);
   const [isHfatAMBOpen, setIsHfatAMBOpen] = useState(false);
@@ -52,7 +52,7 @@ const Sidebar = () => {
         },
         "-ms-overflow-style": "none", // Hide scrollbar for IE and Edge
         "scrollbar-width": "none", // Hide scrollbar for Firefox
-        width: isCollapsed ? "70px" : "300px",
+        width: isCollapsed ? "80px" : "320px",
         "& .pro-sidebar-inner": {
           background: `${colors.primary[400]} !important`,
         },
@@ -66,18 +66,18 @@ const Sidebar = () => {
     >
       <ProSidebar
         collapsed={isCollapsed}
-        style={
-          {
-            // height: "100vh",
-            // position: "fixed",
-            // zIndex: 1,
-            // top: 0,
-            // left: 0,
-            // backgroundColor: colors.primary[400],
-            // width: isCollapsed ? "70px" : "300px",
-            // transition: "width 0.5s",
-          }
-        }
+        style={{
+          // height: "100vh",
+          // overflowY: "scroll", // Enable scrolling
+          // overflowX: "hidden",
+          position: "fixed",
+          // zIndex: 1,
+          // top: 0,
+          // left: 0,
+          // backgroundColor: colors.primary[400],
+          // width: isCollapsed ? "70px" : "300px",
+          // transition: "width 0.5s",
+        }}
       >
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}

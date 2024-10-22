@@ -120,7 +120,7 @@ const ViewData = ({ formName }) => {
         .map((row) => [
           row[field]?.latitude,
           row[field]?.longitude,
-          row.uniqueCode,
+          formName == "CST" ? row.Respondent_ID : row.uniqueCode,
         ])
     );
   };

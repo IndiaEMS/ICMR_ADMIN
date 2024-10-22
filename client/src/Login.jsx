@@ -7,11 +7,15 @@ import {
   Container,
   Paper,
   Grid,
+  AppBar,
+  Box,
 } from "@mui/material";
 import axios from "axios";
 import { AppContext } from "./context/user";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "./slices/authSlice";
+
+import bgImg from "./assets/bg.jpg";
 
 export default function AdminLogin() {
   // const { setUser } = useContext(AppContext);
@@ -65,77 +69,144 @@ export default function AdminLogin() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
-        <Typography component="h1" variant="h5" align="center">
-          Admin Portal
-        </Typography>
-        {error && (
-          <Typography color="error" align="center">
-            {error}
+    <>
+      <AppBar
+        position="static"
+        sx={{ backgroundColor: "white", padding: "10px" }}
+      >
+        <Container maxWidth="xl">
+          <Box
+            sx={{
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            {/* show img */}
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/ICMR_Logo.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/secondLogo.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/thirdLogo.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/fourthLogo.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/fifthLogo.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+            <img
+              src="https://indiaems.icmr.org.in/src/assets/PU_Icon.png"
+              alt="logo"
+              style={{ height: "80px" }}
+            />
+          </Box>
+        </Container>
+      </AppBar>
+      <Container
+        component="main"
+        maxWidth="xs"
+        //set bgImage in full screen full height width
+        sx={{
+          backgroundImage: `url(${bgImg})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          height: "100vh",
+          // remove max width
+          maxWidth: "none",
+          minWidth: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
+          <Typography component="h1" variant="h5" align="center">
+            Admin Portal
           </Typography>
-        )}
-        <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
-          <TextField
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": { borderColor: "white" },
-                "&:hover fieldset": { borderColor: "white" },
-              },
-              "& .MuiInputLabel-root": {
-                color: "white",
-              },
-              "& .MuiInputBase-input": {
-                color: "white",
-              },
-              "& label.Mui-focused": { color: "white" },
-            }}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label="Email Address"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            sx={{
-              "& .MuiOutlinedInput-root": {
-                "&.Mui-focused fieldset": { borderColor: "white" },
-                "&:hover fieldset": { borderColor: "white" },
-              },
-              "& .MuiInputLabel-root": {
-                color: "white",
-              },
-              "& .MuiInputBase-input": {
-                color: "white",
-              },
-              "& label.Mui-focused": { color: "white" },
-            }}
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            autoComplete="current-password"
-          />
-          <Grid container justifyContent="center" style={{ marginTop: "20px" }}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
-              disabled={isLoading}
+          {error && (
+            <Typography color="error" align="center">
+              {error}
+            </Typography>
+          )}
+          <form onSubmit={handleSubmit} style={{ marginTop: "20px" }}>
+            <TextField
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": { borderColor: "white" },
+                  "&:hover fieldset": { borderColor: "white" },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "white",
+                },
+                "& .MuiInputBase-input": {
+                  color: "white",
+                },
+                "& label.Mui-focused": { color: "white" },
+              }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Email Address"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              autoComplete="email"
+              autoFocus
+            />
+            <TextField
+              sx={{
+                "& .MuiOutlinedInput-root": {
+                  "&.Mui-focused fieldset": { borderColor: "white" },
+                  "&:hover fieldset": { borderColor: "white" },
+                },
+                "& .MuiInputLabel-root": {
+                  color: "white",
+                },
+                "& .MuiInputBase-input": {
+                  color: "white",
+                },
+                "& label.Mui-focused": { color: "white" },
+              }}
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              label="Password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+            <Grid
+              container
+              justifyContent="center"
+              style={{ marginTop: "20px" }}
             >
-              {isLoading ? "Loading" : "Login"}
-            </Button>
-          </Grid>
-        </form>
-      </Paper>
-    </Container>
+              <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                disabled={isLoading}
+              >
+                {isLoading ? "Loading" : "Login"}
+              </Button>
+            </Grid>
+          </form>
+        </Paper>
+      </Container>
+    </>
   );
 }

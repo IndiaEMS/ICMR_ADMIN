@@ -541,23 +541,24 @@ const Dashboard = () => {
 
       <Box
         display="flex"
-        my="20px"
+        mt={"20px"}
         flexDirection="row"
         justifyContent="space-between"
         flexWrap="wrap"
       >
-        <Box
-          p="10px"
-          backgroundColor={colors.primary[400]}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          flexWrap="wrap"
-        >
-          {states.find((state) => state.value === selectedState)?.target
-            .HFAT1 <= 0 ? (
-            ""
-          ) : (
+        {states.find((state) => state.value === selectedState)?.target.HFAT1 <=
+        0 ? (
+          ""
+        ) : (
+          <Box
+            p="10px"
+            backgroundColor={colors.primary[400]}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            flexWrap="wrap"
+            my={"20px"}
+          >
             <IndividualPieChart
               counter={counter.HFAT1Count ?? 0}
               title={"HFAT-1"}
@@ -566,7 +567,12 @@ const Dashboard = () => {
                   .HFAT1
               }
             />
-          )}
+          </Box>
+        )}
+        {states.find((state) => state.value === selectedState)?.target.HFAT2 <=
+        0 ? (
+          ""
+        ) : (
           <Box
             p="10px"
             backgroundColor={colors.primary[400]}
@@ -574,21 +580,22 @@ const Dashboard = () => {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
+            mb={"20px"}
           >
-            {states.find((state) => state.value === selectedState)?.target
-              .HFAT2 <= 0 ? (
-              ""
-            ) : (
-              <IndividualPieChart
-                counter={counter.HFAT2Count ?? 0}
-                title={"HFAT-2"}
-                target={
-                  states.find((state) => state.value === selectedState)?.target
-                    .HFAT2
-                }
-              />
-            )}
+            <IndividualPieChart
+              counter={counter.HFAT2Count ?? 0}
+              title={"HFAT-2"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT2
+              }
+            />
           </Box>
+        )}
+        {states.find((state) => state.value === selectedState)?.target.HFAT3 <=
+        0 ? (
+          ""
+        ) : (
           <Box
             p="10px"
             backgroundColor={colors.primary[400]}
@@ -596,21 +603,22 @@ const Dashboard = () => {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
+            mb={"20px"}
           >
-            {states.find((state) => state.value === selectedState)?.target
-              .HFAT3 <= 0 ? (
-              ""
-            ) : (
-              <IndividualPieChart
-                counter={counter.HFAT3Count ?? 0}
-                title={"HFAT-3"}
-                target={
-                  states.find((state) => state.value === selectedState)?.target
-                    .HFAT3
-                }
-              />
-            )}
+            <IndividualPieChart
+              counter={counter.HFAT3Count ?? 0}
+              title={"HFAT-3"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .HFAT3
+              }
+            />
           </Box>
+        )}
+        {states.find((state) => state.value === selectedState)?.target
+          .AMBULANCE <= 0 ? (
+          ""
+        ) : (
           <Box
             p="10px"
             backgroundColor={colors.primary[400]}
@@ -618,21 +626,22 @@ const Dashboard = () => {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
+            mb={"20px"}
           >
-            {states.find((state) => state.value === selectedState)?.target
-              .AMBULANCE <= 0 ? (
-              ""
-            ) : (
-              <IndividualPieChart
-                counter={counter.AMBULANCECount ?? 0}
-                title={"Ambulance"}
-                target={
-                  states.find((state) => state.value === selectedState)?.target
-                    .AMBULANCE
-                }
-              />
-            )}
+            <IndividualPieChart
+              counter={counter.AMBULANCECount ?? 0}
+              title={"Ambulance"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .AMBULANCE
+              }
+            />
           </Box>
+        )}
+        {states.find((state) => state.value === selectedState)?.target.CST <=
+        0 ? (
+          ""
+        ) : (
           <Box
             p="10px"
             backgroundColor={colors.primary[400]}
@@ -640,21 +649,22 @@ const Dashboard = () => {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
+            mb={"20px"}
           >
-            {states.find((state) => state.value === selectedState)?.target
-              .CST <= 0 ? (
-              ""
-            ) : (
-              <IndividualPieChart
-                counter={counter.AMBULANCECount ?? 0}
-                title={"CST"}
-                target={
-                  states.find((state) => state.value === selectedState)?.target
-                    .CST
-                }
-              />
-            )}
+            <IndividualPieChart
+              counter={counter.AMBULANCECount ?? 0}
+              title={"CST"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .CST
+              }
+            />
           </Box>
+        )}
+        {states.find((state) => state.value === selectedState)?.target
+          .Autopsy <= 0 ? (
+          ""
+        ) : (
           <Box
             p="10px"
             backgroundColor={colors.primary[400]}
@@ -662,32 +672,29 @@ const Dashboard = () => {
             justifyContent="center"
             alignItems="center"
             flexWrap="wrap"
+            mb={"20px"}
           >
-            {states.find((state) => state.value === selectedState)?.target
-              .Autopsy <= 0 ? (
-              ""
-            ) : (
-              <IndividualPieChart
-                counter={counter}
-                title={"Autopsy"}
-                target={
-                  states.find((state) => state.value === selectedState)?.target
-                    .Autopsy
-                }
-              />
-            )}
+            <IndividualPieChart
+              counter={counter}
+              title={"Autopsy"}
+              target={
+                states.find((state) => state.value === selectedState)?.target
+                  .Autopsy
+              }
+            />
           </Box>
-        </Box>
+        )}
       </Box>
+      <Header title="Overall" />
       <Box
         display="flex"
-        my="20px"
+        mb="20px"
         flexDirection="row"
         justifyContent="space-between"
         flexWrap="wrap"
       >
         <Box
-          p="100px"
+          p={"50px 80px"}
           backgroundColor={colors.primary[400]}
           display="flex"
           justifyContent="center"
@@ -697,7 +704,7 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          p="100px"
+          p={"50px 100px"}
           backgroundColor={colors.primary[400]}
           display="flex"
           justifyContent="center"

@@ -58,7 +58,7 @@ const PieChart = ({ counter }) => {
 
   return (
     <div>
-      <Box width="350px" height="400px" margin="0 auto">
+      <Box width="350px" height="300px" margin="0 auto">
         <Pie data={data} options={options} />
       </Box>
     </div>
