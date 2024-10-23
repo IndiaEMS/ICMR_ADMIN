@@ -9,6 +9,7 @@ import {
   Grid,
   AppBar,
   Box,
+  useTheme,
 } from "@mui/material";
 import axios from "axios";
 import { AppContext } from "./context/user";
@@ -27,6 +28,8 @@ export default function AdminLogin() {
   const [isLoading, setIsLoading] = useState(false);
 
   const url = import.meta.env.VITE_SERVER;
+
+  const theme = useTheme();
 
   // useEffect(() => {
   //   const token = localStorage.getItem("token");
@@ -69,7 +72,19 @@ export default function AdminLogin() {
   };
 
   return (
-    <>
+    <Box
+      sx={{
+        backgroundImage: `url(${bgImg})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        height: "100vh",
+        maxWidth: "none",
+        minWidth: "100%",
+        // display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <AppBar
         position="static"
         sx={{ backgroundColor: "white", padding: "10px" }}
@@ -82,35 +97,83 @@ export default function AdminLogin() {
             }}
           >
             {/* show img */}
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/ICMR_Logo.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens
+                  sm: "40px", // medium screens
+                  md: "60px", // large screens and above
+                },
+              }}
             />
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/secondLogo.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens (down(sm))
+                  sm: "40px", // medium screens (up(sm), down(md))
+                  lg: "60px", // large screens and up
+                },
+              }}
             />
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/thirdLogo.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens (down(sm))
+                  sm: "40px", // medium screens (up(sm), down(md))
+                  lg: "60px", // large screens and up
+                },
+              }}
             />
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/fourthLogo.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens (down(sm))
+                  sm: "40px", // medium screens (up(sm), down(md))
+                  lg: "60px", // large screens and up
+                },
+              }}
             />
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/fifthLogo.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens (down(sm))
+                  sm: "40px", // medium screens (up(sm), down(md))
+                  lg: "60px", // large screens and up
+                },
+              }}
             />
-            <img
+            <Box
+              component="img"
               src="https://indiaems.icmr.org.in/src/assets/PU_Icon.png"
               alt="logo"
-              style={{ height: "80px" }}
+              height="60px"
+              sx={{
+                height: {
+                  xs: "20px", // small screens (down(sm))
+                  sm: "40px", // medium screens (up(sm), down(md))
+                  lg: "60px", // large screens and up
+                },
+              }}
             />
           </Box>
         </Container>
@@ -118,21 +181,24 @@ export default function AdminLogin() {
       <Container
         component="main"
         maxWidth="xs"
-        //set bgImage in full screen full height width
         sx={{
-          backgroundImage: `url(${bgImg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          height: "100vh",
-          // remove max width
-          maxWidth: "none",
-          minWidth: "100%",
+          // set vertical center
           display: "flex",
+          flexDirection: "column",
           justifyContent: "center",
           alignItems: "center",
+          // set height
+          height: "80vh",
         }}
       >
-        <Paper elevation={3} style={{ padding: "20px", marginTop: "50px" }}>
+        <Paper
+          elevation={3}
+          style={{
+            padding: "20px",
+            // marginTop: "50px",
+            backgroundColor: "rgba(0,0,0,0.9)",
+          }}
+        >
           <Typography component="h1" variant="h5" align="center">
             Admin Portal
           </Typography>
@@ -207,6 +273,6 @@ export default function AdminLogin() {
           </form>
         </Paper>
       </Container>
-    </>
+    </Box>
   );
 }
