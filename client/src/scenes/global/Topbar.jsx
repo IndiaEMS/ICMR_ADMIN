@@ -13,12 +13,13 @@ import React from "react";
 import Menu from "@mui/material/Menu";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { AppContext } from "../../context/user";
 import { useSelector } from "react-redux";
 const settings = ["Logout"];
 const url = import.meta.env.VITE_SERVER;
 
-const Topbar = () => {
+const Topbar = ({ isSidebar, setIsSidebar }) => {
   // const { state } = useContext(AppContext);
 
   const { user } = useSelector((state) => state.auth);
@@ -70,6 +71,22 @@ const Topbar = () => {
 
   return (
     <Box display="flex" justifyContent="space-between" p={2}>
+      {window.innerWidth < 1300 && (
+        <Box display="flex">
+          <IconButton
+            onClick={() => {
+              setIsSidebar(!isSidebar);
+              setIsCollapsed(false);
+            }}
+            sx={{ mr: 2 }}
+            color="inherit"
+          >
+            <IconButton onClick={() => setIsCollapsed(!isCollapsed)}>
+              <MenuOutlinedIcon />
+            </IconButton>
+          </IconButton>
+        </Box>
+      )}
       <Box
         display="flex"
         width={"70vh"}

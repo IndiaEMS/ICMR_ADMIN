@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import Sidebar from "./scenes/global/Sidebar";
 import Dashboard from "./scenes/dashboard";
@@ -11,7 +11,7 @@ import Form from "./scenes/form";
 import Line from "./scenes/line";
 import Pie from "./scenes/pie";
 import Geography from "./scenes/geography";
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import ViewData from "./scenes/ViewData/ViewData";
 import AdminLogin from "./Login";
@@ -22,7 +22,6 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const location = useLocation();
 
   const isAuthenticated = () => {
     const token = localStorage.getItem("token");
@@ -37,42 +36,47 @@ function App() {
     );
   };
 
-  // set the sidebar to false if the screen width is greater than 1300px
-  // set the sidebar to true if the screen width is less than 1300px
-  // this is to ensure that the sidebar is hidden on larger screens
-  // and shown on smaller screens
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 1300) {
-        setIsSidebar(false);
+        setIsSidebar(false); // Hide sidebar if screen is wider than 1300px
       } else {
-        setIsSidebar(true);
+        setIsSidebar(true); // Show sidebar if screen is smaller
       }
     };
 
+    // Initial check and set event listener
     handleResize();
     window.addEventListener("resize", handleResize);
 
+    // Cleanup listener on component unmount
     return () => window.removeEventListener("resize", handleResize);
   }, []);
-
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <div className="app">
-          {isAuthenticated() && !isSidebar ? (
+        <Box
+          className="app"
+          sx={{
+            display: "grid",
+            gridTemplateColumns: isAuthenticated()
+              ? isCollapsed
+                ? "80px 1fr"
+                : "270px 1fr"
+              : "1fr",
+            height: "100vh",
+          }}
+        >
+          {isAuthenticated() && (
             <Sidebar
               isSidebar={isSidebar}
-              setIsSidebar={setIsSidebar}
               isCollapsed={isCollapsed}
               setIsCollapsed={setIsCollapsed}
             />
-          ) : (
-            <></>
           )}
-          <main className="content">
-            {isAuthenticated() && <Topbar isSidebar={isSidebar} setIsSidebar={setIsSidebar} />}
+          <Box className="content">
+            {isAuthenticated() && <Topbar setIsSidebar={setIsSidebar} />}
             <Routes>
               <Route path="/login" element={<AdminLogin />} />
               {/* <Route path="/" element={<AdminLogin />} /> */}
@@ -173,8 +177,8 @@ function App() {
                 }
               />
             </Routes>
-          </main>
-        </div>
+          </Box>
+        </Box>
       </ThemeProvider>
     </ColorModeContext.Provider>
   );

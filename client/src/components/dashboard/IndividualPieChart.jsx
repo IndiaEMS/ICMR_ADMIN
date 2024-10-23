@@ -16,7 +16,7 @@ const IndividualPieChart = ({ title, subtitle, counter, target }) => {
     datasets: [
       {
         label: "Data Distribution",
-        data: [counter ?? 0, target - counter],
+        data: [counter ?? 0, Math.max(0, target - (counter ?? 0))],
         backgroundColor: [colors.greenAccent[400], colors.blueAccent[400]],
         borderColor: [colors.primary[400], colors.primary[400]],
         borderWidth: 1,
@@ -52,7 +52,9 @@ const IndividualPieChart = ({ title, subtitle, counter, target }) => {
         {title}
       </Typography>
       <Typography variant="h6" align="center" gutterBottom>
-        Total : {target}
+        Archived : {counter}
+        <br />
+        Target : {target}
       </Typography>
       <Box width="250px" height="250px" margin="0 auto">
         <Pie data={data} options={options} />

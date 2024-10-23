@@ -31,14 +31,14 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
   );
 };
 
-const Sidebar = ({ isSideBar,isCollapsed,setIsCollapsed }) => {
+const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
   // const { state } = useContext(AppContext);
   const { user } = useSelector((state) => state.auth);
   const userRole = user?.role ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  
+
   const [selected, setSelected] = useState("Dashboard");
   const [isHfatOpen, setIsHfatOpen] = useState(false);
   const [isHfatAMBOpen, setIsHfatAMBOpen] = useState(false);
@@ -82,7 +82,19 @@ const Sidebar = ({ isSideBar,isCollapsed,setIsCollapsed }) => {
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
           <MenuItem
-            onClick={() => setIsCollapsed(!isCollapsed)}
+            onClick={
+              () => {
+                if (window.innerWidth > 1300) {
+                  setIsCollapsed(!isCollapsed);
+                  setIsSidebar(false);
+                } else {
+                  setIsSidebar(!isSideBar);
+                  setIsCollapsed(false);
+                }
+              }
+
+              // setIsSidebar(!isSideBar) ?? setIsCollapsed(!isCollapsed)
+            }
             icon={isCollapsed ? <MenuOutlinedIcon /> : undefined}
             style={{
               margin: "10px 0 20px 0",

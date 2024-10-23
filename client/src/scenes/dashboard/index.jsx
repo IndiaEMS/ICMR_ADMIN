@@ -234,7 +234,7 @@ const Dashboard = () => {
                   mr: "10px",
                   // hover
                   "&:hover": {
-                    backgroundColor: colors.blueAccent[600],
+                    backgroundColor: colors.greenAccent[700],
                   },
                 }}
                 onClick={() => {
@@ -620,7 +620,7 @@ const Dashboard = () => {
           ""
         ) : (
           <Box
-            p="10px"
+            // p="10px"
             backgroundColor={colors.primary[400]}
             display="flex"
             justifyContent="center"
@@ -694,7 +694,7 @@ const Dashboard = () => {
         flexWrap="wrap"
       >
         <Box
-          p={"50px 80px"}
+          p={"50px"}
           backgroundColor={colors.primary[400]}
           display="flex"
           justifyContent="center"
@@ -704,7 +704,7 @@ const Dashboard = () => {
         </Box>
 
         <Box
-          p={"50px 100px"}
+          p={"50px"}
           backgroundColor={colors.primary[400]}
           display="flex"
           justifyContent="center"
