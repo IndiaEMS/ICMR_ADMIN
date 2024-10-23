@@ -154,24 +154,25 @@ const ViewData = ({ formName }) => {
       setTitle("HFAT-3");
       setColumns(HFAT3Columns);
       setExportColumns(HFAT3ColumnsExport);
-      setRows(HFAT3Rows(data));
+      // setRows(HFAT3Rows(data));
+      setRows(data);
       filterAndMapData(data);
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
 
-      setRows(HFAT1Rows(data));
+      setRows(data);
     } else if (formName === "HFAT-2WithAMB") {
       setTitle("HFAT-2 with Ambulance");
       setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
-      setRows(HFAT2Rows(data));
+      setRows(data);
     } else if (formName === "HFAT-3WithAMB") {
       setTitle("HFAT-3 with Ambulance");
       setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT3ColumnsExport, ...HFATAmbulanceColumnsExport]);
-      setRows(HFAT3Rows(data));
+      setRows(data);
     } else if (formName === "AMBULANCE") {
       setTitle("Ambulance");
       setColumns(AmbulanceColumns);
@@ -224,7 +225,7 @@ const ViewData = ({ formName }) => {
         },
       });
       setData(data?.data);
-      // console.log("DATA......................",data?.data);
+      // console.log("DATA......................", data?.data);
 
       // setLoading(false);
     } catch (error) {

@@ -2209,7 +2209,7 @@ export const HFAT2DownloadCsv = async (req, res) => {
 
 export const HFAT2DownloadExcel = async (req, res) => {
   try {
-    const data = await HFAT1.find();
+    const data = await HFAT2.find();
 
     const workbook = new ExcelJS.Workbook();
     const worksheet = workbook.addWorksheet("My Sheet");

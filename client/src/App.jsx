@@ -72,7 +72,14 @@ function App() {
             <></>
           )}
           <main className="content">
-            {isAuthenticated() && <Topbar isSidebar={isSidebar} setIsSidebar={setIsSidebar} />}
+            {isAuthenticated() && (
+              <Topbar
+                isSidebar={isSidebar}
+                setIsSidebar={setIsSidebar}
+                isCollapsed={isCollapsed}
+                setIsCollapsed={setIsCollapsed}
+              />
+            )}
             <Routes>
               <Route path="/login" element={<AdminLogin />} />
               {/* <Route path="/" element={<AdminLogin />} /> */}

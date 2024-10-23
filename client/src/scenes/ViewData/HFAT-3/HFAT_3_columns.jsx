@@ -6,9 +6,10 @@ const columns = [
     headerName: "Record ID",
     checkboxSelection: true,
     headerCheckboxSelection: false,
+    valueGetter: (params) => params.data?._id,
   },
   {
-    field: "H3A2",
+    field: "uniqueCode",
     headerName: "Unique Code",
   },
   { field: "H3A1", headerName: "3A.1 Assessor's Name:" },

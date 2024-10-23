@@ -12,13 +12,18 @@ import { deleteHfat3 } from "../controller/delete/Hfat_3_delete.js";
 const router = express.Router();
 const jsonparser = bodyParser.json();
 router.post("/HFAT-3", jsonparser, HFAT3Controller);
-router.get("/HFAT-3", jsonparser,AuthenciatedUser, HFAT3Get);
-router.get("/HFAT-3WithAMB", jsonparser,AuthenciatedUser, HFAT3AndAMBULANCEGet);
+router.get("/HFAT-3", jsonparser, AuthenciatedUser, HFAT3Get);
+router.get(
+  "/HFAT-3WithAMB",
+  jsonparser,
+  AuthenciatedUser,
+  HFAT3AndAMBULANCEGet
+);
 router.delete("/HFAT-3", jsonparser, HFAT3Delete);
 // router.get("/HFAT-3/id/:id", jsonparser, HFAT3Get);
 // router.get("/HFAT-3/Csv", jsonparser, HFAT3DownloadCsv);
 // router.get("/HFAT-3/Excel", jsonparser, HFAT3DownloadExcel);
 
-router.delete("HFAT-3/delete",AuthenciatedUser, deleteHfat3)
+router.delete("/HFAT-3/delete", AuthenciatedUser, deleteHfat3);
 
 export default router;
