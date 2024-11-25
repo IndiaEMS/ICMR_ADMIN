@@ -49,9 +49,9 @@ const Dashboard = () => {
       label: "All",
       target: {
         HFAT1: 0,
-        HFAT2: 53,
+        HFAT2: 57,
         HFAT3: 215,
-        CST: 6000,
+        CST: 30000,
         AMBULANCE: 247,
         Autopsy: 0,
       },
@@ -61,7 +61,7 @@ const Dashboard = () => {
       label: "Gujarat",
       target: {
         HFAT1: 0,
-        HFAT2: 11,
+        HFAT2: 15,
         HFAT3: 85,
         CST: 6000,
         AMBULANCE: 71,
@@ -652,7 +652,7 @@ const Dashboard = () => {
             mb={"20px"}
           >
             <IndividualPieChart
-              counter={counter.AMBULANCECount ?? 0}
+              counter={counter.CSTCount ?? 0}
               title={"CST"}
               target={
                 states.find((state) => state.value === selectedState)?.target

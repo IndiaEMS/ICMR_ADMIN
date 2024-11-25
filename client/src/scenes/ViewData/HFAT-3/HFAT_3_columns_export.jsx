@@ -880,7 +880,7 @@ const columns = [
       "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Incubators)",
   },
   {
-    field: "table2_Adult",
+    field: "table2_0_Adult",
     headerName:
       "3E.1 : Numbers of Patients who Visited ED in Last One Month (Adult (> 18Years))",
   },
