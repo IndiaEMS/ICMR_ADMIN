@@ -258,309 +258,309 @@ export const CSTColumns = (data) => {
 
 const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
   return [
-    // { field: "AA1", headerName: "AA.1 Date & Time:" },
-    // { field: "AA2", headerName: "AA.2 Site:" },
-    // { field: "AA3", headerName: "AA.3 Name of the Data Collector:" },
+    { field: "AA1", headerName: "AA.1 Date & Time:" },
+    { field: "AA2", headerName: "AA.2 Site:" },
+    { field: "AA3", headerName: "AA.3 Name of the Data Collector:" },
     {
       field: "AA4",
       headerName: "AA.4 Respondent ID:",
       valueGetter: (params) => params?.data?.Respondent_ID,
     },
-    // {
-    //   field: "AB1",
-    //   headerName: "AB.1 Block",
-    // },
-    // { field: "AB2", headerName: "AB.2 Type of PSU:" },
-    // { field: "AB3", headerName: "AB.3 Name of PSU (Town/Village):" },
-    // {
-    //   field: "AB4",
-    //   headerName: "AB.4 GPS Co-ordinates: (Latitude)",
-    //   valueGetter: (params) => params?.data?.AB4?.latitude,
-    // },
-    // {
-    //   field: "AB4",
-    //   headerName: "AB.4 GPS Co-ordinates: (Longitude)",
-    //   valueGetter: (params) => params?.data?.AB4?.longitude,
-    // },
-    // {
-    //   field: "AB4",
-    //   headerName: "AB.4 GPS Co-ordinates: (State)",
-    //   valueGetter: (params) => params?.data?.AB4?.district,
-    // },
-    // {
-    //   field: "AB4",
-    //   headerName: "AB.4 GPS Co-ordinates: (district)",
-    //   valueGetter: (params) => params?.data?.AB4?.state,
-    // },
-    // {
-    //   field: "AB5",
-    //   headerName: "AB.5 Household ID Number:",
-    //   valueGetter: (params) => params?.data?.Household_ID,
-    // },
-    // {
-    //   field: "AB6",
-    //   headerName:
-    //     "AB.6 For how long have you been living in this city/village with your family?",
-    // },
-    // {
-    //   field: "AC1",
-    //   headerName:
-    //     "AC.1 How many members are currently residing in his household?",
-    // },
-    // ...generateMemeberColumns,
-    // { field: "AC2_1", headerName: "AC.2.1 Name of Respondent?" },
-    // {
-    //   field: "AC3",
-    //   headerName:
-    //     "AC.3 Are there any other persons such as small children or infants that we have not listed?",
-    // },
-    // {
-    //   field: "AC4",
-    //   headerName:
-    //     "AC.4 Are there any other people who may not be members of your family such as domestic servants who usually live here?",
-    // },
-    // {
-    //   field: "AC5",
-    //   headerName:
-    //     "AC.5 In the past one year, did any member of this household have any health emergency that could have required any sort of medical attention or treatment?",
-    // },
-    // {
-    //   field: "AC6_1",
-    //   headerName:
-    //     "AC.6.1 In the past one year, did you or any member of this household suffered from sudden injury in Road Traffic Accident/ fracture/ severe fall/ drowning/ stabbing/ gunshot/ any other assault/ any attempt to self-harm/ domestic violence/ homicidal etc.?",
-    // },
-    // {
-    //   field: "AC6_1_if",
-    //   headerName:
-    //     "AC6.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC6_2",
-    //   headerName:
-    //     "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    // },
-    // {
-    //   field: "AC7_1",
-    //   headerName:
-    //     "AC.7.1 In the past one year, did you or any member of this household suffered from severe/ minor burns etc.",
-    // },
-    // {
-    //   field: "AC7_1_if",
-    //   headerName:
-    //     "AC.7.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC7_2",
-    //   headerName:
-    //     "Ac.7.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    // },
-    // {
-    //   field: "AC8_1",
-    //   headerName:
-    //     "AC.8.1 In the past one year, has anyone in your household had a history of heart attack or sudden onset of acute chest pain/ heaviness/ constriction, with possible radiation to the left arm, neck, or back, associated with symptoms such as upper abdominal pain/ palpitations/ dizziness/ profuse sweating, and exacerbated by exertion after meals?",
-    // },
-    // {
-    //   field: "AC8_1_if",
-    //   headerName:
-    //     "AC.8.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC8_2",
-    //   headerName:
-    //     "AC.8.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    // },
-    // {
-    //   field: "AC9_1",
-    //   headerName:
-    //     "Ac.9.1 In the past one year, did you or any member of this household suffered with brain stroke or symptoms like sudden onset of weakness, especially one side of the body/ loss of consciousness/ altered sensorium/ Imbalance/ blurred vision/ facial deviation/ drooping of eyelid/ speech abnormality with numbness and tingling sensation, or difficulty in speaking or understanding speech (aphasia), or sudden severe headache with no known cause of one's life (haemorrhagic strokes)?",
-    // },
-    // {
-    //   field: "AC9_1_if",
-    //   headerName:
-    //     "AC.9.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC9_2",
-    //   headerName:
-    //     "AC.9.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    // },
-    // {
-    //   field: "AC10_1",
-    //   headerName:
-    //     "AC.10.1 In the past one year, has anyone in your household experienced breathlessness with or without sudden onset of fever/ cough with expectoration/ chest pain (pleuritic)/ fast breathing/ not able to speak complete sentences/ loss of consciousness/ or chest tightness leading to suspicion of pneumonia?",
-    // },
-    // {
-    //   field: "AC10_1_if",
-    //   headerName:
-    //     "AC.10.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC10_2",
-    //   headerName:
-    //     "AC.10.2 If yes, could you please tell who all from your Household suffered with this condition?",
-    // },
-    // {
-    //   field: "AC11_1",
-    //   headerName:
-    //     "AC.11.1 In the past one year, did any women in your household give birth to a child or had any episode of miscarriage/ abortion?",
-    // },
-    // {
-    //   field: "AC11_1_if",
-    //   headerName:
-    //     "AC.11.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC11_2",
-    //   headerName:
-    //     "AC.11.2 If “Yes” to AC.11.1, did women or mother suffer with any condition like vaginal bleeding that required blood transfusion or sudden increase in blood pressure or decreased urine output or loss of fetal movements or loss of consciousness or seizure or fits etc., before / during / after delivery?",
-    // },
-    // {
-    //   field: "AC11_2_if",
-    //   headerName:
-    //     "AC.11.2.2 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC11_3",
-    //   headerName:
-    //     "AC.11.3 If “Yes” to AC.11.2, could you please tell us who suffered with this condition?",
-    // },
-    // {
-    //   field: "AC11_4",
-    //   headerName:
-    //     'AC.11.4 If "Yes" to AC.11.1, At the time of birth did the new-born had any issues such as not cried/ delayed cry/ not able to breath/ body getting cold/ minimal limb movement/ blue discoloration/ taken no ICU after delivery/ convulsion/ sudden onset of fever/ difficulty in breast feeding/ excessive diarrhoea/ jaundice or any other condition that required a longer hospital stay before being discharged/ that required a further admission after discharge within the first month of the birth?',
-    // },
-    // {
-    //   field: "AC11_4_if",
-    //   headerName:
-    //     "AC.11.4.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC11_5",
-    //   headerName:
-    //     "AC.11.5 If “Yes” to AC.11.4, could you please tell us who suffered with this condition?",
-    // },
-    // {
-    //   field: "AC12_1",
-    //   headerName:
-    //     "AC.12.1 In the past one year have you or anyone from your family member been bitten by a snake?",
-    // },
-    // {
-    //   field: "AC12_1_if",
-    //   headerName:
-    //     "AC.12.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC12_2",
-    //   headerName:
-    //     "AC.12.2 If “Yes”, could you please tell who all suffered with this condition?",
-    // },
-    // {
-    //   field: "AC13_1",
-    //   headerName:
-    //     "AC.13.1 In the past one year, did you or anyone of your family member have a history of accidental/ intentional ingestion of poison/ ingestion or exposure to pesticides/ insecticides/ ingestion of rat poison/ phenyl any hazardous substance/ chemical substance or any other substance that could have required any sort of medical attention or treatment?",
-    // },
-    // {
-    //   field: "AC13_1_if",
-    //   headerName:
-    //     "AC.13.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC13_2",
-    //   headerName:
-    //     "AC.13.2 If Yes, Could you please tell who all suffered with this condition?",
-    // },
-    // {
-    //   field: "AC14_1",
-    //   headerName:
-    //     "AC.14.1 Apart from the above-mentioned conditions, did anyone suffer from any other conditions that required immediate emergency services?",
-    // },
-    // {
-    //   field: "AC14_1_if",
-    //   headerName:
-    //     "AC.14.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
-    // },
-    // {
-    //   field: "AC14_2",
-    //   headerName:
-    //     "AC.14.2 If yes, could you please tell who all suffered with this condition?",
-    // },
-    // {
-    //   field: "AC15_1",
-    //   headerName:
-    //     "AC.15.1 In the last one year, did any member in your household lost his/her life due to any health emergency condition?",
-    // },
-    // ...generateDeathMemeberColumns,
-    // {
-    //   field: "AC15_2",
-    //   headerName:
-    //     "AC.15.2 If yes, how many members in your household lost his/her life due to any health emergency condition (Specify)",
-    // },
-    // {
-    //   field: "AC15_4_0",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Trauma)",
-    //   valueGetter: (params) => params?.AC15_4?.[0],
-    // },
-    // {
-    //   field: "AC15_4_1",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Burn: Severe / Minor burns)",
-    //   valueGetter: (params) => params?.AC15_4?.[1],
-    // },
-    // {
-    //   field: "AC15_4_2",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = STEMI)",
-    //   valueGetter: (params) => params?.AC15_4?.[2],
-    // },
-    // {
-    //   field: "AC15_4_3",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Stroke)",
-    //   valueGetter: (params) => params?.AC15_4?.[3],
-    // },
-    // {
-    //   field: "AC15_4_4",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Acute Respiratory Illness)",
-    //   valueGetter: (params) => params?.AC15_4?.[4],
-    // },
-    // {
-    //   field: "AC15_4_5",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Postpartum Haemorrhage & Pre-Eclampsia)",
-    //   valueGetter: (params) => params?.AC15_4?.[5],
-    // },
-    // {
-    //   field: "AC15_4_6",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Neonatal Emergency)",
-    //   valueGetter: (params) => params?.AC15_4?.[6],
-    // },
-    // {
-    //   field: "AC15_4_7",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Snake bite)",
-    //   valueGetter: (params) => params?.AC15_4?.[7],
-    // },
-    // {
-    //   field: "AC15_4_8",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Poisoning)",
-    //   valueGetter: (params) => params?.AC15_4?.[9],
-    // },
-    // {
-    //   field: "AC15_4_9",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (choice = others)",
-    //   valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[0],
-    // },
-    // {
-    //   field: "AC15_4_9_other_specify",
-    //   headerName:
-    //     "Ac.15.4 What werw the symptoms the deceased complained about? (Others(Specify))",
-    //   valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[1],
-    // },
+    {
+      field: "AB1",
+      headerName: "AB.1 Block",
+    },
+    { field: "AB2", headerName: "AB.2 Type of PSU:" },
+    { field: "AB3", headerName: "AB.3 Name of PSU (Town/Village):" },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (Latitude)",
+      valueGetter: (params) => params?.data?.AB4?.latitude,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (Longitude)",
+      valueGetter: (params) => params?.data?.AB4?.longitude,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (State)",
+      valueGetter: (params) => params?.data?.AB4?.district,
+    },
+    {
+      field: "AB4",
+      headerName: "AB.4 GPS Co-ordinates: (district)",
+      valueGetter: (params) => params?.data?.AB4?.state,
+    },
+    {
+      field: "AB5",
+      headerName: "AB.5 Household ID Number:",
+      valueGetter: (params) => params?.data?.Household_ID,
+    },
+    {
+      field: "AB6",
+      headerName:
+        "AB.6 For how long have you been living in this city/village with your family?",
+    },
+    {
+      field: "AC1",
+      headerName:
+        "AC.1 How many members are currently residing in his household?",
+    },
+    ...generateMemeberColumns,
+    { field: "AC2_1", headerName: "AC.2.1 Name of Respondent?" },
+    {
+      field: "AC3",
+      headerName:
+        "AC.3 Are there any other persons such as small children or infants that we have not listed?",
+    },
+    {
+      field: "AC4",
+      headerName:
+        "AC.4 Are there any other people who may not be members of your family such as domestic servants who usually live here?",
+    },
+    {
+      field: "AC5",
+      headerName:
+        "AC.5 In the past one year, did any member of this household have any health emergency that could have required any sort of medical attention or treatment?",
+    },
+    {
+      field: "AC6_1",
+      headerName:
+        "AC.6.1 In the past one year, did you or any member of this household suffered from sudden injury in Road Traffic Accident/ fracture/ severe fall/ drowning/ stabbing/ gunshot/ any other assault/ any attempt to self-harm/ domestic violence/ homicidal etc.?",
+    },
+    {
+      field: "AC6_1_if",
+      headerName:
+        "AC6.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC6_2",
+      headerName:
+        "AC.6.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    },
+    {
+      field: "AC7_1",
+      headerName:
+        "AC.7.1 In the past one year, did you or any member of this household suffered from severe/ minor burns etc.",
+    },
+    {
+      field: "AC7_1_if",
+      headerName:
+        "AC.7.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC7_2",
+      headerName:
+        "Ac.7.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    },
+    {
+      field: "AC8_1",
+      headerName:
+        "AC.8.1 In the past one year, has anyone in your household had a history of heart attack or sudden onset of acute chest pain/ heaviness/ constriction, with possible radiation to the left arm, neck, or back, associated with symptoms such as upper abdominal pain/ palpitations/ dizziness/ profuse sweating, and exacerbated by exertion after meals?",
+    },
+    {
+      field: "AC8_1_if",
+      headerName:
+        "AC.8.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC8_2",
+      headerName:
+        "AC.8.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    },
+    {
+      field: "AC9_1",
+      headerName:
+        "Ac.9.1 In the past one year, did you or any member of this household suffered with brain stroke or symptoms like sudden onset of weakness, especially one side of the body/ loss of consciousness/ altered sensorium/ Imbalance/ blurred vision/ facial deviation/ drooping of eyelid/ speech abnormality with numbness and tingling sensation, or difficulty in speaking or understanding speech (aphasia), or sudden severe headache with no known cause of one's life (haemorrhagic strokes)?",
+    },
+    {
+      field: "AC9_1_if",
+      headerName:
+        "AC.9.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC9_2",
+      headerName:
+        "AC.9.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    },
+    {
+      field: "AC10_1",
+      headerName:
+        "AC.10.1 In the past one year, has anyone in your household experienced breathlessness with or without sudden onset of fever/ cough with expectoration/ chest pain (pleuritic)/ fast breathing/ not able to speak complete sentences/ loss of consciousness/ or chest tightness leading to suspicion of pneumonia?",
+    },
+    {
+      field: "AC10_1_if",
+      headerName:
+        "AC.10.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC10_2",
+      headerName:
+        "AC.10.2 If yes, could you please tell who all from your Household suffered with this condition?",
+    },
+    {
+      field: "AC11_1",
+      headerName:
+        "AC.11.1 In the past one year, did any women in your household give birth to a child or had any episode of miscarriage/ abortion?",
+    },
+    {
+      field: "AC11_1_if",
+      headerName:
+        "AC.11.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC11_2",
+      headerName:
+        "AC.11.2 If “Yes” to AC.11.1, did women or mother suffer with any condition like vaginal bleeding that required blood transfusion or sudden increase in blood pressure or decreased urine output or loss of fetal movements or loss of consciousness or seizure or fits etc., before / during / after delivery?",
+    },
+    {
+      field: "AC11_2_if",
+      headerName:
+        "AC.11.2.2 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC11_3",
+      headerName:
+        "AC.11.3 If “Yes” to AC.11.2, could you please tell us who suffered with this condition?",
+    },
+    {
+      field: "AC11_4",
+      headerName:
+        'AC.11.4 If "Yes" to AC.11.1, At the time of birth did the new-born had any issues such as not cried/ delayed cry/ not able to breath/ body getting cold/ minimal limb movement/ blue discoloration/ taken no ICU after delivery/ convulsion/ sudden onset of fever/ difficulty in breast feeding/ excessive diarrhoea/ jaundice or any other condition that required a longer hospital stay before being discharged/ that required a further admission after discharge within the first month of the birth?',
+    },
+    {
+      field: "AC11_4_if",
+      headerName:
+        "AC.11.4.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC11_5",
+      headerName:
+        "AC.11.5 If “Yes” to AC.11.4, could you please tell us who suffered with this condition?",
+    },
+    {
+      field: "AC12_1",
+      headerName:
+        "AC.12.1 In the past one year have you or anyone from your family member been bitten by a snake?",
+    },
+    {
+      field: "AC12_1_if",
+      headerName:
+        "AC.12.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC12_2",
+      headerName:
+        "AC.12.2 If “Yes”, could you please tell who all suffered with this condition?",
+    },
+    {
+      field: "AC13_1",
+      headerName:
+        "AC.13.1 In the past one year, did you or anyone of your family member have a history of accidental/ intentional ingestion of poison/ ingestion or exposure to pesticides/ insecticides/ ingestion of rat poison/ phenyl any hazardous substance/ chemical substance or any other substance that could have required any sort of medical attention or treatment?",
+    },
+    {
+      field: "AC13_1_if",
+      headerName:
+        "AC.13.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC13_2",
+      headerName:
+        "AC.13.2 If Yes, Could you please tell who all suffered with this condition?",
+    },
+    {
+      field: "AC14_1",
+      headerName:
+        "AC.14.1 Apart from the above-mentioned conditions, did anyone suffer from any other conditions that required immediate emergency services?",
+    },
+    {
+      field: "AC14_1_if",
+      headerName:
+        "AC.14.1.1 If Yes, What were the symptoms of emergency conditions and first course of action?",
+    },
+    {
+      field: "AC14_2",
+      headerName:
+        "AC.14.2 If yes, could you please tell who all suffered with this condition?",
+    },
+    {
+      field: "AC15_1",
+      headerName:
+        "AC.15.1 In the last one year, did any member in your household lost his/her life due to any health emergency condition?",
+    },
+    ...generateDeathMemeberColumns,
+    {
+      field: "AC15_2",
+      headerName:
+        "AC.15.2 If yes, how many members in your household lost his/her life due to any health emergency condition (Specify)",
+    },
+    {
+      field: "AC15_4_0",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Trauma)",
+      valueGetter: (params) => params?.AC15_4?.[0],
+    },
+    {
+      field: "AC15_4_1",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Burn: Severe / Minor burns)",
+      valueGetter: (params) => params?.AC15_4?.[1],
+    },
+    {
+      field: "AC15_4_2",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = STEMI)",
+      valueGetter: (params) => params?.AC15_4?.[2],
+    },
+    {
+      field: "AC15_4_3",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Stroke)",
+      valueGetter: (params) => params?.AC15_4?.[3],
+    },
+    {
+      field: "AC15_4_4",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Acute Respiratory Illness)",
+      valueGetter: (params) => params?.AC15_4?.[4],
+    },
+    {
+      field: "AC15_4_5",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Postpartum Haemorrhage & Pre-Eclampsia)",
+      valueGetter: (params) => params?.AC15_4?.[5],
+    },
+    {
+      field: "AC15_4_6",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Neonatal Emergency)",
+      valueGetter: (params) => params?.AC15_4?.[6],
+    },
+    {
+      field: "AC15_4_7",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Snake bite)",
+      valueGetter: (params) => params?.AC15_4?.[7],
+    },
+    {
+      field: "AC15_4_8",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Poisoning)",
+      valueGetter: (params) => params?.AC15_4?.[9],
+    },
+    {
+      field: "AC15_4_9",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = others)",
+      valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[0],
+    },
+    {
+      field: "AC15_4_9_other_specify",
+      headerName:
+        "Ac.15.4 What werw the symptoms the deceased complained about? (Others(Specify))",
+      valueGetter: (params) => params?.AC15_4?.[10]?.split(":")[1],
+    },
   ];
 };
 
