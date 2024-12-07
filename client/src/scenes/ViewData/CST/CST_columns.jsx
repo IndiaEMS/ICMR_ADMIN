@@ -83,79 +83,79 @@ const generateColumns = (
   return Array.from({ length: maxMembers }, (_, memberIndex) => {
     // Generate columns for each part in sequence for the current member
     const memberColumns = [
-      // ...PartBcolumns.map((column) => ({
-      //   field: column.field,
-      //   headerName: column.headerName,
-      //   valueGetter: (params) => {
-      //     const member = params?.data?.Emergency_Data?.[memberIndex];
-      //     if (column.valueGetter) {
-      //       return column.valueGetter(member);
-      //     } else {
-      //       if (Array.isArray(member?.[column.field.split("_")[0]])) {
-      //         return member?.[column.field.split("_")[0]]?.[
-      //           column.field.split("_")[1]
-      //         ];
-      //       } else {
-      //         return member ? member[column.field] : "";
-      //       }
-      //     }
-      //   },
-      // })),
+      ...PartBcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
       ...generatePartCColumns(PartCcolumns, memberIndex),
-      // ...PartDcolumns.map((column) => ({
-      //   field: column.field,
-      //   headerName: column.headerName,
-      //   valueGetter: (params) => {
-      //     const member = params?.data?.Emergency_Data?.[memberIndex];
-      //     if (column.valueGetter) {
-      //       return column.valueGetter(member);
-      //     } else {
-      //       if (Array.isArray(member?.[column.field.split("_")[0]])) {
-      //         return member?.[column.field.split("_")[0]]?.[
-      //           column.field.split("_")[1]
-      //         ];
-      //       } else {
-      //         return member ? member[column.field] : "";
-      //       }
-      //     }
-      //   },
-      // })),
-      // ...PartEcolumns.map((column) => ({
-      //   field: column.field,
-      //   headerName: column.headerName,
-      //   valueGetter: (params) => {
-      //     const member = params?.data?.Emergency_Data?.[memberIndex];
-      //     if (column.valueGetter) {
-      //       return column.valueGetter(member);
-      //     } else {
-      //       if (Array.isArray(member?.[column.field.split("_")[0]])) {
-      //         return member?.[column.field.split("_")[0]]?.[
-      //           column.field.split("_")[1]
-      //         ];
-      //       } else {
-      //         return member ? member[column.field] : "";
-      //       }
-      //     }
-      //   },
-      // })),
-      // ...PartFcolumns.map((column) => ({
-      //   field: column.field,
-      //   headerName: column.headerName,
-      //   valueGetter: (params) => {
-      //     const member = params?.data?.Emergency_Data?.[memberIndex];
-      //     if (column.valueGetter) {
-      //       return column.valueGetter(member);
-      //     } else {
-      //       if (Array.isArray(member?.[column.field.split("_")[0]])) {
-      //         return member?.[column.field.split("_")[0]]?.[
-      //           column.field.split("_")[1]
-      //         ];
-      //       } else {
-      //         return member ? member[column.field] : "";
-      //       }
-      //     }
-      //   },
-      // })),
+      ...PartDcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+      ...PartEcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
+      ...PartFcolumns.map((column) => ({
+        field: column.field,
+        headerName: column.headerName,
+        valueGetter: (params) => {
+          const member = params?.data?.Emergency_Data?.[memberIndex];
+          if (column.valueGetter) {
+            return column.valueGetter(member);
+          } else {
+            if (Array.isArray(member?.[column.field.split("_")[0]])) {
+              return member?.[column.field.split("_")[0]]?.[
+                column.field.split("_")[1]
+              ];
+            } else {
+              return member ? member[column.field] : "";
+            }
+          }
+        },
+      })),
     ];
 
     return memberColumns;
