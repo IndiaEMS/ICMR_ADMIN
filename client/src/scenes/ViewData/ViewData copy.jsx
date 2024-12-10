@@ -1,160 +1,612 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
+import {
+  Box,
+  Button,
+  useTheme,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+} from "@mui/material";
 
-import { DataGridComponent } from "./DataGridComponent.jsx";
+import { tokens } from "../../theme";
+import RefreshIcon from "@mui/icons-material/Refresh";
+import { DownloadOutlined } from "@mui/icons-material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Header from "../../components/Header";
+import React, { useState, useEffect, useRef } from "react";
 
 import { HFAT1Columns } from "./HFAT-1/HFAT_1_columns";
 import { HFAT1ColumnsExport } from "./HFAT-1/HFAT_1_columns_export";
 import { HFAT2Columns } from "./HFAT-2/HFAT_2_columns";
-import { HFAT2ColumnsExport } from "./HFAT-2/HFAT_2_columns_Export";
+import { HFAT2ColumnsExport } from "./HFAT-2/HFAT_2_columns_export";
 import { HFAT3Columns } from "./HFAT-3/HFAT_3_columns";
-// import { HFAT2ColumnsExport } from "./HFAT-3/HFAT_2_columns Export";
-import { AmbulanceColumns } from "./Ambulance/Ambulance_columns";
+import { HFAT3ColumnsExport } from "./HFAT-3/HFAT_3_columns_export";
+import {
+  AmbulanceColumns,
+  HFATAmbulanceColumns,
+} from "./Ambulance/Ambulance_columns";
+import {
+  AmbulanceColumnsExport,
+  HFATAmbulanceColumnsExport,
+} from "./Ambulance/Ambulance_columns_export";
+import { CSTColumns } from "./CST/CST_columns";
+import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 
 import { HFAT1Rows } from "./HFAT-1/HFAT_1_rows";
 import { HFAT2Rows } from "./HFAT-2/HFAT_2_rows";
 import { HFAT3Rows } from "./HFAT-3/HFAT_3_rows";
-import { AmbulanceRows } from "./Ambulance/Ambulance_rows";
 
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { AgGridReact } from "ag-grid-react"; // React Data Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+import { useSelector } from "react-redux";
+import MapView from "./MapView";
 
 const url = import.meta.env.VITE_SERVER;
 
 const ViewData = ({ formName }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const gridRef = useRef();
   const [data, setData] = useState([]);
   const [rows, setRows] = useState([]);
   const [cols, setCols] = useState([]);
-  const [exportColumns, setExportColumns] = useState();
+  const [columns, setColumns] = useState([]);
+  const [exportColumns, setExportColumns] = useState([]);
+  const [title, setTitle] = useState(formName);
+  const [loading, setLoading] = useState(false);
+  const [selectedState, setSelectedState] = useState("");
+  const [selectedRows, setSelectedRows] = useState([]);
+  const { user } = useSelector((state) => state.auth);
+  const { token } = useSelector((state) => state.auth);
 
-  // i want to make this rows in a separate file
-  // give useMemo in function
+  const [isMapOpen, setIsMapOpen] = useState(false);
+  const [mapData, setMapData] = useState([]);
 
-  const getRowsAndCols = useMemo(() => {
+  const [isMapBtnDisabled, setIsMapBtnDisabled] = useState(false);
+
+  const adminState = user;
+
+  const states = [
+    { value: "", label: "All" },
+    { value: "GJBRC", label: "Gujarat", coordinate: [22.309425, 72.13623] },
+    { value: "ORPUR", label: "Odisha", coordinate: [20.9517, 85.0985] },
+    { value: "MPBHS", label: "Bhopal", coordinate: [23.2599, 77.4126] },
+    { value: "PBLDH", label: "Ludhiana", coordinate: [30.901, 75.8573] },
+    { value: "PYPDY", label: "Pondicherry", coordinate: [11.9416, 79.8083] },
+  ];
+
+  const filterAndMapData = (rows) => {
+    setMapData([]);
+    var field = "";
+    switch (formName) {
+      case "HFAT-1":
+        field = "A10";
+        break;
+      case "HFAT-2":
+        field = "H2A9";
+        break;
+      case "HFAT-3":
+        field = "H3A9";
+        break;
+      case "AMBULANCE":
+        field = "AMB4";
+        break;
+      case "CST":
+        field = "AB4";
+        break;
+      case "Autopsy":
+        field = "AB4";
+        break;
+      default:
+        field = "";
+        break;
+    }
+
+    if (field === "") return;
+
+    setMapData(
+      rows
+        .filter(
+          (row) =>
+            row[field] &&
+            row[field].latitude &&
+            row[field].longitude &&
+            !/[a-zA-Z°]/.test(row[field].latitude) &&
+            !/[a-zA-Z°]/.test(row[field].longitude) &&
+            /^-?\d+(\.\d+)?$/.test(row[field].latitude) && // Check for valid number format
+            /^-?\d+(\.\d+)?$/.test(row[field].longitude)
+        )
+        .map((row) => [
+          row[field]?.latitude,
+          row[field]?.longitude,
+          formName == "CST" ? row.Respondent_ID : row.uniqueCode,
+        ])
+    );
+  };
+
+  useEffect(() => {
+    // console.log(adminState);
+    if (adminState.role === "admin") {
+      setSelectedState(
+        states.find((state) => state.label === adminState.sitename)?.value
+      );
+    }
+
+    setLoading(true);
+    setRows([]);
     if (formName === "HFAT-1") {
-      setCols(HFAT1Columns);
+      setTitle("HFAT-1");
+      setColumns(HFAT1Columns);
       setExportColumns(HFAT1ColumnsExport);
-      setRows(HFAT1Rows(data));
+      setRows(data);
+      filterAndMapData(data);
+      // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
-      setCols(HFAT2Columns);
+      setTitle("HFAT-2");
+      setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
-      setRows(HFAT2Rows(data));
+      setRows(data);
+      filterAndMapData(data);
+      // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
-      setCols(HFAT3Columns);
-      setExportColumns(HFAT3Columns);
-      setRows(HFAT3Rows(data));
+      setTitle("HFAT-3");
+      setColumns(HFAT3Columns);
+      setExportColumns(HFAT3ColumnsExport);
+      // setRows(HFAT3Rows(data));
+      setRows(data);
+      filterAndMapData(data);
     } else if (formName === "HFAT-1WithAMB") {
-      setCols([...HFAT1Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT1ColumnsExport, ...AmbulanceColumns]);
-      // setRows([
-      //   ...HFAT1Rows(data),
-      //   ...AmbulanceRows([data.ambulanceDetails ?? {}]),
-      // ]);
-      setRows(HFAT1Rows(data));
-      // setRows(AmbulanceRows(data));
+      setTitle("HFAT-1 with Ambulance");
+      setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
+
+      setRows(data);
     } else if (formName === "HFAT-2WithAMB") {
-      setCols([...HFAT2Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT2ColumnsExport, ...AmbulanceColumns]);
-      setRows(HFAT2Rows(data));
+      setTitle("HFAT-2 with Ambulance");
+      setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      setRows(data);
     } else if (formName === "HFAT-3WithAMB") {
-      setCols([...HFAT3Columns, ...AmbulanceColumns]);
-      setExportColumns([...HFAT3Columns, ...AmbulanceColumns]);
-      setRows(HFAT3Rows(data));
+      setTitle("HFAT-3 with Ambulance");
+      setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT3ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      setRows(data);
     } else if (formName === "AMBULANCE") {
-      setCols(AmbulanceColumns);
-      setExportColumns(AmbulanceColumns);
-      setRows(AmbulanceRows(data));
+      setTitle("Ambulance");
+      setColumns(AmbulanceColumns);
+      setExportColumns(AmbulanceColumnsExport);
+      // setRows(AmbulanceRows(data));
+      setRows(data);
+      filterAndMapData(data);
+    } else if (formName === "CST") {
+      setTitle("Community Survey Tool");
+      setColumns(CSTColumns(data));
+      setExportColumns(CSTColumns(data));
+      setRows(data);
+      filterAndMapData(data);
+    } else if (formName === "Autopsy") {
+      setTitle("Verbal Autopsy Tool");
+      setColumns(AutopsyColumnsExport);
+      setExportColumns(AutopsyColumnsExport);
+      // console.log(data);
+      setRows(data);
+
+      // setRows(CSTRows(data));
     } else {
       console.log("No form found");
     }
-  }, [formName, data]);
+    setCols(columns);
+    setLoading(false);
+  }, [data]);
 
-  // const getRowsAndCols = (formName, data) => {
-  //   if (formName === "HFAT-1") {
-  //     setCols(HFAT1ColumnsCopy);
-  //     setRows(HFAT1Rows(data));
-  //   } else if (formName === "HFAT-2") {
-  //     setCols(HFAT2ColumnsCopy);
-  //     setRows(HFAT2Rows(data));
-  //   } else if (formName === "HFAT-3") {
-  //     setCols(HFAT3Columns);
-  //     setRows(HFAT3Rows(data));
-  //   } else {
-  //     console.log("No form found");
-  //   }
-  // };
+  useEffect(() => {
+    setRows([]);
+    setMapData([]);
+    setColumns([]);
+    setExportColumns([]);
+    getData();
+  }, [formName]);
+
+  useEffect(() => {
+    setCols(columns);
+  }, [columns]);
 
   // getRowsAndCols();
 
-  // const getData = async () => {
-  //   try {
-  //     const { data } = await axios.get(`${url}/${formName}`);
-  //     setData(data.data);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const getData = async () => {
+    try {
+      // setLoading(true);
+      // console.log(`${url}/${formName}/${selectedState}`);
+      const { data } = await axios.get(`${url}/${formName}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      setData(data?.data);
+      // console.log("DATA......................", data?.data);
 
-  // useEffect(() => {
-  //   // getRowsAndCols();
-  //   getData();
-  // }, []);
+      // setLoading(false);
+    } catch (error) {
+      console.log(error);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      navigate("/login");
+    }
+  };
+
+  useEffect(() => {
+    if (adminState.role === "superadmin") {
+      setMapData([]);
+      if (selectedState === "") {
+        setRows(data); // Show all rows if no state is selected
+        filterAndMapData(data);
+        setIsMapBtnDisabled(false);
+      } else {
+        // Filter rows where any field in the row might contain the state value
+        const filteredRows = data?.filter((row) => {
+          return Object.values(row).some(
+            (cellValue) =>
+              typeof cellValue === "string" &&
+              cellValue.startsWith(selectedState)
+          );
+        });
+        setRows(filteredRows);
+        filterAndMapData(filteredRows);
+        // setIsMapBtnDisabled(true);
+      }
+    }
+  }, [selectedState, data]);
+
+  useEffect(() => {
+    getData();
+  }, [formName]);
+
+  const handleDownloadCSV = async () => {
+    try {
+      setCols(exportColumns);
+      // refresh header
+      await gridRef.current.api.refreshClientSideRowModel();
+      // export to csv
+      gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCols(columns);
+    }
+  };
+
+  const handleDelete = async () => {
+    if (selectedRows.length === 0) {
+      alert("No rows selected for deletion!");
+      return;
+    }
+
+    const selectedIds = selectedRows.map((row) => row._id); // Assuming the rows have an 'id' field
+
+    try {
+      // Make delete request
+      await axios.delete(`${url}/${formName}/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        data: { ids: selectedIds }, // Sending the selected ids to be deleted
+      });
+
+      // Refresh the data after successful deletion
+      getData();
+      alert("Selected rows deleted successfully");
+    } catch (error) {
+      console.error("Error deleting rows:", error);
+      alert("Failed to delete rows");
+    }
+  };
+
+  const onSelectionChanged = (params) => {
+    const selectedNodes = params.api.getSelectedNodes();
+    const selectedData = selectedNodes.map((node) => node.data);
+    setSelectedRows(selectedData);
+
+    if (selectedData.length > 10) {
+      // Enforce the selection limit of 10
+      alert("Maximum 10 records can be selected at one time.");
+    }
+  };
+
+  const handleOpenMap = () => {
+    const firstSelectedRow = selectedRows[0];
+    if (firstSelectedRow) {
+      const location = [firstSelectedRow.lat, firstSelectedRow.lng]; // assuming your row has lat/lng properties
+      setSelectedLocation(location);
+    }
+    setIsMapOpen(true);
+  };
+
+  const handleCloseMap = () => {
+    setIsMapOpen(false);
+  };
+
+  if (loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h1>{formName} View Data</h1>
-      <div
-        className="ag-theme-quartz" // applying the grid theme
-        style={{ height: 600 }} // the grid will fill the size of the parent container
+    <Box m="20px">
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Header title={title} subtitle={`Managing the ${title}`} />
+        <Box>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            <RefreshIcon sx={{ mr: "10px" }} />
+            Refresh
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
+            }}
+            onClick={handleDownloadCSV}
+          >
+            <DownloadOutlined sx={{ mr: "10px" }} />
+            Download in CSV
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
+            }}
+            onClick={handleDelete}
+          >
+            <DeleteIcon sx={{ mr: "10px" }} />
+            Delete
+          </Button>
+        </Box>
+      </Box>
+      <Box display="flex" justifyContent="space-between" alignItems="center">
+        <Box>
+          {user.role === "superadmin" && (
+            <Box>
+              {states.map((state) => (
+                <Button
+                  key={state.value}
+                  sx={{
+                    backgroundColor:
+                      selectedState === state.value
+                        ? colors.greenAccent[700]
+                        : colors.blueAccent[700],
+                    color: colors.grey[100],
+                    fontSize: "14px",
+                    fontWeight: "bold",
+                    padding: "10px 20px",
+                    mr: "10px",
+                    "&:hover": {
+                      backgroundColor: colors.blueAccent[600],
+                    },
+                  }}
+                  onClick={() => {
+                    setSelectedState(state.value);
+                  }}
+                >
+                  {state.label}
+                </Button>
+              ))}
+            </Box>
+          )}
+
+          {/* <Button
+            sx={{
+              backgroundColor: colors.greenAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            Gujarat
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            Odisha
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            Madhya Pradesh
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            Ludhiana
+          </Button>
+          <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+            }}
+            onClick={() => {
+              getData();
+            }}
+          >
+            pondicherry
+          </Button> */}
+        </Box>
+
+        {mapData.length > 0 && !isMapBtnDisabled ? (
+          <Box>
+            <Button
+              sx={{
+                backgroundColor: colors.blueAccent[700],
+                color: colors.grey[100],
+                fontSize: "14px",
+                fontWeight: "bold",
+                padding: "10px 20px",
+                mr: "10px",
+                "&:hover": {
+                  backgroundColor: colors.blueAccent[600],
+                },
+              }}
+              onClick={handleOpenMap}
+            >
+              View In Map
+            </Button>
+          </Box>
+        ) : (
+          ""
+        )}
+      </Box>
+      <Box
+        m="40px 0 0 0"
+        height="75vh"
+        className="ag-theme-quartz"
+        sx={{
+          "& .ag-root-wrapper": {
+            backgroundColor: colors.primary[400],
+          },
+          "& .ag-header": {
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+          },
+          "& .ag-header-cell": {
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+          },
+          "& .ag-header-group-cell": {
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+          },
+          "& .ag-body": {
+            backgroundColor: colors.primary[400],
+            color: colors.grey[100],
+          },
+          "& .ag-paging-panel": {
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+          },
+          "& .ag-picker-field-wrapper": {
+            color: colors.grey[900],
+          },
+          "& .ag-icon": {
+            color: colors.grey[100],
+          },
+          "& .ag-floating-filter-input": {
+            color: "black",
+          },
+          "& .ag-checkbox-input-wrapper": {
+            color: colors.greenAccent[200],
+          },
+          "& .ag-icon-checkbox-checked": {
+            color: colors.greenAccent[200],
+          },
+          "& .ag-overlay-no-rows-center": {
+            backgroundColor: colors.primary[400],
+            color: colors.grey[100],
+          },
+          "& .ag-row": {
+            backgroundColor: colors.primary[400],
+            color: colors.grey[100],
+          },
+        }}
       >
-        {/* <DataGridComponent
-          rows={rows}
-          columns={cols}
-          exportColumns={exportColumns}
-          formName={formName}
-          getData={getData}
-        /> */}
-        {/* <Box
-          m="40px 0 0 0"
-          height="75vh"
-          sx={{
-            "& .MuiDataGrid-root": {
-              border: "none",
-            },
-            "& .MuiDataGrid-cell": {
-              borderBottom: "none",
-            },
-            "& .name-column--cell": {
-              color: colors.greenAccent[300],
-            },
-            "& .MuiDataGrid-columnHeaders": {
-              backgroundColor: colors.blueAccent[700],
-              borderBottom: "none",
-            },
-            "& .MuiDataGrid-virtualScroller": {
-              backgroundColor: colors.primary[400],
-            },
-            "& .MuiDataGrid-footerContainer": {
-              borderTop: "none",
-              backgroundColor: colors.blueAccent[700],
-            },
-            "& .MuiCheckbox-root": {
-              color: `${colors.greenAccent[200]} !important`,
-            },
+        <AgGridReact
+          ref={gridRef}
+          rowData={rows}
+          columnDefs={cols ?? columns}
+          rowSelection={"multiple"}
+          onSelectionChanged={onSelectionChanged}
+          defaultColDef={{
+            sortable: true,
+            filter: true,
+            floatingFilter: true,
           }}
-        >
-          <DataGrid checkboxSelection rows={rows} columns={cols} />
-        </Box> */}
-      </div>
-    </div>
+          localeText={loading ? "Loading..." : "No data available"}
+          pagination={true}
+          paginationPageSize={20}
+        />
+      </Box>
+      <Dialog open={isMapOpen} onClose={handleCloseMap} maxWidth="lg" fullWidth>
+        <DialogTitle>
+          View Location on Map (<b>Note:</b> Invalid coordinates will not be
+          shown on the map.)
+        </DialogTitle>
+        <DialogContent>
+          <Box style={{ height: "600px" }}>
+            <MapView
+              // mapData={ambulanceData}
+              mapData={mapData ?? []} // Assuming rows have lat/lng
+              selectedLocation={
+                states.find((state) => state.value === selectedState)
+                  ?.coordinate
+              }
+            />
+          </Box>
+        </DialogContent>
+      </Dialog>
+    </Box>
   );
 };
 

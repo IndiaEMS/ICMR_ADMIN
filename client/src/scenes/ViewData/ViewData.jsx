@@ -202,16 +202,22 @@ const ViewData = ({ formName }) => {
   }, [data]);
 
   useEffect(() => {
-    setRows([]);
-    setMapData([]);
-    setColumns([]);
-    setExportColumns([]);
-    getData();
+    // Reset states before fetching data
+    const resetState = () => {
+      setRows([]);
+      setMapData([]);
+      setColumns([]);
+      setExportColumns([]);
+    };
+  
+    resetState();
+    getData(); // Fetch new data based on formName
   }, [formName]);
+  
 
-  useEffect(() => {
-    setCols(columns);
-  }, [columns]);
+  // useEffect(() => {
+  //   setCols(columns);
+  // }, [columns]);
 
   // getRowsAndCols();
 
@@ -259,23 +265,37 @@ const ViewData = ({ formName }) => {
     }
   }, [selectedState, data]);
 
-  useEffect(() => {
-    getData();
-  }, [formName]);
-
   const handleDownloadCSV = async () => {
     try {
-      setCols(exportColumns);
-      // refresh header
-      await gridRef.current.api.refreshClientSideRowModel();
-      // export to csv
-      gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
+      setCols(exportColumns); // Set export columns
+      const totalRows = rows.length; // Total number of rows
+      const chunkSize = 1000; // Chunk size of 1000 rows
+      let chunkStart = 0; // Start index for the chunk
+      let chunkEnd = chunkSize; // End index for the chunk
+  
+      const downloadChunk = async (start, end) => {
+        const chunkData = rows.slice(start, end); // Get a chunk of data
+        // Set the rows for export
+        gridRef.current.api.setRowData(chunkData);
+        // Export the chunk to CSV
+        gridRef.current.api.exportDataAsCsv({
+          fileName: `${formName}_part_${Math.ceil(start / chunkSize) + 1}.csv`,
+        });
+      };
+  
+      // Loop through the data and export in chunks
+      while (chunkStart < totalRows) {
+        await downloadChunk(chunkStart, chunkEnd); // Download the current chunk
+        chunkStart += chunkSize; // Move to the next chunk
+        chunkEnd += chunkSize;
+      }
     } catch (error) {
       console.log(error);
     } finally {
-      setCols(columns);
+      setCols(columns); // Reset columns after download
     }
   };
+  
 
   const handleDelete = async () => {
     if (selectedRows.length === 0) {
