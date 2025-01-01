@@ -55,6 +55,7 @@ const ViewData = ({ formName }) => {
   const [exportColumns, setExportColumns] = useState([]);
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
+  const [isDownloadDisabled, setIsDownloadDisabled] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
   const { user } = useSelector((state) => state.auth);
@@ -293,6 +294,8 @@ const ViewData = ({ formName }) => {
 
   const handleDownloadCSV = async () => {
     try {
+      if(isDownloadDisabled) return;
+      setIsDownloadDisabled(true);
       setCols(exportColumns);
       await gridRef.current.api.refreshClientSIdeRowModel();
       gridRef.current.api.exportDataAsCsv({
@@ -301,7 +304,8 @@ const ViewData = ({ formName }) => {
     } catch (error) {
       console.log(error);
     } finally {
-      // setCols(columns);
+      setCols(columns);
+      setIsDownloadDisabled(false);
     }
   };
   
@@ -393,11 +397,12 @@ const ViewData = ({ formName }) => {
               "&:hover": {
                 backgroundColor: colors.blueAccent[600],
               },
+              disabled: isDownloadDisabled
             }}
             onClick={handleDownloadCSV}
           >
             <DownloadOutlined sx={{ mr: "10px" }} />
-            Download in CSV
+            {isDownloadDisabled ? "Downloading..." : "Download in CSV"}
           </Button>
           <Button
             sx={{
