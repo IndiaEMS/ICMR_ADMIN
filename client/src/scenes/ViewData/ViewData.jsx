@@ -222,23 +222,49 @@ const ViewData = ({ formName }) => {
   // getRowsAndCols();
 
   const getData = async () => {
-    try {
-      // setLoading(true);
-      // console.log(`${url}/${formName}/${selectedState}`);
-      const { data } = await axios.get(`${url}/${formName}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setData(data?.data);
-      // console.log("DATA......................", data?.data);
+    if (loading) return; // Prevent duplicate requests while loading
 
-      // setLoading(false);
+    try {
+      const chunkSize = 2000; // Define the number of records per chunk
+      let currentPage = 1; // Start with the first page
+      let allData = []; // Array to store all fetched data
+      let totalFetched = 0; // Track the total number of fetched records
+
+      while (true) {
+        // Fetch a chunk of data from the server
+        const { data } = await axios.get(`${url}/${formName}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            page: currentPage, // Current page number
+            limit: chunkSize, // Number of records per page
+          },
+        });
+
+        const chunkData = data?.data || [];
+
+        allData = [...allData, ...chunkData]; // Append the chunk data
+        totalFetched += chunkData.length; // Track the total fetched records
+
+        setData([...allData]); // Update the state incrementally
+
+        // If the chunk size is less than the requested chunkSize, we are at the last chunk
+        if (chunkData.length < chunkSize) {
+          break;
+        }
+
+        currentPage++; // Increment the page to fetch the next chunk
+      }
+
+      setLoading(true); // Start loading after initial data fetch
     } catch (error) {
       console.log(error);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       navigate("/login");
+    } finally {
+      setLoading(false); // End loading
     }
   };
 
@@ -267,32 +293,15 @@ const ViewData = ({ formName }) => {
 
   const handleDownloadCSV = async () => {
     try {
-      setCols(exportColumns); // Set export columns
-      const totalRows = rows.length; // Total number of rows
-      const chunkSize = 1000; // Chunk size of 1000 rows
-      let chunkStart = 0; // Start index for the chunk
-      let chunkEnd = chunkSize; // End index for the chunk
-  
-      const downloadChunk = async (start, end) => {
-        const chunkData = rows.slice(start, end); // Get a chunk of data
-        // Set the rows for export
-        gridRef.current.api.setRowData(chunkData);
-        // Export the chunk to CSV
-        gridRef.current.api.exportDataAsCsv({
-          fileName: `${formName}_part_${Math.ceil(start / chunkSize) + 1}.csv`,
-        });
-      };
-  
-      // Loop through the data and export in chunks
-      while (chunkStart < totalRows) {
-        await downloadChunk(chunkStart, chunkEnd); // Download the current chunk
-        chunkStart += chunkSize; // Move to the next chunk
-        chunkEnd += chunkSize;
-      }
+      setCols(exportColumns);
+      await gridRef.current.api.refreshClientSIdeRowModel();
+      gridRef.current.api.exportDataAsCsv({
+        fileName: `${formName}.csv`,
+      });
     } catch (error) {
       console.log(error);
     } finally {
-      setCols(columns); // Reset columns after download
+      // setCols(columns);
     }
   };
   

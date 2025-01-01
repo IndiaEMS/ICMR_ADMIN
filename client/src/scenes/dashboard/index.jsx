@@ -76,7 +76,7 @@ const Dashboard = () => {
         HFAT2: 17,
         Autopsy: 0,
         HFAT3: 44,
-        CST: 600,
+        CST: 6000,
         AMBULANCE: 54,
       },
     },

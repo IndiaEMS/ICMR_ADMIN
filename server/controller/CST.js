@@ -53,18 +53,15 @@ export const CSTGetController = async (req, res, next) => {
     const role = req.user.role;
 
     if (!adminId || !state) {
-      return next(new ErrorHandler("both id and state are required"));
+      return next(new ErrorHandler("Both ID and state are required"));
     }
 
     const validateUser = await User.findById(adminId);
-
     if (!validateUser) {
-      return next(new ErrorHandler("user is not authenticated"));
+      return next(new ErrorHandler("User is not authenticated"));
     }
 
-    // const stateCode = state.split(",")[1]?.trim();
     const stateCode = state?.trim();
-
     const states = [
       { value: "", label: "All" },
       { value: "GJBRC", label: "Gujarat" },
@@ -85,27 +82,32 @@ export const CSTGetController = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    // const CSTData = await CSTFORM.find({ AA2: { $regex: regex } });
-    var CSTData;
-    if (role === "superadmin") {
-      CSTData = await CSTFORM.find();
-    } else {
-      CSTData = await CSTFORM.find({ AA2: { $regex: regex } });
-    }
+    // Pagination
+    let { page = 1, limit = 2000 } = req.query; // Default values
+    const skip = (page - 1) * limit; // Correct skip calculation
 
-    if (!CSTData) {
-      return next(new ErrorHandler("data not found"));
+    // Query based on role
+    const query = role === "superadmin" ? {} : { AA2: { $regex: regex } };
+
+    const CSTData = await CSTFORM.find(query).skip(skip).limit(limit);
+    const totalRecords = await CSTFORM.countDocuments(query);
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    if (!CSTData || CSTData.length === 0) {
+      return next(new ErrorHandler("Data not found"));
     }
 
     res.status(200).json({
       success: true,
       data: CSTData,
+      totalRecords,
+      totalPages,
+      currentPage: page,
     });
   } catch (error) {
     next(error);
   }
 };
-
 export const deleteCst = async (req, res) => {
   try {
     const { ids } = req.body;
