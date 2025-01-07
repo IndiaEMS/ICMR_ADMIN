@@ -213,6 +213,7 @@ const ViewData = ({ formName }) => {
   
     resetState();
     getData(); // Fetch new data based on formName
+    getData(); // Fetch new data based on formName
   }, [formName]);
   
 
