@@ -323,6 +323,7 @@ const ViewData = ({ formName }) => {
       console.log(error);
     } finally {
       setCols(columns);
+      setIsDownloadDisabled(false);
     }
   };
   
