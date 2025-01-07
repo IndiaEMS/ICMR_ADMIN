@@ -292,20 +292,36 @@ const ViewData = ({ formName }) => {
     }
   }, [selectedState, data]);
 
+  // const handleDownloadCSV = async () => {
+  //   try {
+  //     if(isDownloadDisabled) return;
+  //     setIsDownloadDisabled(true);
+  //     setCols(exportColumns);
+  //     await gridRef.current.api.refreshClientSIdeRowModel();
+  //     gridRef.current.api.exportDataAsCsv({
+  //       fileName: `${formName}.csv`,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setCols(columns);
+  //     setIsDownloadDisabled(false);
+  //   }
+  // };
+
   const handleDownloadCSV = async () => {
     try {
       if(isDownloadDisabled) return;
       setIsDownloadDisabled(true);
       setCols(exportColumns);
-      await gridRef.current.api.refreshClientSIdeRowModel();
-      gridRef.current.api.exportDataAsCsv({
-        fileName: `${formName}.csv`,
-      });
+      // refresh header
+      await gridRef.current.api.refreshClientSideRowModel();
+      // export to csv
+      gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
     } catch (error) {
       console.log(error);
     } finally {
       setCols(columns);
-      setIsDownloadDisabled(false);
     }
   };
   
