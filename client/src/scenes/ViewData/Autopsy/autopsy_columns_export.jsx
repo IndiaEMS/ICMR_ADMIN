@@ -7,6 +7,9 @@ const column = [
     width: 250,
     valueGetter: (params) => params.data._id,
   },
+  { field: "Name", headerName: "Name of the data collecter:" },
+  { field: "State", headerName: "State" },
+  { field: "TypeOfDeath", headerName: "Type Of Death" , valueGetter : (params) => params.data.TypeOfDeath.join(",")},
   { field: "FA1", headerName: "FA.1 : Name of the respondent:" },
   {
     field: "FA2",

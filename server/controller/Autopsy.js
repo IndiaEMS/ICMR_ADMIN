@@ -84,12 +84,9 @@ export const AutopsyGetController = async (req, res, next) => {
 
     const regex = new RegExp(`^${matchedState.value}`);
 
-    var AutopsyData;
-    if (role === "superadmin") {
-      AutopsyData = await Autopsy.find();
-    } else {
-      AutopsyData = await Autopsy.find({ FA2: { $regex: regex } });
-    }
+    const query = role === "superadmin" ? {} : { State: { $regex: regex } };
+    
+    const AutopsyData = await Autopsy.find(query)
 
     if (!AutopsyData) {
       return next(new ErrorHandler("data not found"));
