@@ -1,5 +1,6 @@
 import generateColumns from "../generateColumns";
 import generateAMBColumns from "../generateAMBColumns";
+import getOptionsIndex from "../getOptionsIndex";
 
 const columns = [
   {

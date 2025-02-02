@@ -1,4 +1,5 @@
 import generateColumns from "../generateColumns";
+import getOptionsIndex from "../getOptionsIndex";
 
 // Column Definitions: Defines the columns to be displayed.
 const columns = [

@@ -1,3 +1,5 @@
+import getOptionsIndex from "../getOptionsIndex";
+
 // const generateColumns = (maxMembers, columns) => {
 //   console.log(maxMembers,maxMembers);
 
@@ -496,58 +498,10 @@ const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
         "AC.15.2 If yes, how many members in your household lost his/her life due to any health emergency condition (Specify)",
     },
     {
-      field: "AC15_4_0",
+      field: "AC15_4",
       headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Trauma)",
-      valueGetter: (params) => params?.AC15_4?.[0],
-    },
-    {
-      field: "AC15_4_1",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Burn: Severe / Minor burns)",
-      valueGetter: (params) => params?.AC15_4?.[1],
-    },
-    {
-      field: "AC15_4_2",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = STEMI)",
-      valueGetter: (params) => params?.AC15_4?.[2],
-    },
-    {
-      field: "AC15_4_3",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Stroke)",
-      valueGetter: (params) => params?.AC15_4?.[3],
-    },
-    {
-      field: "AC15_4_4",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Acute Respiratory Illness)",
-      valueGetter: (params) => params?.AC15_4?.[4],
-    },
-    {
-      field: "AC15_4_5",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Postpartum Haemorrhage & Pre-Eclampsia)",
-      valueGetter: (params) => params?.AC15_4?.[5],
-    },
-    {
-      field: "AC15_4_6",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Neonatal Emergency)",
-      valueGetter: (params) => params?.AC15_4?.[6],
-    },
-    {
-      field: "AC15_4_7",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Snake bite)",
-      valueGetter: (params) => params?.AC15_4?.[7],
-    },
-    {
-      field: "AC15_4_8",
-      headerName:
-        "Ac.15.4 What werw the symptoms the deceased complained about? (choice = Poisoning)",
-      valueGetter: (params) => params?.AC15_4?.[9],
+        "Ac.15.4 What werw the symptoms the deceased complained about?",
+      valueGetter: (params) => getOptionsIndex(params?.AC15_4),
     },
     {
       field: "AC15_4_9",
@@ -578,39 +532,10 @@ const PartCcolumns = [
     valueGetter: (params) => params?.C1?.split(":")[1],
   },
   {
-    field: "C2_0",
+    field: "C2",
     headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Serious illness requiring higher centre)",
-  },
-  {
-    field: "C2_1",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of doctor)",
-  },
-  {
-    field: "C2_2",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of specialist )",
-  },
-  {
-    field: "C2_3",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Medicines unavailable)",
-  },
-  {
-    field: "C2_4",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Admission facility unavailable)",
-  },
-  {
-    field: "C2_5",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Unavailability of bed)",
-  },
-  {
-    field: "C2_6",
-    headerName:
-      "C.2 If referral was suggested by the medical team, what was the reason given for referral? (choice = Inappropriate staff behaviour)",
+      "C.2 If referral was suggested by the medical team, what was the reason given for referral?",
+      valueGetter: (params) => getOptionsIndex(params?.C2),
   },
   {
     field: "C2_7",
@@ -778,49 +703,10 @@ const PartBcolumns = [
   { field: "B2", headerName: "B.2 Level of education:" },
   { field: "B3", headerName: "B.3 Occupation:" },
   {
-    field: "B4_0",
+    field: "B4",
     headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Private cashless)",
-  },
-  {
-    field: "B4_1",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Private reimbursement)",
-  },
-  {
-    field: "B4_2",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Central Health Insurance Scheme (Ayushmaan Bharat/ CGHS / etc.))",
-  },
-  {
-    field: "B4_3",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = State Health Insurance Scheme)",
-  },
-  {
-    field: "B4_4",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Co-Payment)",
-  },
-  {
-    field: "B4_5",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Community Health Insurance Programme)",
-  },
-  {
-    field: "B4_6",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = None)",
-  },
-  {
-    field: "B4_7",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Prefer not to disclose/ Refuse)",
-  },
-  {
-    field: "B4_8",
-    headerName:
-      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had? (Choice = Don’t Know)",
+      "B.4 Which of the following Health Insurance coverage you or the person with emergency condition or the deceased had?",
+      valueGetter: (params) => getOptionsIndex(params?.B4),
   },
   { field: "B5_dt", headerName: "B.5 When did this incident take place?" },
   {
@@ -999,37 +885,19 @@ const PartBcolumns = [
   },
   { field: "B26", headerName: "B.25 What was the name of the facility?" },
   {
-    field: "B27_0",
+    field: "B27",
     headerName:
-      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Self)",
+      "B.27 Who suggested you the above-mentioned facility for emergency care?",
+      valueGetter: (params) => getOptionsIndex(params?.B27),
   },
   {
-    field: "B27_1",
-    headerName:
-      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Family members)",
-  },
-  {
-    field: "B27_2",
-    headerName:
-      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = Neighbour)",
-  },
-  {
-    field: "B27_3",
-    headerName:
-      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = ASHA/AWW)",
-  },
-  {
-    field: "B27_4",
-    headerName:
-      "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = ANM)",
-  },
-  {
-    field: "B27_5",
+    field: "B27_6",
     headerName:
       "B.27 Who suggested you the above-mentioned facility for emergency care? (choice = CHO)",
+
   },
   {
-    field: "B27_5",
+    field: "B27_6",
     headerName:
       "B.27 Who suggested you the above-mentioned facility for emergency care? (Other Specify)",
   },
@@ -1074,74 +942,10 @@ const PartBcolumns = [
 
 const PartDcolumns = [
   {
-    field: "D1_0",
+    field: "D1",
     headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Lack of severity of symptoms)",
-  },
-  {
-    field: "D1_1",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Bad previous experience)",
-  },
-  {
-    field: "D1_2",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = High cost of medical care)",
-  },
-  {
-    field: "D1_3",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Distant healthcare facilities)",
-  },
-  {
-    field: "D1_4",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Non-availability of transport)",
-  },
-  {
-    field: "D1_5",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Dissuaded by family/ friend/ neighbour)",
-  },
-  {
-    field: "D1_6",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Absence of accompanying member)",
-  },
-  {
-    field: "D1_7",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Doctors not taking care or visiting the patient after admission)",
-  },
-  {
-    field: "D1_8",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Unavailability of OTC drugs)",
-  },
-  {
-    field: "D1_9",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Over prescription of medicines)",
-  },
-  {
-    field: "D1_10",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Unnecessary investigations)",
-  },
-  {
-    field: "D1_11",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Cultural barrier)",
-  },
-  {
-    field: "D1_12",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Linguistic barrier)",
-  },
-  {
-    field: "D1_13",
-    headerName:
-      "D.1 Why did you NOT seek medical care at the facility during the emergency? (choice = Lack of trust)",
+      "D.1 Why did you NOT seek medical care at the facility during the emergency?",
+      valueGetter: (params) => getOptionsIndex(params?.D1),
   },
   {
     field: "D1_14",
@@ -1157,54 +961,10 @@ const PartDcolumns = [
     valueGetter: (params) => params?.D1?.[14]?.split(":")?.[1],
   },
   {
-    field: "D2_0",
+    field: "D2",
     headerName:
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Difficulty in getting the transport to healthcare facilities)",
-  },
-  {
-    field: "D2_1",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Reaching health facility not treating the condition)",
-  },
-  {
-    field: "D2_2",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Unavailability of same clinicians)",
-  },
-  {
-    field: "D2_3",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Long waiting period)",
-  },
-  {
-    field: "D2_4",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Communication barrier)",
-  },
-  {
-    field: "D2_5",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Out of pocket expenditure)",
-  },
-  {
-    field: "D2_6",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Unavailability of OTC drugs)",
-  },
-  {
-    field: "D2_7",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Over prescription of medicines)",
-  },
-  {
-    field: "D2_8",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Doctors not taking care or visiting the patient after admission)",
-  },
-  {
-    field: "D2_9",
-    headerName:
-      "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = Unnecessary investigations)",
+      valueGetter: (params) => getOptionsIndex(params?.D2),
   },
   {
     field: "D2_10",
@@ -1225,44 +985,10 @@ const PartDcolumns = [
       "D.2 During the last medical emergency, when you went to seek medical care what were the challenges faced. (choice = None of the above)",
   },
   {
-    field: "D3_0",
+    field: "D3",
     headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Easy accessibility)",
-  },
-  {
-    field: "D3_1",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Skilled Healthcare provider)",
-  },
-  {
-    field: "D3_2",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Good Professional behaviour)",
-  },
-  {
-    field: "D3_3",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Insurance facility)",
-  },
-  {
-    field: "D3_4",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Affordable services)",
-  },
-  {
-    field: "D3_5",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Insurance Empanelled Health care facility)",
-  },
-  {
-    field: "D3_6",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Good ambience of HCF)",
-  },
-  {
-    field: "D3_7",
-    headerName:
-      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care? (choice = Immediate care)",
+      "D.3 What motivated you for seeking care or taking the patient to the healthcare facility for emergency care?",
+      valueGetter: (params) => getOptionsIndex(params?.D3),
   },
   {
     field: "D3_8",
@@ -1278,29 +1004,10 @@ const PartDcolumns = [
     valueGetter: (params) => params?.D3?.[8]?.split(":")?.[1],
   },
   {
-    field: "D4_0",
+    field: "D4",
     headerName:
-      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Affordability)",
-  },
-  {
-    field: "D4_1",
-    headerName:
-      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Availability of Transport)",
-  },
-  {
-    field: "D4_2",
-    headerName:
-      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Availability of accompanying person)",
-  },
-  {
-    field: "D4_3",
-    headerName:
-      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Distance from facility)",
-  },
-  {
-    field: "D4_4",
-    headerName:
-      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions? (choice = Time delay)",
+      "D.4 While choosing a healthcare facility, what influence your decision to seek care during any health emergency conditions?",
+      valueGetter: (params) => getOptionsIndex(params?.D4),
   },
   {
     field: "D4_5",
@@ -1320,39 +1027,10 @@ const PartDcolumns = [
 const PartEcolumns = [
   { field: "E1", headerName: "E.1 Was the patient covered by any insurance?" },
   {
-    field: "E2_0",
+    field: "E2",
     headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Private cashless)",
-  },
-  {
-    field: "E2_1",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Private reimbursement)",
-  },
-  {
-    field: "E2_2",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Central Health Insurance Scheme (Ayushmaan Bharat/ CGHS / etc.))",
-  },
-  {
-    field: "E2_3",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = State Health Insurance Scheme)",
-  },
-  {
-    field: "E2_4",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Co-Payment)",
-  },
-  {
-    field: "E2_4",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = Community Health Insurance Programme)",
-  },
-  {
-    field: "E2_6",
-    headerName:
-      "E.2 If yes, which of the following Health Insurance coverage patient had? (choice = None)",
+      "E.2 If yes, which of the following Health Insurance coverage patient had?",
+      valueGetter: (params) => getOptionsIndex(params?.E2),
   },
   {
     field: "E3_a",
@@ -1521,34 +1199,10 @@ const PartFcolumns = [
     headerName: "F.9 Total family Income per Month (in INR):",
   },
   {
-    field: "F10_0",
+    field: "F10",
     headerName:
-      "F.10 What type of Transport facility available at home: (choice = None)",
-  },
-  {
-    field: "F10_1",
-    headerName:
-      "F.10 What type of Transport facility available at home: (choice = Two-Wheeler (Bicycle))",
-  },
-  {
-    field: "F10_2",
-    headerName:
-      "F.10 What type of Transport facility available at home: (choice = Two-Wheeler (Motorcycle))",
-  },
-  {
-    field: "F10_3",
-    headerName:
-      "F.10 What type of Transport facility available at home: (choice = Three-Wheeler (Manual Rickshaw, Auto rickshaw etc.))",
-  },
-  {
-    field: "F10_4",
-    headerName:
-      "F.10 What type of Transport facility available at home: (choice = Four-Wheeler (Car/Jeep/etc.))",
-  },
-  {
-    field: "F10_5",
-    headerName:
-      "F.10 What type of Transport facility available at home: (choice = Agricultural Vehicle (Tractor))",
+      "F.10 What type of Transport facility available at home:",
+      valueGetter: (params) => getOptionsIndex(params?.F10),
   },
   {
     field: "F10_6",
@@ -1566,34 +1220,10 @@ const PartFcolumns = [
     headerName: "F.11 Do you have any medical insurance?",
   },
   {
-    field: "F12_0",
+    field: "F12",
     headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Private Insurance)",
-  },
-  {
-    field: "F12_1",
-    headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Central Health Insurance Scheme (Ayushmaan Bharat))",
-  },
-  {
-    field: "F12_2",
-    headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = State Health Insurance Scheme)",
-  },
-  {
-    field: "F12_3",
-    headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Co-Payment)",
-  },
-  {
-    field: "F12_4",
-    headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Community Health Insurance Programme)",
-  },
-  {
-    field: "F12_5",
-    headerName:
-      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Employee based Insurance (ESI / CGHS/others))",
+      "F.12 If Yes, which of the following Household Medical Insurance coverage do you have?",
+      valueGetter: (params) => getOptionsIndex(params?.F12),
   },
   {
     field: "F13",
@@ -1658,34 +1288,10 @@ const PartHcolumns = [
     valueGetter: (params) => params?.H9?.split(":")[1],
   },
   {
-    field: "H10_0",
+    field: "H10",
     headerName:
-      "H.10 What type of Transport facility available at home: ( choice = None)",
-  },
-  {
-    field: "H10_1",
-    headerName:
-      "H.10 What type of Transport facility available at home: ( choice = Two-Wheeler (Bicycle))",
-  },
-  {
-    field: "H10_2",
-    headerName:
-      "H.10 What type of Transport facility available at home: ( choice = Two-Wheeler (Motorcycle))",
-  },
-  {
-    field: "H10_3",
-    headerName:
-      "H.10 What type of Transport facility available at home: ( choice = Three-Wheeler (Manual Rickshaw, Auto rickshaw etc.))",
-  },
-  {
-    field: "H10_4",
-    headerName:
-      "H.10 What type of Transport facility available at home: ( choice = Four-Wheeler (Car/Jeep/ etc.))",
-  },
-  {
-    field: "H10_5",
-    headerName:
-      "H.10 What type of Transport facility available at home: ( choice = Agricultural Vehicle (Tractor))",
+      "H.10 What type of Transport facility available at home:",
+      valueGetter: (params) => getOptionsIndex(params?.H10),
   },
   {
     field: "H10_6",
@@ -1701,29 +1307,10 @@ const PartHcolumns = [
   },
   { field: "H11", headerName: "H.11 Do you have any medical insurance?" },
   {
-    field: "H12_0",
+    field: "H12",
     headerName:
-      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Private Insurance)",
-  },
-  {
-    field: "H12_1",
-    headerName:
-      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Central Health Insurance Scheme (Ayushmaan Bharat))",
-  },
-  {
-    field: "H12_2",
-    headerName:
-      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = State Health Insurance Scheme)",
-  },
-  {
-    field: "H12_3",
-    headerName:
-      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Community Health Insurance Programme)",
-  },
-  {
-    field: "H12_4",
-    headerName:
-      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have? (choice = Employee based Insurance (ESI / CGHS/others))",
+      "H.12 If Yes, which of the following Household Medical Insurance coverage do you have?",
+      valueGetter: (params) => getOptionsIndex(params?.H12),
   },
   {
     field: "H13",

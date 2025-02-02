@@ -147,14 +147,16 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
-      setColumns(HFAT2Columns);
+      // setColumns(HFAT2Columns);
+      setColumns(HFAT2ColumnsExport);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
       filterAndMapData(data);
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
-      setColumns(HFAT3Columns);
+      // setColumns(HFAT3Columns);
+      setColumns(HFAT3ColumnsExport);
       setExportColumns(HFAT3ColumnsExport);
       // setRows(HFAT3Rows(data));
       setRows(data);
