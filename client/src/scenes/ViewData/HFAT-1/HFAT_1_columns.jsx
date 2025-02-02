@@ -1,3 +1,4 @@
+
 import generateColumns from "./../generateColumns";
 
 // Column Definitions: Defines the columns to be displayed.
@@ -8,11 +9,13 @@ const columns = [
     checkboxSelection: true,
     headerCheckboxSelection: false,
     width: 250,
+    editable: false,
     valueGetter: (params) => params.data?._id,
   },
   {
     headerName: "Unique Code",
     field: "uniqueCode",
+    editable: false,
     valueGetter: (params) => params.data?.uniqueCode,
   },
   { headerName: "1A.1. Assessor's Name", field: "A1" },
@@ -137,7 +140,9 @@ const columns = [
   {
     headerName:
       "1B.10 Which of the following does your facility have to provide easy access for emergency care?",
-
+    // field: "B10",
+    // // valueGetter: (params) => mapAndGetIndex(params.data?.B10),
+    // // valueGetter: (params) => params.data?.B10?.filter(Boolean).join(", "),
     children: [
       {
         headerName:
@@ -155,9 +160,12 @@ const columns = [
       },
     ],
   },
+
   {
     headerName:
       "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care?",
+    field: "B11",
+    // valueGetter: (params) => mapAndGetIndex(params.data?.B11),
     children: [
       {
         headerName: "Decontamination Area at the Entrance of ED",
@@ -1675,5 +1683,7 @@ const columns = [
     field: "H1J2",
   },
 ];
+
+
 
 export const HFAT1Columns = generateColumns(columns);

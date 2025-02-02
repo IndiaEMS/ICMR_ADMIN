@@ -4992,3 +4992,19 @@ export const HFAT1DownloadExcel = async (req, res) => {
     res.status(500).send("Error generating CSV file");
   }
 };
+
+
+
+// HFAT1UpdateController
+export const HFAT1UpdateController = async (req, res) => {
+  try {
+    // const { id } = req.params;
+    const data = req.body;
+    const updatedData = await HFAT1.findByIdAndUpdate(data._id, data);
+    res.status(200).json({updatedData,succes:true});
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating data");
+  }
+}

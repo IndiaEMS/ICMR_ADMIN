@@ -47,7 +47,7 @@ const url = import.meta.env.VITE_SERVER;
 const ViewData = ({ formName }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const gridRef = useRef();
+  const gridRef = useRef(null);
   const [data, setData] = useState([]);
   const [rows, setRows] = useState([]);
   const [cols, setCols] = useState([]);
@@ -138,7 +138,8 @@ const ViewData = ({ formName }) => {
     setRows([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
-      setColumns(HFAT1Columns);
+      // setColumns(HFAT1Columns);
+      setColumns(HFAT1ColumnsExport);
       setExportColumns(HFAT1ColumnsExport);
       setRows(data);
       filterAndMapData(data);
@@ -210,11 +211,11 @@ const ViewData = ({ formName }) => {
       setColumns([]);
       setExportColumns([]);
     };
-  
+
     resetState();
     getData(); // Fetch new data based on formName
+    getData(); // Fetch new data based on formName
   }, [formName]);
-  
 
   // useEffect(() => {
   //   setCols(columns);
@@ -292,15 +293,32 @@ const ViewData = ({ formName }) => {
     }
   }, [selectedState, data]);
 
+  // const handleDownloadCSV = async () => {
+  //   try {
+  //     if(isDownloadDisabled) return;
+  //     setIsDownloadDisabled(true);
+  //     setCols(exportColumns);
+  //     await gridRef.current.api.refreshClientSIdeRowModel();
+  //     gridRef.current.api.exportDataAsCsv({
+  //       fileName: `${formName}.csv`,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setCols(columns);
+  //     setIsDownloadDisabled(false);
+  //   }
+  // };
+
   const handleDownloadCSV = async () => {
     try {
       if(isDownloadDisabled) return;
       setIsDownloadDisabled(true);
       setCols(exportColumns);
-      await gridRef.current.api.refreshClientSIdeRowModel();
-      gridRef.current.api.exportDataAsCsv({
-        fileName: `${formName}.csv`,
-      });
+      // refresh header
+      await gridRef.current.api.refreshClientSideRowModel();
+      // export to csv
+      gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
     } catch (error) {
       console.log(error);
     } finally {
@@ -308,7 +326,29 @@ const ViewData = ({ formName }) => {
       setIsDownloadDisabled(false);
     }
   };
-  
+
+  // const downloadCsv = async () => {
+  //   try {
+  //     const response = await fetch("http://localhost:3000/download-csv", {
+  //       method: "GET",
+  //     });
+
+  //     if (!response.ok) {
+  //       throw new Error("Failed to download file");
+  //     }
+
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(blob);
+  //     const link = document.createElement("a");
+  //     link.href = url;
+  //     link.setAttribute("download", "dataset.csv");
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.remove();
+  //   } catch (error) {
+  //     console.error("Error downloading CSV:", error);
+  //   }
+  // };
 
   const handleDelete = async () => {
     if (selectedRows.length === 0) {
@@ -359,6 +399,29 @@ const ViewData = ({ formName }) => {
   const handleCloseMap = () => {
     setIsMapOpen(false);
   };
+
+  // value update
+  const onCellValueChanged = (params) => {
+    console.log(params);
+    const { data } = params;
+    const { _id } = data;
+    const updatedData = { ...data, _id };
+    console.log(updatedData);
+    // axios.put(`${url}/${formName}/update`, updatedData, {
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // }).then((res) => {
+    //   // console.log(res);
+    //   alert("Data updated successfully");
+    // }).catch((err) => {
+    //   // console.log(err);
+    //   alert("Failed to update data");
+    // });
+    // show success message
+
+  };
+  
 
   if (loading) return <div>Loading...</div>;
 
@@ -604,6 +667,11 @@ const ViewData = ({ formName }) => {
             backgroundColor: colors.primary[400],
             color: colors.grey[100],
           },
+          // ag-input-field-input
+          "& .ag-input-field-input": {
+            color: colors.grey[100],
+            backgroundColor: colors.primary[400],
+          },
         }}
       >
         <AgGridReact
@@ -616,7 +684,11 @@ const ViewData = ({ formName }) => {
             sortable: true,
             filter: true,
             floatingFilter: true,
+            // editable: formName == "HFAT-1" ? true : false,
+            editable: false,
           }}
+          // on cell editing
+          onCellValueChanged={onCellValueChanged}
           localeText={loading ? "Loading..." : "No data available"}
           pagination={true}
           paginationPageSize={20}

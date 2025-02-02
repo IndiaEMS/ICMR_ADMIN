@@ -7,6 +7,7 @@ import {
   HFAT1Get,
   HFAT1Delete,
   HFAT1AndAMBULANCEGet,
+  HFAT1UpdateController,
 } from "../controller/HFAT-1.js";
 import {AuthenciatedUser} from "../Middleware/auth.js"
 import { deleteHfat1 } from "../controller/delete/Hfat_1_delete.js";
@@ -21,6 +22,7 @@ router.get("/HFAT-1/id/:id", jsonparser, HFAT1Get);
 router.get("/HFAT-1/Download", jsonparser, HFAT1DownloadCsv);
 router.get("/HFAT-1/Excel", jsonparser, HFAT1DownloadExcel);
 router.delete("/HFAT-1", jsonparser, HFAT1Delete);
+router.put("/HFAT-1/update", jsonparser, AuthenciatedUser, HFAT1UpdateController);
 
 router.delete("HFAT-1/delete",AuthenciatedUser, deleteHfat1);
 
