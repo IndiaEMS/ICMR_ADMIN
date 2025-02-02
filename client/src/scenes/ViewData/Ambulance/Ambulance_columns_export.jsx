@@ -43,21 +43,9 @@ const columns = [
   },
   { field: "AMB11", headerName: "7. How much area to you cater to" },
   {
-    field: "AMB12_0",
-    headerName: "8. Staff on duty per ambulance (choice = Driver)",
-  },
-  {
-    field: "AMB12_1",
-    headerName: "8. Staff on duty per ambulance (choice = Doctor)",
-  },
-  {
-    field: "AMB12_2",
-    headerName:
-      "8. Staff on duty per ambulance (choice = emergency medical technicians)",
-  },
-  {
-    field: "AMB12_3",
-    headerName: "8. Staff on duty per ambulance (choice = nurse)",
+    field: "AMB12",
+    headerName: "8. Staff on duty per ambulance",
+    valueGetter: (params) => getOptionsIndex(params.data?.AMB12),
   },
   {
     field: "AMB12_4",
@@ -153,297 +141,297 @@ const columns = [
   },
   {
     field: "table1_0_Available",
-    headerName: "9.4 : Whether it’s available or not (Monitor - Available)",
+    headerName: "9.4 : Whether it's available or not (Monitor - Available)",
   },
   {
     field: "table1_0_Functional",
-    headerName: "9.4 : Whether it’s available or not (Monitor - Functional)",
+    headerName: "9.4 : Whether it's available or not (Monitor - Functional)",
   },
   {
     field: "table1_0_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Monitor - When was it last used?)",
+      "9.4 : Whether it's available or not (Monitor - When was it last used?)",
   },
   {
     field: "table1_1_Available",
-    headerName: "9.4 : Whether it’s available or not (ECG Machine - Available)",
+    headerName: "9.4 : Whether it's available or not (ECG Machine - Available)",
   },
   {
     field: "table1_1_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (ECG Machine - Functional)",
+      "9.4 : Whether it's available or not (ECG Machine - Functional)",
   },
   {
     field: "table1_1_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (ECG Machine - When was it last used?)",
+      "9.4 : Whether it's available or not (ECG Machine - When was it last used?)",
   },
   {
     field: "table1_2_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Pulse Oxymeter - Available)",
+      "9.4 : Whether it's available or not (Pulse Oxymeter - Available)",
   },
   {
     field: "table1_2_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Pulse Oxymeter - Functional)",
+      "9.4 : Whether it's available or not (Pulse Oxymeter - Functional)",
   },
   {
     field: "table1_2_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Pulse Oxymeter - When was it last used?)",
+      "9.4 : Whether it's available or not (Pulse Oxymeter - When was it last used?)",
   },
   {
     field: "table1_3_Available",
-    headerName: "9.4 : Whether it’s available or not (Glucometer  - Available)",
+    headerName: "9.4 : Whether it's available or not (Glucometer  - Available)",
   },
   {
     field: "table1_3_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Glucometer  - Functional)",
+      "9.4 : Whether it's available or not (Glucometer  - Functional)",
   },
   {
     field: "table1_3_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Glucometer  - When was it last used?)",
+      "9.4 : Whether it's available or not (Glucometer  - When was it last used?)",
   },
   {
     field: "table1_4_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator - Available)",
+      "9.4 : Whether it's available or not (Defibrillator - Available)",
   },
   {
     field: "table1_4_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator - Functional)",
+      "9.4 : Whether it's available or not (Defibrillator - Functional)",
   },
   {
     field: "table1_4_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator - When was it last used?)",
+      "9.4 : Whether it's available or not (Defibrillator - When was it last used?)",
   },
   {
     field: "table1_5_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator pads - disposable - Available)",
+      "9.4 : Whether it's available or not (Defibrillator pads - disposable - Available)",
   },
   {
     field: "table1_5_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator pads - disposable - Functional)",
+      "9.4 : Whether it's available or not (Defibrillator pads - disposable - Functional)",
   },
   {
     field: "table1_5_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Defibrillator pads - disposable - When was it last used?)",
+      "9.4 : Whether it's available or not (Defibrillator pads - disposable - When was it last used?)",
   },
   {
     field: "table1_6_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - Available)",
+      "9.4 : Whether it's available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - Available)",
   },
   {
     field: "table1_6_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - Functional)",
+      "9.4 : Whether it's available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - Functional)",
   },
   {
     field: "table1_6_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - When was it last used?)",
+      "9.4 : Whether it's available or not (Sphygmomanometer, Non-mercurial- Paediatric cuff- Adult cuff - When was it last used?)",
   },
   {
     field: "table1_7_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - Available)",
+      "9.4 : Whether it's available or not (Stethoscope Adult - Available)",
   },
   {
     field: "table1_7_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - Functional)",
+      "9.4 : Whether it's available or not (Stethoscope Adult - Functional)",
   },
   {
     field: "table1_7_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Adult - When was it last used?)",
+      "9.4 : Whether it's available or not (Stethoscope Adult - When was it last used?)",
   },
   {
     field: "table1_8_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Available)",
+      "9.4 : Whether it's available or not (Stethoscope Paediatric - Available)",
   },
   {
     field: "table1_8_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - Functional)",
+      "9.4 : Whether it's available or not (Stethoscope Paediatric - Functional)",
   },
   {
     field: "table1_8_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Stethoscope Paediatric - When was it last used?)",
+      "9.4 : Whether it's available or not (Stethoscope Paediatric - When was it last used?)",
   },
   {
     field: "table1_9_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Available)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Adult - Available)",
   },
   {
     field: "table1_9_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - Functional)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Adult - Functional)",
   },
   {
     field: "table1_9_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Adult - When was it last used?)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Adult - When was it last used?)",
   },
   {
     field: "table1_10_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Available)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Paediatric - Available)",
   },
   {
     field: "table1_10_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - Functional)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Paediatric - Functional)",
   },
   {
     field: "table1_10_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Endotracheal tubes Paediatric - When was it last used?)",
+      "9.4 : Whether it's available or not (Endotracheal tubes Paediatric - When was it last used?)",
   },
   {
     field: "table1_11_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Paediatric - Available)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Paediatric - Available)",
   },
   {
     field: "table1_11_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Paediatric - Functional)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Paediatric - Functional)",
   },
   {
     field: "table1_11_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Paediatric - When was it last used?)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Paediatric - When was it last used?)",
   },
   {
     field: "table1_12_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Adult - Available)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Adult - Available)",
   },
   {
     field: "table1_12_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Adult - Functional)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Adult - Functional)",
   },
   {
     field: "table1_12_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngeal Mask Airways Adult - When was it last used?)",
+      "9.4 : Whether it's available or not (Laryngeal Mask Airways Adult - When was it last used?)",
   },
   {
     field: "table1_13_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Nebulizer with nebulizer kit - Available)",
+      "9.4 : Whether it's available or not (Nebulizer with nebulizer kit - Available)",
   },
   {
     field: "table1_13_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Nebulizer with nebulizer kit - Functional)",
+      "9.4 : Whether it's available or not (Nebulizer with nebulizer kit - Functional)",
   },
   {
     field: "table1_13_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Nebulizer with nebulizer kit - When was it last used?)",
+      "9.4 : Whether it's available or not (Nebulizer with nebulizer kit - When was it last used?)",
   },
   {
     field: "table1_14_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Available)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Adult - Available)",
   },
   {
     field: "table1_14_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - Functional)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Adult - Functional)",
   },
   {
     field: "table1_14_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Adult - When was it last used?)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Adult - When was it last used?)",
   },
   {
     field: "table1_15_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Available)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Paediatric - Available)",
   },
   {
     field: "table1_15_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - Functional)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Paediatric - Functional)",
   },
   {
     field: "table1_15_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Laryngoscope Set Paediatric - When was it last used?)",
+      "9.4 : Whether it's available or not (Laryngoscope Set Paediatric - When was it last used?)",
   },
   {
     field: "table1_16_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Communication Device (eg mobile, Radio) - Available)",
+      "9.4 : Whether it's available or not (Communication Device (eg mobile, Radio) - Available)",
   },
   {
     field: "table1_16_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Communication Device (eg mobile, Radio) - Functional)",
+      "9.4 : Whether it's available or not (Communication Device (eg mobile, Radio) - Functional)",
   },
   {
     field: "table1_16_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Communication Device (eg mobile, Radio) - When was it last used?)",
+      "9.4 : Whether it's available or not (Communication Device (eg mobile, Radio) - When was it last used?)",
   },
   {
     field: "table1_17_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Syringe Infusion Pump - Available)",
+      "9.4 : Whether it's available or not (Syringe Infusion Pump - Available)",
   },
   {
     field: "table1_17_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Syringe Infusion Pump - Functional)",
+      "9.4 : Whether it's available or not (Syringe Infusion Pump - Functional)",
   },
   {
     field: "table1_17_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Syringe Infusion Pump - When was it last used?)",
+      "9.4 : Whether it's available or not (Syringe Infusion Pump - When was it last used?)",
   },
   {
     field: "table1_18_Available",
     headerName:
-      "9.4 : Whether it’s available or not (Transport Ventilators - Available)",
+      "9.4 : Whether it's available or not (Transport Ventilators - Available)",
   },
   {
     field: "table1_18_Functional",
     headerName:
-      "9.4 : Whether it’s available or not (Transport Ventilators - Functional)",
+      "9.4 : Whether it's available or not (Transport Ventilators - Functional)",
   },
   {
     field: "table1_18_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (Transport Ventilators - When was it last used?)",
+      "9.4 : Whether it's available or not (Transport Ventilators - When was it last used?)",
   },
   {
     field: "table1_19_Available",
-    headerName: "9.4 : Whether it’s available or not (GPS System - Available)",
+    headerName: "9.4 : Whether it's available or not (GPS System - Available)",
   },
   {
     field: "table1_19_Functional",
-    headerName: "9.4 : Whether it’s available or not (GPS System - Functional)",
+    headerName: "9.4 : Whether it's available or not (GPS System - Functional)",
   },
   {
     field: "table1_19_LastUsed",
     headerName:
-      "9.4 : Whether it’s available or not (GPS System - When was it last used?)",
+      "9.4 : Whether it's available or not (GPS System - When was it last used?)",
   },
   {
     field: "table2_0_Available",
@@ -628,12 +616,12 @@ const columns = [
   {
     field: "table2_36_Available",
     headerName:
-      "9.5 : Whether these Emergency Medications are available or not? (IV Sets – Macro - Available)",
+      "9.5 : Whether these Emergency Medications are available or not? (IV Sets - Macro - Available)",
   },
   {
     field: "table2_37_Available",
     headerName:
-      "9.5 : Whether these Emergency Medications are available or not? (IV Sets – Micro - Available)",
+      "9.5 : Whether these Emergency Medications are available or not? (IV Sets - Micro - Available)",
   },
   {
     field: "table2_38_Available",
@@ -646,79 +634,16 @@ const columns = [
       "9.5 : Whether these Emergency Medications are available or not? (Betadine - Available)",
   },
   {
-    field: "AMB18_0",
+    field: "AMB18",
     headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Firm padding or commercial head immobilization device)",
-  },
-  {
-    field: "AMB18_1",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Lower extremity traction devices (supporting slings, padding, traction strap))",
-  },
-  {
-    field: "AMB18_2",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Upper and Lower extremity immobilization devices)",
-  },
-  {
-    field: "AMB18_3",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Joint above and joint below fracture immobilizing device)",
-  },
-  {
-    field: "AMB18_4",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Resistant straps or cravats)",
-  },
-  {
-    field: "AMB18_5",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Orthopaedic (scoop) stretcher/ Long back board)",
-  },
-  {
-    field: "AMB18_6",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = Rigid cervical collars (small, medium, large)",
-  },
-  {
-    field: "AMB18_7",
-    headerName:
-      "9.6 : Whether these Immobilizing equipment’s are available? (choice = None of the Above)",
-  },
-  {
-    field: "AMB19_0",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Ambulance Cleaning Checklist)",
-  },
-  {
-    field: "AMB19_1",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Portable Oxygen Cylinder Pressure Monitoring Sheet)",
-  },
-  {
-    field: "AMB19_2",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = In Ambulance Treatment Summary Form)",
-  },
-  {
-    field: "AMB19_3",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Emergency Injection Register)",
-  },
-  {
-    field: "AMB19_4",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Emergency Medicine Checklist)",
-  },
-  {
-    field: "AMB19_5",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = AED Checklist)",
-  },
-  {
-    field: "AMB19_6",
-    headerName:
-      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance? (choice = Patient Register)",
+      "9.6 : Whether these Immobilizing equipment's are available?",
+      valueGetter: (params) => getOptionsIndex(params.data?.AMB18),
+    },
+    {
+      field: "AMB19",
+      headerName:
+      "9.7 : What are the different types of registers/records/checklists maintained on the ambulance?",
+      valueGetter: (params) => getOptionsIndex(params.data?.AMB19),
   },
   {
     field: "AMB19_7",

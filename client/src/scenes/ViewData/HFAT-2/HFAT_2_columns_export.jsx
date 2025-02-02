@@ -1,4 +1,6 @@
 import generateColumns from "./../generateColumns";
+import getOptionsIndex from "./../getOptionsIndex";
+
 export const columns = [
   {
     field: "_id",
@@ -52,129 +54,16 @@ export const columns = [
       "2B.6 What is the average daily number of patients presenting with emergency conditions daily? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
   },
   {
-    field: "H2B7_0",
+    field: "H2B7",
     headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Emergency Registration Counter)",
+      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2B7),
   },
   {
-    field: "H2B7_1",
+    field: "H2B8",
     headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Computerized Registration)",
-  },
-  {
-    field: "H2B7_2",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Triage Area)",
-  },
-  {
-    field: "H2B7_3",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Resuscitation Area)",
-  },
-  {
-    field: "H2B7_4",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Decontamination Facility)",
-  },
-  {
-    field: "H2B7_5",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Security Services)",
-  },
-  {
-    field: "H2B7_6",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Designated Parking Area for Ambulance)",
-  },
-  {
-    field: "H2B7_7",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Smooth Entry for Wheelchair Trolley and Stretcher Bay)",
-  },
-  {
-    field: "H2B7_8",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Waiting Area for patients & Attendants.)",
-  },
-  {
-    field: "H2B7_9",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Plaster Room/Suturing Room/Minor OT)",
-  },
-  {
-    field: "H2B7_10",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Emergency OT)",
-  },
-  {
-    field: "H2B7_11",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Dedicated Isolation rooms)",
-  },
-  {
-    field: "H2B7_12",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Point of Care Lab)",
-  },
-  {
-    field: "H2B7_13",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Blood storage unit)",
-  },
-  {
-    field: "H2B7_14",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice= Point of care ultrasound)",
-  },
-  {
-    field: "H2B7_15",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Radiology service-X ray , Ultrasound.)",
-  },
-  {
-    field: "H2B7_16",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Demarcated Duty Rooms for Doctors and Nurses)",
-  },
-  {
-    field: "H2B7_17",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible) (choice=Area to Keep Dead Bodies)",
-  },
-  {
-    field: "H2B7_18",
-    headerName:
-      "2B.7 Which of the following infrastructure requirements for emergency are available at the CHC? (Multiple answers possible)(Tele-Medicine Facility)",
-  },
-  {
-    field: "H2B8_0",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Services Provided to the patients are clearly defined, displayed prominrntly.)",
-  },
-  {
-    field: "H2B8_1",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Name of doctor and nursing staff on duty are displayed and updates.)",
-  },
-  {
-    field: "H2B8_2",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=List of available drugs are displayed.)",
-  },
-  {
-    field: "H2B8_3",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=All the relevant information is displayed for the patients and visitors including user charges wherever applicable at the time of procedure/ investigation/admission.)",
-  },
-  {
-    field: "H2B8_4",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Important contact numbers including ambulance, blood bank, police and referral centers displayed..)",
-  },
-  {
-    field: "H2B8_5",
-    headerName:
-      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Display of citizen's charter.)",
+      "2B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2B8),
   },
   {
     field: "H2B8_6",
@@ -634,64 +523,10 @@ export const columns = [
       "2C.2 Whether training for emergency care management is being conducted for the staff in the institution?",
   },
   {
-    field: "H2C3_0",
+    field: "H2C3",
     headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Trauma & Accidental Injuries)",
-  },
-  {
-    field: "H2C3_1",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Burns)",
-  },
-  {
-    field: "H2C3_2",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Cardiac emergencies: acute chest pain, acute coronary syndrome (ACS)/ STEMI, Heart failure, Cardiac Arrest)",
-  },
-  {
-    field: "H2C3_3",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Stroke)",
-  },
-  {
-    field: "H2C3_4",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Acute Breathlessness)",
-  },
-  {
-    field: "H2C3_5",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Seizures)",
-  },
-  {
-    field: "H2C3_6",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Bites (Animal bite/snake bite/scorpion sting))",
-  },
-  {
-    field: "H2C3_7",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Choking/foreign body ingestion)",
-  },
-  {
-    field: "H2C3_8",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Poisoning)",
-  },
-  {
-    field: "H2C3_9",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = PPH)",
-  },
-  {
-    field: "H2C3_10",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Pre-Eclampsia)",
-  },
-  {
-    field: "H2C3_11",
-    headerName:
-      "2C.3 Which of the following emergency care trainings you have undergone? (choice = Neonatal emergencies)",
+      "2C.3 Which of the following emergency care trainings you have undergone?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2C3),
   },
   {
     field: "H2C3_12",
@@ -718,279 +553,16 @@ export const columns = [
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },
   {
-    field: "H2D1_0",
+    field: "H2D1",
     headerName:
       "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Oxygen medicinal gas)",
-  },
-  {
-    field: "H2D1_1",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Atropine)",
-  },
-  {
-    field: "H2D1_2",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Diazepam/Lorazepam)",
-  },
-  {
-    field: "H2D1_3",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Adrenaline)",
-  },
-  {
-    field: "H2D1_4",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Charcoal activated)",
-  },
-  {
-    field: "H2D1_5",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Antisnake venom)",
-  },
-  {
-    field: "H2D1_6",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Pralidoxime (PAM))",
-  },
-  {
-    field: "H2D1_7",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Magnesium sulphate)",
-  },
-  {
-    field: "H2D1_8",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Tetanus immunoglobulin)",
-  },
-  {
-    field: "H2D1_9",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Neostigmine)",
-  },
-  {
-    field: "H2D1_10",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Aspirin)",
-  },
-  {
-    field: "H2D1_11",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Clopidogrel)",
-  },
-  {
-    field: "H2D1_12",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Atorvastatin)",
-  },
-  {
-    field: "H2D1_13",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Misoprostol)",
-  },
-  {
-    field: "H2D1_14",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Labetalol IV)",
-  },
-  {
-    field: "H2D1_15",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Phenobarbitone)",
-  },
-  {
-    field: "H2D1_16",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Phenytoin (inj))",
-  },
-  {
-    field: "H2D1_17",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Plasma volume expander)",
-  },
-  {
-    field: "H2D1_18",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = 3% Saline)",
-  },
-  {
-    field: "H2D1_19",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Dobutamine)",
-  },
-  {
-    field: "H2D1_20",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Streptokinase)",
-  },
-  {
-    field: "H2D1_21",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Tenecteplase)",
-  },
-  {
-    field: "H2D1_22",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Oxytocin)",
-  },
-  {
-    field: "H2D1_23",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Salbutamol sulphate)",
-  },
-  {
-    field: "H2D1_24",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Glucose/ 25 % dextrose)",
-  },
-  {
-    field: "H2D1_25",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Tranexamic acid)",
-  },
-  {
-    field: "H2D1_26",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = tPA IV)",
-  },
-  {
-    field: "H2D1_27",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Methergine)",
-  },
-  {
-    field: "H2D1_28",
-    headerName:
-      "2D.1 : Which of the following emergency drugs are available at the CHC? (choice = Carboprost)",
-  },
-  {
-    field: "H2D2_0",
-    headerName:
+      valueGetter: (params) => getOptionsIndex(params.data?.H2D1),
+    },
+    {
+      field: "H2D2",
+      headerName:
       "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Mobile bed for Resuscitation)",
-  },
-  {
-    field: "H2D2_1",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Crash Cart (specialized cart for resuscitation))",
-  },
-  {
-    field: "H2D2_2",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Hard Cervical Collar)",
-  },
-  {
-    field: "H2D2_3",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Oxygen Cylinder/Central Oxygen Supply)",
-  },
-  {
-    field: "H2D2_4",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Suction Machine)",
-  },
-  {
-    field: "H2D2_5",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Multipara Monitor (To monitor Heart rate, BP, SPO2[Essential] ECG, Respiration Rate [Desirable] etc))",
-  },
-  {
-    field: "H2D2_6",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Defibrillator with or without external pacer)",
-  },
-  {
-    field: "H2D2_7",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Toothed Forceps, Kocher Forceps, Magill's forceps, Artery forceps)",
-  },
-  {
-    field: "H2D2_8",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = AMBU Bag for adult and Paediatric)",
-  },
-  {
-    field: "H2D2_9",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Basic airway equipment like oropharyngeal nasopharyngeal airway, LMA for adult and pediatric)",
-  },
-  {
-    field: "H2D2_10",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Advanced laryngoscope and endotracheal tube or other similar device)",
-  },
-  {
-    field: "H2D2_11",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Tourniquet)",
-  },
-  {
-    field: "H2D2_12",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Pelvic binder or bed sheets with clips)",
-  },
-  {
-    field: "H2D2_13",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Laryngoscope with all sized blades)",
-  },
-  {
-    field: "H2D2_14",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Endotracheal Tubes of all sizes)",
-  },
-  {
-    field: "H2D2_15",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Laryngeal Mask Airway (LMA))",
-  },
-  {
-    field: "H2D2_16",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Chest Tubes with Water seal drain)",
-  },
-  {
-    field: "H2D2_17",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = ECG Machine)",
-  },
-  {
-    field: "H2D2_18",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Nebulizer)",
-  },
-  {
-    field: "H2D2_19",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Fluid Warmer)",
-  },
-  {
-    field: "H2D2_20",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Infusion pump and Syringe Drivers)",
-  },
-  {
-    field: "H2D2_21",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Spine board with sling and scotch tapes)",
-  },
-  {
-    field: "H2D2_22",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Splints for all types of fracture)",
-  },
-  {
-    field: "H2D2_23",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Non-invasive Ventilators)",
-  },
-  {
-    field: "H2D2_24",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Invasive Ventilators)",
-  },
-  {
-    field: "H2D2_25",
-    headerName:
-      "2D.2 : Which of the following emergency equipment is available at the CHC? (choice = Incubators)",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2D2),
   },
   {
     field: "table2_0_Adult",
@@ -1108,19 +680,10 @@ export const columns = [
       "2E.2 : Numbers of Patients who Visited ED in Last One Month (Acute Respiratory Illnes - Death)",
   },
   {
-    field: "H2E3_0",
+    field: "H2E3",
     headerName:
-      "2E.3 Which of the following emergency services are delivered at the CHC? (Multiple answers possible) (choice=Triage)",
-  },
-  {
-    field: "H2E3_1",
-    headerName:
-      "2E.3 Which of the following emergency services are delivered at the CHC? (Multiple answers possible) (choice=Resuscitation)",
-  },
-  {
-    field: "H2E3_2",
-    headerName:
-      "2E.3 Which of the following emergency services are delivered at the CHC? (Multiple answers possible) (choice=Medico-legal Reporting)",
+      "2E.3 Which of the following emergency services are delivered at the CHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2E3),
   },
   {
     field: "H2F1",
@@ -1138,34 +701,10 @@ export const columns = [
       "2F.3 How many personnel available for managing information system?",
   },
   {
-    field: "H2F4_0",
+    field: "H2F4",
     headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Numbers by type of emergencies)",
-  },
-  {
-    field: "H2F4_1",
-    headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Length of hospital stay)",
-  },
-  {
-    field: "H2F4_2",
-    headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Turn around time)",
-  },
-  {
-    field: "H2F4_3",
-    headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Disposal time)",
-  },
-  {
-    field: "H2F4_4",
-    headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Number of deaths)",
-  },
-  {
-    field: "H2F4_5",
-    headerName:
-      "2F.4 What key indicators are generated from the emergency management information system? (choice=Number of Referrals)",
+      "2F.4 What key indicators are generated from the emergency management information system?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2F4),
   },
   {
     field: "H2F5",
@@ -1173,29 +712,10 @@ export const columns = [
       "2F.5 Whether time bound management of common emergencies is captured in MIS.",
   },
   {
-    field: "H2F6_0",
+    field: "H2F6",
     headerName:
-      "2F.6 Which of the following alet systems does your facility have? (choice = Code blue alert system)",
-  },
-  {
-    field: "H2F6_1",
-    headerName:
-      "2F.6 Which of the following alet systems does your facility have? (choice = STEMI alert system)",
-  },
-  {
-    field: "H2F6_2",
-    headerName:
-      "2F.6 Which of the following alet systems does your facility have? (choice = Stroke alert system)",
-  },
-  {
-    field: "H2F6_3",
-    headerName:
-      "2F.6 Which of the following alet systems does your facility have? (choice = Trauma alert system)",
-  },
-  {
-    field: "H2F7",
-    headerName:
-      "2F.7 Whether Medical Officer In charge (MO/IC) uses or reviews the data for quality improvement",
+      "2F.6 Which of the following alet systems does your facility have?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2F6),
   },
   {
     field: "H2F8_0",
@@ -1293,12 +813,9 @@ export const columns = [
       "2H.2.4 How frequently emergency care audits are conducted in a year?",
   },
   {
-    field: "H2H8_0",
-    headerName: "2H.2.5 Types of audits conducted? (choice = Mortality Audit)",
-  },
-  {
-    field: "H2H8_1",
-    headerName: "2H.2.5 Types of audits conducted? (choice = Morbidity Audit)",
+    field: "H2H8",
+    headerName: "2H.2.5 Types of audits conducted?",
+    valueGetter: (params) => getOptionsIndex(params.data?.H2H8),
   },
   {
     field: "H2H8_2",
@@ -1315,44 +832,10 @@ export const columns = [
       "2H.2.6 Any action being taken on Audit report in the last one year?",
   },
   {
-    field: "H2I1_0",
+    field: "H2I1",
     headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=OPD/Treatment Register)",
-  },
-  {
-    field: "H2I1_1",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Inventory Register)",
-  },
-  {
-    field: "H2I1_2",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Procedure Register)",
-  },
-  {
-    field: "H2I1_3",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Referral Register)",
-  },
-  {
-    field: "H2I1_4",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Record for handing over and taking over of critical care equipment.)",
-  },
-  {
-    field: "H2I1_5",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Medico-legal register)",
-  },
-  {
-    field: "H2I1_6",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Death Register)",
-  },
-  {
-    field: "H2I1_7",
-    headerName:
-      "2I.1 What types of registers are maintained at the CHC? (Multiple answers possible) (choice=Patient/Community feedback register)",
+      "2I.1 What types of registers are maintained at the CHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2I1),
   },
   {
     field: "H2I1_8",
@@ -1367,29 +850,10 @@ export const columns = [
       "2I.1 What types of registers are maintained at the CHC? (Other specify)",
   },
   {
-    field: "H2I2_0",
+    field: "H2I2",
     headerName:
-      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC? (Select all that apply) (choice=Documents triage guidelines and protocols)",
-  },
-  {
-    field: "H2I2_1",
-    headerName:
-      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC? (Select all that apply) (choice=Standard treatment protocols for emergencies.)",
-  },
-  {
-    field: "H2I2_2",
-    headerName:
-      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC? (Select all that apply) (choice=Transfer policies and procedures.)",
-  },
-  {
-    field: "H2I2_3",
-    headerName:
-      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC? (Select all that apply) (choice=Disaster Management Plan.)",
-  },
-  {
-    field: "H2I2_4",
-    headerName:
-      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC? (Select all that apply) (choice=Policies for handling cases opf death)",
+      "2I.2 Which of the following SOPs for the management of common medical emergencies are followed at your CHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2I2),
   },
   {
     field: "table4_0_SOP",

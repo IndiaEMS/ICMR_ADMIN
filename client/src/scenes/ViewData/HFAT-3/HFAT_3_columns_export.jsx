@@ -64,139 +64,16 @@ const columns = [
       "3B.6 What is the average daily number of patients presenting with emergency conditions? (Chest pain, stroke, acute weakness, acute blindness, Shortness of breath, altered mentation, snake bite, bites, road traffic accident, injuries ,poisoning, deliberate self-harm, infectious diseases, fever, pregnancy related, seizure, acute abdomen, anaphylaxis, cerebro-meningeal infections, foreign body, acute pulmonary disease, Shock, accidental injuries, infections)",
   },
   {
-    field: "H3B7_0",
+    field: "H3B7",
     headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Emergency Registration Counter)",
-  },
-  {
-    field: "H3B7_1",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Waiting Area for patients/attendants)",
-  },
-  {
-    field: "H3B7_2",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Plaster Room/Suturing Room/Minor OT)",
-  },
-  {
-    field: "H3B7_3",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Point of Care Lab)",
-  },
-  {
-    field: "H3B7_4",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Area to Keep Dead Bodies)",
-  },
-  {
-    field: "H3B7_5",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Demarcate Duty Rooms for Doctors and Nurses)",
-  },
-  {
-    field: "H3B7_6",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Computerized Registration)",
-  },
-  {
-    field: "H3B7_7",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Triage Area)",
-  },
-  {
-    field: "H3B7_8",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Resuscitation Area)",
-  },
-  {
-    field: "H3B7_9",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Decontamination Facility)",
-  },
-  {
-    field: "H3B7_10",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Security Services)",
-  },
-  {
-    field: "H3B7_11",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Designated Parking Area for Ambulance)",
-  },
-  {
-    field: "H3B7_12",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Wheelchair Trolley and Stretcher Bay)",
-  },
-  {
-    field: "H3B7_13",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=IT infrastructure for providing teleconsultation services)",
-  },
-  {
-    field: "H3B7_14",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Adequate illumination at the entrance & access road to PHC especially at night.)",
-  },
-  {
-    field: "H3B7_15",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Availability of Wheelchair or stretcher for easy Access)",
-  },
-  {
-    field: "H3B7_16",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Ward is easily accessible from the OPD)",
-  },
-  {
-    field: "H3B7_17",
-    headerName:
-      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC? (Multiple answers possible) (choice=Ward is easily accessible from the OPD)",
-  },
-  {
-    field: "H3B8_0",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Services Provided Clearly Defined and Displayed)",
-  },
-  {
-    field: "H3B8_1",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=The name of the facility is prominently displayed in front of the hospital building)",
-  },
-  {
-    field: "H3B8_2",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Display of citizens charter)",
-  },
-  {
-    field: "H3B8_3",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Direction to PHC is displayed from the Access Road.)",
-  },
-  {
-    field: "H3B8_4",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Facility layout with Directions to different departments displayed.)",
-  },
-  {
-    field: "H3B8_5",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Name of the facility is prominently displayed in front of the hospital building.)",
-  },
-  {
-    field: "H3B8_6",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=All functional areas identified by their respective signage.)",
-  },
-  {
-    field: "H3B8_7",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=Availability of complaint box and display of process for grievance re-addressed and whom to contact is displayed)",
-  },
-  {
-    field: "H3B8_8",
-    headerName:
-      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments? (choice=None of the above)",
+      "3B.7 Which of the following infrastructure requirements for emergency are available at the PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3B7),
+    },
+    {
+      field: "H3B8",
+      headerName:
+      "3B.8 Which of these signage or display boards of the emergency services and entitlements available in its departments?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3B8),
   },
   {
     field: "H3B9",
@@ -605,279 +482,16 @@ const columns = [
   },
   { field: "H3C5", headerName: "3C.5 When was the last training conducted?" },
   {
-    field: "H3D1_0",
+    field: "H3D1",
     headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Oxygen medicinal gas)",
-  },
-  {
-    field: "H3D1_1",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Atropine)",
-  },
-  {
-    field: "H3D1_2",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Diazepam/Lorazepam)",
-  },
-  {
-    field: "H3D1_3",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Adrenaline)",
-  },
-  {
-    field: "H3D1_4",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Charcoal activated)",
-  },
-  {
-    field: "H3D1_5",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Antisnake venom)",
-  },
-  {
-    field: "H3D1_6",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Pralidoxime (PAM))",
-  },
-  {
-    field: "H3D1_7",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Magnesium sulphate)",
-  },
-  {
-    field: "H3D1_8",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Tetanus immunoglobulin)",
-  },
-  {
-    field: "H3D1_9",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Neostigmine)",
-  },
-  {
-    field: "H3D1_10",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Aspirin)",
-  },
-  {
-    field: "H3D1_11",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Clopidogrel)",
-  },
-  {
-    field: "H3D1_12",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Atorvastatin)",
-  },
-  {
-    field: "H3D1_13",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Misoprostol)",
-  },
-  {
-    field: "H3D1_14",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Labetalol IV)",
-  },
-  {
-    field: "H3D1_15",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Phenobarbitone)",
-  },
-  {
-    field: "H3D1_16",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Phenytoin (inj))",
-  },
-  {
-    field: "H3D1_17",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Plasma volume expander)",
-  },
-  {
-    field: "H3D1_18",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = 3% Saline)",
-  },
-  {
-    field: "H3D1_19",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Dobutamine)",
-  },
-  {
-    field: "H3D1_20",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Streptokinase)",
-  },
-  {
-    field: "H3D1_21",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Tenecteplase)",
-  },
-  {
-    field: "H3D1_22",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Oxytocin)",
-  },
-  {
-    field: "H3D1_23",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Salbutamol sulphate)",
-  },
-  {
-    field: "H3D1_24",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Glucose/ 25 % dextrose)",
-  },
-  {
-    field: "H3D1_25",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Tranexamic acid)",
-  },
-  {
-    field: "H3D1_26",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = tPA IV)",
-  },
-  {
-    field: "H3D1_27",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Methergine)",
-  },
-  {
-    field: "H3D1_28",
-    headerName:
-      "3D.1 : Which of the following emergency drugs are available at the PHC? (choice = Carboprost)",
-  },
-  {
-    field: "H3D2_0",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Mobile bed for Resuscitation)",
-  },
-  {
-    field: "H3D2_1",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Crash Cart (Specialized Cart for Resuscitation))",
-  },
-  {
-    field: "H3D2_2",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Hard Cervical Collar)",
-  },
-  {
-    field: "H3D2_3",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Oxygen Cylinder/Central Oxygen Supply)",
-  },
-  {
-    field: "H3D2_4",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Suction Machine)",
-  },
-  {
-    field: "H3D2_5",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Multipara Monitor (To monitor Heart rate, BP, SPO2[Essential] ECG, Respiration Rate [Desirable] etc))",
-  },
-  {
-    field: "H3D2_6",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Defibrillator with or without External Pacer)",
-  },
-  {
-    field: "H3D2_7",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Toothed Forceps, Kocher Forceps, Magill's forceps, Artery forceps)",
-  },
-  {
-    field: "H3D2_8",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = AMBU Bag for Adult and Paediatric)",
-  },
-  {
-    field: "H3D2_9",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Basic airway equipment like oropharyngeal nasopharyngeal airway, LMA for adult and pediatric)",
-  },
-  {
-    field: "H3D2_10",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Advanced Laryngoscope and Endotracheal Tube or Other Similar Device)",
-  },
-  {
-    field: "H3D2_11",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Tourniquet)",
-  },
-  {
-    field: "H3D2_12",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Pelvic Binder or Bed Sheets with Clips)",
-  },
-  {
-    field: "H3D2_13",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Laryngoscope with all sized Blades)",
-  },
-  {
-    field: "H3D2_14",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Endotracheal Tubes of all sizes)",
-  },
-  {
-    field: "H3D2_15",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Laryngeal Mask Airway (LMA))",
-  },
-  {
-    field: "H3D2_16",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Chest Tubes with Water seal drain)",
-  },
-  {
-    field: "H3D2_17",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = ECG Machine)",
-  },
-  {
-    field: "H3D2_18",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Nebulizer)",
-  },
-  {
-    field: "H3D2_19",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Fluid Warmer)",
-  },
-  {
-    field: "H3D2_20",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Infusion Pump and Syringe Drivers)",
-  },
-  {
-    field: "H3D2_21",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Spine Board with Sling and Scotch Tapes)",
-  },
-  {
-    field: "H3D2_22",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Splints for all types of Fracture)",
-  },
-  {
-    field: "H3D2_23",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Non-invasive Ventilators)",
-  },
-  {
-    field: "H3D2_24",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Invasive Ventilators)",
-  },
-  {
-    field: "H3D2_25",
-    headerName:
-      "3D.2 : Which of the following emergency equipment is available at the PHC? (choice = Incubators)",
+      "3D.1 : Which of the following emergency drugs are available at the PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2D1),
+    },
+    {
+      field: "H3D2",
+      headerName:
+      "3D.2 : Which of the following emergency equipment is available at the PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H2D2),
   },
   {
     field: "table2_0_Adult",
@@ -995,24 +609,10 @@ const columns = [
       "3E.2 : Numbers of Patients Attended in ED and Deaths in Last One Year (Jan - Dec 2023) (Acute Respiratory Illness - Death)",
   },
   {
-    field: "H3E3_0",
+    field: "H3E3",
     headerName:
-      "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=Triage)",
-  },
-  {
-    field: "H3E3_1",
-    headerName:
-      "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=Resuscitation)",
-  },
-  {
-    field: "H3E3_2",
-    headerName:
-      "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=Medico-legal Reporting)",
-  },
-  {
-    field: "H3E3_3",
-    headerName:
-      "3E.3 Which of the following emergency services are delivered at the PHC? (Multiple answers possible) (choice=None of the above)",
+      "3E.3 Which of the following emergency services are delivered at the PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3E3),
   },
   {
     field: "H3F1",
@@ -1030,34 +630,10 @@ const columns = [
       "3F.3 How many personnel available for managing information system?",
   },
   {
-    field: "H3F4_0",
+    field: "H3F4",
     headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Numbers by type of emergencies)",
-  },
-  {
-    field: "H3F4_1",
-    headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Length of hospital stay)",
-  },
-  {
-    field: "H3F4_2",
-    headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Turn around time)",
-  },
-  {
-    field: "H3F4_3",
-    headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Disposal time)",
-  },
-  {
-    field: "H3F4_4",
-    headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Number of deaths)",
-  },
-  {
-    field: "H3F4_5",
-    headerName:
-      "3F.4 What key indicators are generated from the emergency management information system? (choice=Number of Referrals)",
+      "3F.4 What key indicators are generated from the emergency management information system?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3F4),
   },
   {
     field: "H3F5",
@@ -1159,12 +735,9 @@ const columns = [
       "3H.2.4 How frequently emergency care audits are conducted in a year?",
   },
   {
-    field: "H3H8_0",
-    headerName: "3H.2.5 Types of audits conducted? (choice = Mortality Audit)",
-  },
-  {
-    field: "H3H8_1",
-    headerName: "3H.2.5 Types of audits conducted? (choice = Morbidity Audit)",
+    field: "H3H8",
+    headerName: "3H.2.5 Types of audits conducted?",
+    valueGetter: (params) => getOptionsIndex(params.data?.H3H8),
   },
   {
     field: "H3H8_2",
@@ -1182,49 +755,10 @@ const columns = [
       "3H.2.6 Any action being taken on Audit report in the last one year?",
   },
   {
-    field: "H3I1_0",
+    field: "H3I1",
     headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=OPD/Treatment Register)",
-  },
-  {
-    field: "H3I1_1",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Inventory Register)",
-  },
-  {
-    field: "H3I1_2",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Referral Register)",
-  },
-  {
-    field: "H3I1_3",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Record for handing over and taking over of critical care equipment.)",
-  },
-  {
-    field: "H3I1_4",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Medico-legal register)",
-  },
-  {
-    field: "H3I1_5",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Patient/Community feedback register)",
-  },
-  {
-    field: "H3I1_6",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=At Risk Register for vulnerable patients)",
-  },
-  {
-    field: "H3I1_7",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Emergency Register)",
-  },
-  {
-    field: "H3I1_8",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (choice=Mapping of the other Facilities in the block/district)",
+      "3I.1 What types of registers are maintained at the PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3I1),
   },
   {
     field: "H3I1_9",
@@ -1238,24 +772,10 @@ const columns = [
       "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (Other specify)",
   },
   {
-    field: "H3I2_0",
+    field: "H3I2",
     headerName:
-      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Use of Standard guidelines for triage)",
-  },
-  {
-    field: "H3I2_1",
-    headerName:
-      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Post Exposure prophylaxis protocols.)",
-  },
-  {
-    field: "H3I2_2",
-    headerName:
-      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Protocols for communication among health care teams and with patients and relatives.)",
-  },
-  {
-    field: "H3I2_3",
-    headerName:
-      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Disaster management plan.)",
+      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC?",
+      valueGetter: (params) => getOptionsIndex(params.data?.H3I2),
   },
   {
     field: "H3I2_4",
