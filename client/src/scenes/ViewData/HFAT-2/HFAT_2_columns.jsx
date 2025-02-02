@@ -7,9 +7,10 @@ const columns = [
     headerCheckboxSelection: false,
     width: 250,
     checkbox: "single",
+    editable: false,
     valueGetter: (params) => params.data._id,
   },
-  { field: "uniqueCode", headerName: "Unique Code" },
+  { field: "uniqueCode", headerName: "Unique Code",editable: false, },
   { field: "H2A1", headerName: "2A.1 : Assessor's Name:" },
   {
     field: "date",

@@ -7,6 +7,7 @@ const columns = [
     field: "AMBid",
     headerName: "Record ID",
     valueGetter: (params) => params.data?._id,
+    editable: false,
   },
   {
     field: "form",
@@ -18,7 +19,7 @@ const columns = [
     headerName: "Form Unique Code",
     valueGetter: (params) => params.data?.formUniqueCode?.split(":")?.[1],
   },
-  { field: "uniqueCode", headerName: "AMB Unique Code" },
+  { field: "uniqueCode", headerName: "AMB Unique Code",editable: false, },
   { field: "AMB2", headerName: "Name of the data Collector" },
   { field: "AMB1", headerName: "State" },
   { field: "AMB3", headerName: "Date" },

@@ -138,8 +138,8 @@ const ViewData = ({ formName }) => {
     setRows([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
-      // setColumns(HFAT1Columns);
-      setColumns(HFAT1ColumnsExport);
+      setColumns(HFAT1Columns);
+      // setColumns(HFAT1ColumnsExport);
       setExportColumns(HFAT1ColumnsExport);
       setRows(data);
       filterAndMapData(data);
@@ -404,22 +404,24 @@ const ViewData = ({ formName }) => {
 
   // value update
   const onCellValueChanged = (params) => {
-    console.log(params);
-    const { data } = params;
-    const { _id } = data;
-    const updatedData = { ...data, _id };
-    console.log(updatedData);
-    // axios.put(`${url}/${formName}/update`, updatedData, {
-    //   headers: {
-    //     Authorization: `Bearer ${token}`,
-    //   },
-    // }).then((res) => {
-    //   // console.log(res);
-    //   alert("Data updated successfully");
-    // }).catch((err) => {
-    //   // console.log(err);
-    //   alert("Failed to update data");
-    // });
+    // get updated data
+    const updatedData = params.data;
+    
+    
+    // get id of the row
+    
+
+    axios.put(`${url}/${formName}/update`, updatedData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((res) => {
+      // console.log(res);
+      alert("Data updated successfully");
+    }).catch((err) => {
+      // console.log(err);
+      alert("Failed to update data");
+    });
     // show success message
 
   };
@@ -686,8 +688,7 @@ const ViewData = ({ formName }) => {
             sortable: true,
             filter: true,
             floatingFilter: true,
-            // editable: formName == "HFAT-1" ? true : false,
-            editable: false,
+            editable: formName == "HFAT-1" ? true : false,
           }}
           // on cell editing
           onCellValueChanged={onCellValueChanged}

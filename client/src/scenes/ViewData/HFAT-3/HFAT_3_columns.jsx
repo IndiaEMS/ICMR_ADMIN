@@ -6,11 +6,13 @@ const columns = [
     headerName: "Record ID",
     checkboxSelection: true,
     headerCheckboxSelection: false,
+    editable: false,
     valueGetter: (params) => params.data?._id,
   },
   {
     field: "uniqueCode",
     headerName: "Unique Code",
+    editable: false,
   },
   { field: "H3A1", headerName: "3A.1 Assessor's Name:" },
   {

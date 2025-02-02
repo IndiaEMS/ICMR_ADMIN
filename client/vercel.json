@@ -2,7 +2,7 @@
     "routes": [
         {
             "src": "/[^.]+",
-            "dest": "/"
+            "dest": "https://indiaems.paruluniversity.ac.in"
         }
     ]
 }

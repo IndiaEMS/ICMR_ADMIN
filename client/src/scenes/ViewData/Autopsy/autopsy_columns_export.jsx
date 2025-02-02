@@ -5,6 +5,7 @@ const column = [
     checkboxSelection: true,
     headerCheckboxSelection: false,
     width: 250,
+    editable: false,
     valueGetter: (params) => params.data._id,
   },
   { field: "Name", headerName: "Name of the data collecter:" },

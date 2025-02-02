@@ -8,6 +8,7 @@ export const columns = [
     checkboxSelection: true,
     headerCheckboxSelection: false,
     width: 250,
+    editable: false,
     valueGetter: (params) => params.data?._id,
   },
   {

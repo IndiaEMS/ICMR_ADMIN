@@ -237,6 +237,7 @@ export const CSTColumns = (data) => {
       headerCheckboxSelection: false,
       checkbox:"single",
       width: 250,
+      editable: false,
       valueGetter: (params) => params.data._id,
     },
 
@@ -266,6 +267,7 @@ const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
     {
       field: "AA4",
       headerName: "AA.4 Respondent ID:",
+      editable: false,
       valueGetter: (params) => params?.data?.Respondent_ID,
     },
     {
