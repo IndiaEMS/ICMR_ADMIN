@@ -41,11 +41,13 @@ const column = [
     field: "FB8",
     headerName: "FB.8 : Place of death:",
     valueGetter: (member) => member?.FB8?.split(":")[0],
+    editable: false,
   },
   {
     field: "FB8",
     headerName: "FB.8 : Place of death: (Other Specify)",
     valueGetter: (member) => member?.FB8?.split(":")[1],
+    editable: false,
   },
   {
     field: "FB9",
@@ -272,11 +274,13 @@ const column = [
     field: "GB9",
     headerName: "GB9 : Place of death",
     valueGetter: (member) => member?.GB9?.split(":")[0],
+    editable: false,
   },
   {
     field: "GB9",
     headerName: "GB9 : Place of death (Other Specify)",
     valueGetter: (member) => member?.GB9?.split(":")[1],
+    editable: false,
   },
   {
     field: "GB10",
@@ -480,11 +484,13 @@ const column = [
     field: "HB10",
     headerName: "HB.10 : Place of death",
     valueGetter: (member) => member?.HB10?.split(":")[0],
+    editable: false,
   },
   {
     field: "HB10",
     headerName: "HB.10 : Place of death (Other Specify)",
     valueGetter: (member) => member?.HB10?.split(":")[1],
+    editable: false,
   },
   {
     field: "HB11",

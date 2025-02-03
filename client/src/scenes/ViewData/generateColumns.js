@@ -40,6 +40,9 @@ const generateColumns = (columns) => {
           }
         },
         valueSetter: (params) => {
+          if (column.valueSetter) {
+            return column.valueSetter(params);
+          }
           if (!column.field) return false;
 
           const fieldParts = column.field.split("_");

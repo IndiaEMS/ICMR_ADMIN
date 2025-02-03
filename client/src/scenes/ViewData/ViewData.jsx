@@ -147,16 +147,14 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
-      // setColumns(HFAT2Columns);
-      setColumns(HFAT2ColumnsExport);
+      setColumns(HFAT2Columns);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
       filterAndMapData(data);
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
-      // setColumns(HFAT3Columns);
-      setColumns(HFAT3ColumnsExport);
+      setColumns(HFAT3Columns);
       setExportColumns(HFAT3ColumnsExport);
       // setRows(HFAT3Rows(data));
       setRows(data);
@@ -406,6 +404,8 @@ const ViewData = ({ formName }) => {
   const onCellValueChanged = (params) => {
     // get updated data
     const updatedData = params.data;
+    console.log(params);
+    
     
     
     // get id of the row
@@ -688,7 +688,7 @@ const ViewData = ({ formName }) => {
             sortable: true,
             filter: true,
             floatingFilter: true,
-            editable: formName == "HFAT-1" ? true : false,
+            editable: true,
           }}
           // on cell editing
           onCellValueChanged={onCellValueChanged}

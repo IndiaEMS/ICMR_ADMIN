@@ -14,6 +14,7 @@ export const columns = [
   {
     field: "formUniqueCode",
     headerName: "Form name",
+    editable: false,
     valueGetter: (params) => {
       if (params.data.ambulanceDetails != null) {
         return params.data?.ambulanceDetails?.formUniqueCode?.split(":")?.[0];
@@ -24,6 +25,7 @@ export const columns = [
   {
     field: "formUniqueCode",
     headerName: "Form Unique Code",
+    editable: false,
     valueFormatter: (params) => {
       if (params.data.ambulanceDetails != null) {
         return params.data?.ambulanceDetails?.formUniqueCode?.split(":")?.[1];
@@ -31,7 +33,7 @@ export const columns = [
       return params.data?.formUniqueCode?.split(":")?.[1];
     },
   },
-  { field: "uniqueCode", headerName: "AMB Unique Code" },
+  { field: "uniqueCode", headerName: "AMB Unique Code",editable: false, },
   { field: "AMB2", headerName: "Name of the data Collector" },
   { field: "AMB1", headerName: "State " },
   { field: "AMB3", headerName: "Date" },

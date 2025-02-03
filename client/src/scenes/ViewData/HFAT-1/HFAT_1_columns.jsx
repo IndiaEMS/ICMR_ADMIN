@@ -1,4 +1,3 @@
-
 import generateColumns from "./../generateColumns";
 
 // Column Definitions: Defines the columns to be displayed.
@@ -19,11 +18,12 @@ const columns = [
     valueGetter: (params) => params.data?.uniqueCode,
   },
   { headerName: "1A.1. Assessor's Name", field: "A1" },
-  { headerName: "1A.2. Date", field: "A2" },
+  { headerName: "1A.2. Date", field: "A2", editable: false },
   {
     headerName: "1A.3. Code",
     field: "A3",
     valueGetter: (params) => params.data?.A3,
+    editable: false,
   },
   { headerName: "1A.4. Block Name", field: "A4" },
   { headerName: "1A.5. Healthcare Facility Name", field: "A5" },
@@ -85,16 +85,34 @@ const columns = [
         headerName: "Red",
         field: "B4_0",
         valueGetter: (params) => params.data?.B4?.[0]?.split(":")[1],
+        valueSetter: (params) => {
+          const value = params.newValue;
+          const B4 = params.data.B4 || [];
+          B4[0] = `Red: ${value}`;
+          return { ...params.data, B4 };
+        },
       },
       {
         headerName: "Yellow",
         field: "B4_1",
         valueGetter: (params) => params.data?.B4?.[1]?.split(":")[1],
+        valueSetter: (params) => {
+          const value = params.newValue;
+          const B4 = params.data.B4 || [];
+          B4[1] = `Yellow: ${value}`;
+          return { ...params.data, B4 };
+        },
       },
       {
         headerName: "Green",
         field: "B4_2",
         valueGetter: (params) => params.data?.B4?.[2]?.split(":")[1],
+        valueSetter: (params) => {
+          const value = params.newValue;
+          const B4 = params.data.B4 || [];
+          B4[2] = `Green: ${value}`;
+          return { ...params.data, B4 };
+        },
       },
     ],
   },
@@ -110,14 +128,33 @@ const columns = [
   },
   {
     headerName: "1B.7 Does the facility have a licensed in-house blood bank?",
-    field: "B7_0",
+    field: "B7",
     valueGetter: (params) => params.data?.B7?.split(":")[0],
+    editable: false,
+    valueSetter: (params) => {
+      const value = params.newValue;
+      var B7 = params.data.B7 || "";
+      // set value
+      B7 = `${value}:${B7.split(":")[1]}`;
+      return { ...params.data, B7 };
+    },
   },
   {
     headerName:
-      "1B.7 Does the facility have a licensed in-house blood bank? (Other Specify)",
-    field: "B7_1",
+    "1B.7 Does the facility have a licensed in-house blood bank? (Other Specify)",
+    field: "B7",
     valueGetter: (params) => params.data?.B7?.split(":")[1],
+    editable: false,
+    valueSetter: (params) => {
+      const value = params.newValue;
+      var B7 = params.data.B7 || "";
+      
+      B7 = "Hello";
+      console.log("B7", B7);
+      // set value after colon
+      // B7 = B7.includes(":") ? `${B7.split(":")[0]}:${value}` : `${B7}:${value}`;
+      return { ...params.data, B7 };
+    }
   },
   {
     headerName:
@@ -989,12 +1026,14 @@ const columns = [
     headerName: "1C.5 Frequency of training on emergency care in a year?",
     field: "C5_0",
     valueGetter: (params) => params.data?.C5?.split(":")[0],
+    editable: false,
   },
   {
     headerName:
       "1C.5 Frequency of training on emergency care in a year? (Other Specify)",
     field: "C5_1",
     valueGetter: (params) => params.data?.C5?.split(":")[1],
+    editable: false,
   },
   { headerName: "1C.6 When was the last training conducted?", field: "C6" },
 
@@ -1373,6 +1412,7 @@ const columns = [
         headerName: "Door to CT/ECG",
         field: "H1F6_0",
         valueGetter: (params) => params.data?.H1F6?.[0]?.split(":-")[1],
+        editable: false,
       },
       // {
       //   headerName: "Time",
@@ -1383,6 +1423,7 @@ const columns = [
         headerName: "Door to needle",
         field: "H1F6_2",
         valueGetter: (params) => params.data?.H1F6?.[1]?.split(":-")[1],
+        editable: false,
       },
       // {
       //   headerName: "Time",
@@ -1393,6 +1434,7 @@ const columns = [
         headerName: "Time to activate emergency alert team",
         field: "H1F6_4",
         valueGetter: (params) => params.data?.H1F6?.[2]?.split(":-")[1],
+        editable: false,
       },
       // {
       //   headerName: "Time",
@@ -1683,7 +1725,5 @@ const columns = [
     field: "H1J2",
   },
 ];
-
-
 
 export const HFAT1Columns = generateColumns(columns);

@@ -15,6 +15,7 @@ const columns = [
   {
     field: "date",
     headerName: "Date:",
+    editable: false,
     valueGetter: (params) => params.data?.HFAT2_DATE,
   },
   { field: "H2A2", headerName: "2A.2 : State:" },
@@ -606,12 +607,14 @@ const columns = [
     field: "H2C4",
     headerName: "2C.4  Frequency of training on emergency care in a year?",
     valueGetter: (params) => params.data?.H2C4?.split(":")[0],
+    editable: false,
   },
   {
     field: "H2C4_1",
     headerName:
       "2C.4  Frequency of training on emergency care in a year? (other specify)",
     valueGetter: (params) => params.data?.H2C4?.split(":")[1],
+    editable: false,
   },
   { field: "H2C5", headerName: "2C.5 When was the last training conducted?" },
   {
@@ -1050,12 +1053,14 @@ const columns = [
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?",
     valueGetter: (params) => params.data?.H2F8?.split("_")?.[0],
+    editable: false,
   },
   {
     field: "H2F8_1",
     headerName:
       "2F.8 Do you get Pre-Hospital Notification during an emergency?(if yes, How often per week)",
     valueGetter: (params) => params.data?.H2F8?.split("_")?.[1],
+    editable: false,
   },
   {
     field: "H2F9",
@@ -1092,11 +1097,13 @@ const columns = [
         headerName: "Other",
         valueGetter: (params) =>
           params.data?.H2G4?.split(":")?.[1]?.length > 0 ? "Other" : "",
+        editable: false,
       },
       {
         field: "H2G4_3",
         headerName: "Other specify",
         valueGetter: (params) => params.data?.H2G4?.split(":")?.[1],
+        editable: false,
       },
     ],
   },
@@ -1120,12 +1127,14 @@ const columns = [
     field: "H2H4_0",
     headerName: "2H.2.1 Do you have a Quality Improvement Committee?",
     valueGetter: (params) => params.data?.H2H4?.split(":")?.[0],
+    editable: false,
   },
   {
     field: "H2H4_1",
     headerName:
       "2H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
     valueGetter: (params) => params.data?.H2H4?.split(":")?.[1],
+    editable: false,
   },
   {
     field: "H2H5",

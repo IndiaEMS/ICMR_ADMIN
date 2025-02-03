@@ -42,6 +42,7 @@ const generateColumns = (
       PartCcolumns.map((column) => ({
         field: column.field,
         headerName: column.headerName,
+        editable: false,
         valueGetter: (params) => {
           const currentMember = params?.data?.Emergency_Data?.[memberIndex];
           const currentPartC = currentMember?.PartCLoop?.[partCIndex];

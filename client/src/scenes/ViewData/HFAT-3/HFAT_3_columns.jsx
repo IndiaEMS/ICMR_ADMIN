@@ -25,6 +25,7 @@ const columns = [
     headerName: "3A.2 State:",
     valueFormatter: (params) =>
       `${params.value.split("_")[0]}_${params.value.split("_")[1]}`,
+    editable: false,
   },
   { field: "H3A3", headerName: "3A.3 Block Name:" },
   { field: "H3A4", headerName: "3A.4 Healthcare Facility Name" },
@@ -561,11 +562,13 @@ const columns = [
         field: "H3C4",
         headerName: "Frequency of training on emergency care in a year?",
         valueGetter: (params) => params.data?.H3C4?.split(":")[0],
+        editable: false,
       },
       {
         field: "H3C4",
         headerName: "Other Specify",
         valueGetter: (params) => params.data?.H3C4?.split(":")[1],
+        editable: false,
       },
     ],
   },
@@ -1037,12 +1040,14 @@ const columns = [
       "3F.7 Do you get Pre-Hospital Notification during an emergency?",
     valueGetter: (params) => params.data?.H3F7?.split(":")[0],
     valueFormatter: (params) => params.value?.split("(")[0],
+    editable: false,
   },
   {
     field: "H3F7",
     headerName:
       "3F.7 If Yes , How often per week get Pre-Hospital Notification during an emergency?",
     valueGetter: (params) => params.data?.H3F7?.split(":")[1],
+    editable: false,
   },
   {
     field: "H3F8",
@@ -1066,12 +1071,14 @@ const columns = [
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system?",
     valueGetter: (params) => params.data?.H3G4?.split(":")[0],
+    editable: false,
   },
   {
     field: "H3G4",
     headerName:
       "3G.4 If funds are available, which health protection schemes are covering your emergency care system? (Other specify)",
     valueGetter: (params) => params.data?.H3G4?.split(":")[1],
+    editable: false,
   },
   {
     field: "H3G5",
@@ -1099,11 +1106,13 @@ const columns = [
     headerName:
       "3H.2.1 Do you have a Quality Improvement Committee? (if yes, collect detail of Committee)",
     valueGetter: (params) => params.data?.H3H4?.split(":")[0],
+    editable: false,
   },
   {
     field: "H3H4_1",
     headerName: "3H.2.1 If Yes ,Provide Details",
     valueGetter: (params) => params.data?.H3H4?.split(":")[1],
+    editable: false,
   },
   {
     field: "H3H5",
