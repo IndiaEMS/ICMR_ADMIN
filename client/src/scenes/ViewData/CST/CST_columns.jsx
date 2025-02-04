@@ -89,6 +89,7 @@ const generateColumns = (
       ...PartBcolumns.map((column) => ({
         field: column.field,
         headerName: column.headerName,
+        editable: false,
         valueGetter: (params) => {
           const member = params?.data?.Emergency_Data?.[memberIndex];
           if (column.valueGetter) {
@@ -108,6 +109,7 @@ const generateColumns = (
       ...PartDcolumns.map((column) => ({
         field: column.field,
         headerName: column.headerName,
+        editable: false,
         valueGetter: (params) => {
           const member = params?.data?.Emergency_Data?.[memberIndex];
           if (column.valueGetter) {
@@ -126,6 +128,7 @@ const generateColumns = (
       ...PartEcolumns.map((column) => ({
         field: column.field,
         headerName: column.headerName,
+        editable: false,
         valueGetter: (params) => {
           const member = params?.data?.Emergency_Data?.[memberIndex];
           if (column.valueGetter) {
@@ -144,6 +147,7 @@ const generateColumns = (
       ...PartFcolumns.map((column) => ({
         field: column.field,
         headerName: column.headerName,
+        editable: false,
         valueGetter: (params) => {
           const member = params?.data?.Emergency_Data?.[memberIndex];
           if (column.valueGetter) {
@@ -170,6 +174,7 @@ const generateMemberColumns = (maxMembers, columns, table_name) => {
     return columns.map((column) => ({
       field: column.field,
       headerName: column.headerName,
+      editable: column.field == "MemberID" ? false : true,
       valueGetter: (params) => {
         const member = params?.data?.[table_name]?.[index];
 
@@ -193,7 +198,7 @@ const MemberColumns = [
   { field: `name`, headerName: "Name" },
   { field: `age`, headerName: "Age" },
   { field: `sex`, headerName: "Sex" },
-  { field: `MemberID`, headerName: "MemberID" },
+  { field: `MemberID`, headerName: "MemberID",editable: false, },
 ];
 
 export const CSTColumns = (data) => {
@@ -262,8 +267,8 @@ export const CSTColumns = (data) => {
 
 const PartAcolumns = (generateMemeberColumns, generateDeathMemeberColumns) => {
   return [
-    { field: "AA1", headerName: "AA.1 Date & Time:" },
-    { field: "AA2", headerName: "AA.2 Site:" },
+    { field: "AA1", headerName: "AA.1 Date & Time:",editable: false, },
+    { field: "AA2", headerName: "AA.2 Site:",editable: false, },
     { field: "AA3", headerName: "AA.3 Name of the Data Collector:" },
     {
       field: "AA4",

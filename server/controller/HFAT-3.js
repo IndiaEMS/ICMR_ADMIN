@@ -403,3 +403,17 @@ export const HFAT3Delete = async (req, res, next) => {
     next(error);
   }
 };
+
+
+export const HFAT3UpdateController = async (req, res) => {
+  try {
+    // const { id } = req.params;
+    const data = req.body;
+    const updatedData = await HFAT3.findByIdAndUpdate(data._id, data);
+    res.status(200).json({updatedData,succes:true});
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating data");
+  }
+}

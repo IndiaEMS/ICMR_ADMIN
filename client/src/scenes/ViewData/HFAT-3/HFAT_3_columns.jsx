@@ -19,6 +19,7 @@ const columns = [
     field: "HFAT3_DATE",
     headerName: "Date:",
     valueFormatter: (params) => params.data?.HFAT3_DATE,
+    editable: false,
   },
   {
     field: "H3A2",
