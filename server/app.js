@@ -17,6 +17,7 @@ import CSTROUTER from "./Routers/CST.js";
 import FETCHROUTER from "./Routers/fetch.js";
 import USERROUTER from "./Routers/user.js";
 import AUTOPSYROUTER from "./Routers/Autopsy.js";
+import LOTROUTER from "./Routers/LOT.js";
 
 import cookieParser from "cookie-parser";
 
@@ -73,6 +74,7 @@ app.use(HFAT3ROUTER);
 app.use(AMBULANCEROUTER);
 app.use(CSTROUTER);
 app.use(AUTOPSYROUTER);
+app.use(LOTROUTER);
 app.use(FETCHROUTER);
 app.use(USERROUTER);
 

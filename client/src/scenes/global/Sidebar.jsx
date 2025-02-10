@@ -218,6 +218,13 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                   selected={selected}
                   setSelected={setSelected}
                 />
+                <Item
+                  title="LOT"
+                  to="ViewData/LOT"
+                  icon={<ViewListIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
                 <MenuItem
                   icon={<ViewListIcon />}
                   onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}

@@ -41,6 +41,7 @@ import { CSTColumns } from "./CST/CST_columns";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 import { useSelector } from "react-redux";
 import MapView from "./MapView";
+import { LOTColumns } from "./LOT/LOT_columns";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -196,7 +197,14 @@ const ViewData = ({ formName }) => {
       setRows(data);
 
       // setRows(CSTRows(data));
-    } else {
+    } 
+    else if(formName === "LOT"){
+      setTitle("Live Observation Tool");
+      setColumns(LOTColumns);
+      setExportColumns(LOTColumns);
+      setRows(data);
+      filterAndMapData(data);
+    }else {
       console.log("No form found");
     }
     setCols(columns);

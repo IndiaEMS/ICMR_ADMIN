@@ -111,6 +111,7 @@ function App() {
                 { path: "/ViewData/AMBULANCE", formName: "AMBULANCE" },
                 { path: "/ViewData/CST", formName: "CST" },
                 { path: "/ViewData/Autopsy", formName: "Autopsy" },
+                { path: "/ViewData/LOT", formName: "LOT" },
               ].map((route) => (
                 <Route
                   key={route.path}
