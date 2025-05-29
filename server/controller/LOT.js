@@ -107,9 +107,9 @@ export const LOTGet = async (req, res, next) => {
 
 export const LOTDelete = async (req, res, next) => {
   try {
-    const { id } = req.body;
+    const { ids } = req.body;
 
-    const LOTData = await LOT.deleteMany({ _id: { $in: id } });
+    const LOTData = await LOT.deleteMany({ _id: { $in: ids } });
 
     if (!LOTData) {
       res.status(404).json({ error: "Data not found" });

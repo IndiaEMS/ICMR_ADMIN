@@ -16,28 +16,27 @@ const generateColumns = (columns) => {
         cellEditor: column.cellEditor,
         cellEditorParams: column.cellEditorParams,
         valueGetter: (params) => {
+          let value;
           if (column.valueGetter) {
-            return column.valueGetter(params);
+            value = column.valueGetter(params);
           } else if (column.field?.startsWith("table")) {
-            return params.data?.[column.field?.split("_")[0]]?.[
-              column.field?.split("_")[1]
-            ]?.[column.field?.split("_")[2]];
-          } else if (
-            column.field?.includes("_") &&
-            !column.field?.startsWith("_")
-          ) {
+            value = params.data?.[column.field?.split("_")[0]]?.[column.field?.split("_")[1]]?.[column.field?.split("_")[2]];
+          } else if (column.field?.includes("_") && !column.field?.startsWith("_")) {
             if (Array.isArray(params.data?.[column.field?.split("_")[0]])) {
-              return params.data?.[column.field?.split("_")[0]]?.[
-                column.field?.split("_")[1]
-              ];
+              value = params.data?.[column.field?.split("_")[0]]?.[column.field?.split("_")[1]];
             } else {
-              return params.data?.[column.field?.split("_")[0]]?.[
-                column.field?.split("_")[1]
-              ];
+              value = params.data?.[column.field?.split("_")[0]]?.[column.field?.split("_")[1]];
             }
           } else {
-            return params?.data?.[column.field] ?? "";
+            value = params?.data?.[column.field] ?? "";
           }
+
+          // Check if value is an empty string
+          if (value === "" || value === null || value === undefined) {
+            value = "uncheck"
+          }
+
+          return value;
         },
         valueSetter: (params) => {
           if (column.valueSetter) {

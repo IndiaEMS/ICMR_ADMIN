@@ -54,6 +54,7 @@ const Dashboard = () => {
         CST: 30000,
         AMBULANCE: 247,
         Autopsy: 0,
+        LOT: 0,
       },
     },
     {
@@ -66,6 +67,7 @@ const Dashboard = () => {
         CST: 6000,
         AMBULANCE: 71,
         Autopsy: 0,
+        LOT: 0,
       },
     },
     {
@@ -78,6 +80,7 @@ const Dashboard = () => {
         HFAT3: 44,
         CST: 6000,
         AMBULANCE: 54,
+        LOT: 0,
       },
     },
     {
@@ -90,6 +93,7 @@ const Dashboard = () => {
         HFAT3: 25,
         CST: 6000,
         AMBULANCE: 50,
+        LOT: 0,
       },
     },
     {
@@ -102,6 +106,7 @@ const Dashboard = () => {
         CST: 6000,
         AMBULANCE: 50,
         Autopsy: 0,
+        LOT: 0,
       },
     },
     {
@@ -114,6 +119,7 @@ const Dashboard = () => {
         CST: 6000,
         AMBULANCE: 22,
         Autopsy: 0,
+        LOT: 0,
       },
     },
   ];
@@ -175,7 +181,7 @@ const Dashboard = () => {
       });
 
       // Log the data received to help debug
-      console.log("Data received:", data);
+      // console.log("Data received:", data);
 
       setCounter(data);
     } catch (error) {
@@ -428,6 +434,35 @@ const Dashboard = () => {
               }` ?? "0"
             }
             subtitle="Autopsy"
+            // progress={counter.AMBULANCECount / 10000}
+            // increase="+43 New"
+            icon={
+              <FeedIcon
+                sx={{ color: colors.greenAccent[600], fontSize: "26px" }}
+              />
+            }
+          />
+        </Box>
+        <Box
+          gridColumn="span 3"
+          backgroundColor={colors.primary[400]}
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+        >
+          <StatBox
+            // title={counter.AutopsyCount ?? "0"}
+            title={
+              `${counter.LOTCount}${
+                states.find((state) => state.value === selectedState)?.target
+                  ?.LOT == 0
+                  ? ""
+                  : ` / ${states.find(
+                      (state) => state.value === selected?.target?.LOT
+                    )}`
+              }` ?? "0"
+            }
+            subtitle="Live Observation Tool"
             // progress={counter.AMBULANCECount / 10000}
             // increase="+43 New"
             icon={

@@ -29,6 +29,8 @@ import {
   AmbulanceColumnsExport,
   HFATAmbulanceColumnsExport,
 } from "./Ambulance/Ambulance_columns_export";
+import { LOTColumns } from "./LOT/LOT_columns";
+import { LOTColumnsExport } from "./LOT/LOT_columns_export";
 
 import { HFAT1Rows } from "./HFAT-1/HFAT_1_rows";
 import { HFAT2Rows } from "./HFAT-2/HFAT_2_rows";
@@ -41,7 +43,6 @@ import { CSTColumns } from "./CST/CST_columns";
 import { AutopsyColumnsExport } from "./Autopsy/autopsy_columns_export";
 import { useSelector } from "react-redux";
 import MapView from "./MapView";
-import { LOTColumns } from "./LOT/LOT_columns";
 
 const url = import.meta.env.VITE_SERVER;
 
@@ -139,7 +140,8 @@ const ViewData = ({ formName }) => {
     setRows([]);
     if (formName === "HFAT-1") {
       setTitle("HFAT-1");
-      setColumns(HFAT1Columns);
+      setColumns(HFAT1ColumnsExport);
+      setCols(HFAT1ColumnsExport);
       // setColumns(HFAT1ColumnsExport);
       setExportColumns(HFAT1ColumnsExport);
       setRows(data);
@@ -148,14 +150,16 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
     } else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
-      setColumns(HFAT2Columns);
+      setColumns(HFAT2ColumnsExport);
+      setCols(HFAT2ColumnsExport);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
       filterAndMapData(data);
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
-      setColumns(HFAT3Columns);
+      setColumns(HFAT3ColumnsExport);
+      setCols(HFAT3ColumnsExport);
       setExportColumns(HFAT3ColumnsExport);
       // setRows(HFAT3Rows(data));
       setRows(data);
@@ -163,22 +167,26 @@ const ViewData = ({ formName }) => {
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT1Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
 
       setRows(data);
     } else if (formName === "HFAT-2WithAMB") {
       setTitle("HFAT-2 with Ambulance");
       setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT2Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
       setRows(data);
     } else if (formName === "HFAT-3WithAMB") {
       setTitle("HFAT-3 with Ambulance");
       setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT3Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT3ColumnsExport, ...HFATAmbulanceColumnsExport]);
       setRows(data);
     } else if (formName === "AMBULANCE") {
       setTitle("Ambulance");
       setColumns(AmbulanceColumns);
+      setCols(AmbulanceColumns);
       setExportColumns(AmbulanceColumnsExport);
       // setRows(AmbulanceRows(data));
       setRows(data);
@@ -186,12 +194,14 @@ const ViewData = ({ formName }) => {
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));
+      setCols(CSTColumns(data));
       setExportColumns(CSTColumns(data));
       setRows(data);
       filterAndMapData(data);
     } else if (formName === "Autopsy") {
       setTitle("Verbal Autopsy Tool");
       setColumns(AutopsyColumnsExport);
+      setCols(AutopsyColumnsExport);
       setExportColumns(AutopsyColumnsExport);
       // console.log(data);
       setRows(data);
@@ -201,14 +211,16 @@ const ViewData = ({ formName }) => {
     else if(formName === "LOT"){
       setTitle("Live Observation Tool");
       setColumns(LOTColumns);
-      setExportColumns(LOTColumns);
+      setCols(LOTColumns);
+      setExportColumns(LOTColumnsExport);
       setRows(data);
       filterAndMapData(data);
     }else {
       console.log("No form found");
     }
-    setCols(columns);
+    // setCols(columns);
     setLoading(false);
+    // setCols(columns);
   }, [data]);
 
   useEffect(() => {
@@ -221,7 +233,7 @@ const ViewData = ({ formName }) => {
     };
 
     resetState();
-    getData(); // Fetch new data based on formName
+    // getData(); // Fetch new data based on formName
     getData(); // Fetch new data based on formName
   }, [formName]);
 
@@ -301,32 +313,36 @@ const ViewData = ({ formName }) => {
     }
   }, [selectedState, data]);
 
-  // const handleDownloadCSV = async () => {
-  //   try {
-  //     if(isDownloadDisabled) return;
-  //     setIsDownloadDisabled(true);
-  //     setCols(exportColumns);
-  //     await gridRef.current.api.refreshClientSIdeRowModel();
-  //     gridRef.current.api.exportDataAsCsv({
-  //       fileName: `${formName}.csv`,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setCols(columns);
-  //     setIsDownloadDisabled(false);
-  //   }
-  // };
 
   const handleDownloadCSV = async () => {
     try {
-      if(isDownloadDisabled) return;
+      if (isDownloadDisabled) return;
       setIsDownloadDisabled(true);
-      setCols(exportColumns);
-      // refresh header
-      await gridRef.current.api.refreshClientSideRowModel();
-      // export to csv
-      gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
+
+      if (formName === "CST") {
+        // Call the /download-csv API for CST
+        const response = await axios.get(`${url}/download-csv`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: "blob", // Ensure the response is treated as a file
+        });
+
+        // Create a download link for the file
+        const blob = new Blob([response.data], { type: "text/csv" });
+        const link = document.createElement("a");
+        link.href = window.URL.createObjectURL(blob);
+        link.download = `${formName}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        setCols(exportColumns);
+        // Refresh header
+        await gridRef.current.api.refreshClientSideRowModel();
+        // Export to CSV
+        gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -334,6 +350,97 @@ const ViewData = ({ formName }) => {
       setIsDownloadDisabled(false);
     }
   };
+
+
+  // const handleDownloadCSV = async () => {
+  //   try {
+  //     if(isDownloadDisabled) return;
+  //     setIsDownloadDisabled(true);
+
+  //     if(formName === "CST"){
+        
+  //     }
+  //     // setCols(exportColumns);
+  //     // await gridRef.current.api.refreshClientSIdeRowModel();
+  //     gridRef.current.api.exportDataAsCsv({
+  //       fileName: `${formName}.csv`,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     // setCols(columns);
+  //     setIsDownloadDisabled(false);
+  //   }
+  // };
+
+  // const handleDownloadCSV = async () => {
+  //   try {
+  //     setCols(exportColumns);
+  //     // refresh header
+  //     await gridRef.current.api.refreshClientSideRowModel();
+  //     // export to csv
+  //     gridRef.current.api.exportDataAsCsv({ fileName: `${formName}.csv` });
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setCols(columns);
+  //   }
+  // };
+
+  // const handleDownloadCSV = async () => {
+  //   try {
+  //     if (isDownloadDisabled) return;
+  //     setIsDownloadDisabled(true);
+  //     setCols(exportColumns);
+  
+  //     // Refresh header
+  //     await gridRef.current.api.refreshClientSideRowModel();
+  
+  //     const rowCount = gridRef.current.api.getDisplayedRowCount();
+  //     const batchSize = 500; // Adjust batch size based on performance
+  //     let fileCounter = 1;
+  
+  //     for (let i = 0; i < rowCount; i += batchSize) {
+  //       // Get CSV data for the current batch
+  //       const csvData = gridRef.current.api.getDataAsCsv({
+  //         onlySelected: false,
+  //         columnSeparator: ',',
+  //         suppressQuotes: false,
+  //         processCellCallback: (params) => params.value,
+  //       });
+  
+  //       // Save as a separate CSV file
+  //       await downloadCsvFile(csvData, `${formName}_part${fileCounter}.csv`);
+  
+  //       fileCounter++;
+  
+  //       // Add a delay (1 second) before downloading the next file
+  //       await new Promise((resolve) => setTimeout(resolve, 1000));
+  //     }
+  //   } catch (error) {
+  //     console.error("CSV Export Error:", error);
+  //   } finally {
+  //     setCols(columns);
+  //     setIsDownloadDisabled(false);
+  //   }
+  // };
+  
+  // // Helper function to trigger CSV download
+  // const downloadCsvFile = async (csvContent, fileName) => {
+  //   return new Promise((resolve) => {
+  //     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  //     const link = document.createElement("a");
+  //     link.href = URL.createObjectURL(blob);
+  //     link.download = fileName;
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     document.body.removeChild(link);
+  
+  //     // Wait briefly before resolving (ensures browser processes download)
+  //     setTimeout(resolve, 500);
+  //   });
+  // };
+  
 
   // const downloadCsv = async () => {
   //   try {
