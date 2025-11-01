@@ -761,7 +761,7 @@ const PartBcolumns = [
     field: "B14",
     headerName: "B.14 Who first recognized the symptoms to be serious?",
     valueGetter: (params) =>
-      params?.B14?.split(":")?.[1]?.length > 0 ? "Other" : "",
+      params?.B14?.split(":")?.[1]?.length > 0 && params?.B14?.split(":")?.[1] !== undefined ? "Other" : params?.B14,
   },
   {
     field: "B14",
@@ -789,14 +789,14 @@ const PartBcolumns = [
     headerName:
       "B.17 Who suggested you visit the healthcare facility for emergency care?",
     valueGetter: (params) =>
-      params?.B17?.split(":")?.[1]?.length > 0 ? "Other" : "",
+      params?.B17?.split(":")?.[1]?.length > 0 && params?.B17?.split(":")?.[1] !== undefined ? "Other" : params?.B17,
   },
   {
     field: "B17",
     headerName:
       "B.17 Who suggested you visit the healthcare facility for emergency care? (Other Specify)",
     valueGetter: (params) =>
-      params?.B17?.split(":")?.[1]?.length > 0 ? "Other" : "",
+      params?.B17?.split(":")?.[1],
   },
   {
     field: "B18",
@@ -877,21 +877,21 @@ const PartBcolumns = [
   {
     field: "B24",
     headerName:
-      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (hours)",
+      "B.24 How much time the ambulance/ any transport took to reach the first facility from the point of incident? (Minutes)",
     valueGetter: (params) => params?.B24_2,
   },
   {
     field: "B25",
-    headerName: "B.24 Which type of facility did you visit first?",
+    headerName: "B.25 Which type of facility did you visit first?",
     valueGetter: (params) => params?.B25?.split(":")[0],
   },
   {
     field: "B25",
     headerName:
-      "B.24 Which type of facility did you visit first? (Other Specify)",
+      "B.25 Which type of facility did you visit first? (Other Specify)",
     valueGetter: (params) => params?.B25?.split(":")[1],
   },
-  { field: "B26", headerName: "B.25 What was the name of the facility?" },
+  { field: "B26", headerName: "B.26 What was the name of the facility?" },
   {
     field: "B27",
     headerName:

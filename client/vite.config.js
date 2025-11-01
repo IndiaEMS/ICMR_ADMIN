@@ -15,4 +15,8 @@ export default defineConfig({
       },
     }),
   ],
-});
+  server: {
+    historyApiFallback: true, // Ensure this line is present
+    port:8080,
+  },
+})

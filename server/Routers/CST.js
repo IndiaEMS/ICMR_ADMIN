@@ -15,4 +15,6 @@ router.put("/CST/update", jsonparser, AuthenciatedUser, CSTUpdateController);
 
 router.get("/CST-csv", CSTDownloadCsv);
 
+router.get("/download-csv" ,AuthenciatedUser , CSTDownloadCsv);
+
 export default router;

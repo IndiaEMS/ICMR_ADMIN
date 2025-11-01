@@ -11,7 +11,7 @@ const PieChart = ({ counter }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const data = {
-    labels: ["HFAT-1", "HFAT-2", "HFAT-3", "Ambulance", "CST", "Autopsy"],
+    labels: ["HFAT-1", "HFAT-2", "HFAT-3", "Ambulance", "CST", "Autopsy",'LOT'],
     datasets: [
       {
         label: "Data Distribution",
@@ -22,6 +22,7 @@ const PieChart = ({ counter }) => {
           counter.AMBULANCECount ?? 0,
           counter.CSTCount ?? 0,
           counter.AutopsyCount ?? 0,
+          counter.LOTCount ?? 0,
         ],
         backgroundColor: [
           colors.greenAccent[400],
@@ -30,8 +31,10 @@ const PieChart = ({ counter }) => {
           colors.grey[400],
           colors.orangeAccent[400],
           colors.purpleAccent[400],
+          colors.purpleAccent[400],
         ],
         borderColor: [
+          colors.primary[400],
           colors.primary[400],
           colors.primary[400],
           colors.primary[400],

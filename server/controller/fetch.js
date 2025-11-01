@@ -7,6 +7,7 @@ import { HFAT3 } from "../Database/HFAT-3.js";
 import { AMBULANCE } from "../Database/Ambulance.js";
 import { CSTFORM } from "../Database/CST.js";
 import { Autopsy } from "../Database/Autopsy.js";
+import { LOT } from "../Database/LOT.js";
 const app = express();
 
 // for HFAT1, HFAT2,HFAT3 And AMBULANCE
@@ -73,6 +74,8 @@ export const DashboardCounter = async (req, res) => {
     var AMBULANCECount;
     var CSTCount;
     var AutopsyCount;
+    var LOTCount;
+
 
     if (role === "superadmin" || role === "analytics") {
       HFAT1Count = await HFAT1.countDocuments();
@@ -81,6 +84,7 @@ export const DashboardCounter = async (req, res) => {
       AMBULANCECount = await AMBULANCE.countDocuments();
       CSTCount = await CSTFORM.countDocuments();
       AutopsyCount = await Autopsy.countDocuments();
+      LOTCount = await LOT.countDocuments();
     } else {
       HFAT1Count = await HFAT1.countDocuments({
         uniqueCode: { $regex: regex },
@@ -96,7 +100,10 @@ export const DashboardCounter = async (req, res) => {
       });
       CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
       AutopsyCount = await Autopsy.countDocuments({
-        FA2: { $regex: regex },
+        State: { $regex: regex },
+      });
+      LOTCount = await LOT.countDocuments({
+        LOTA3: { $regex: regex },
       });
     }
 
@@ -108,6 +115,7 @@ export const DashboardCounter = async (req, res) => {
       AMBULANCECount,
       CSTCount,
       AutopsyCount,
+      LOTCount,
     });
   } catch (error) {
     console.log(error);
@@ -173,9 +181,15 @@ export const changeSuperadminState = async (req, res) => {
     const AMBULANCECount = await AMBULANCE.countDocuments({
       uniqueCode: { $regex: regex },
     });
-    const CSTCount = await CSTFORM.countDocuments({ AA2: { $regex: regex } });
+    const CSTCount = await CSTFORM.countDocuments({
+      AA2: { $regex: regex },
+      AA1: { $nin: ["", null, undefined] }
+    });
     const AutopsyCount = await Autopsy.countDocuments({
-      FA2: { $regex: regex },
+      State: { $regex: regex },
+    });
+    const LOTCount = await LOT.countDocuments({
+      LOTA3: { $regex: regex },
     });
 
     // Respond with success and the counts
@@ -188,6 +202,7 @@ export const changeSuperadminState = async (req, res) => {
       AMBULANCECount,
       CSTCount,
       AutopsyCount,
+      LOTCount,
     });
   } catch (error) {
     console.log(error);

@@ -19,7 +19,7 @@ const BarChart = ({ counter }) => {
 
   // Bar chart data
   const barData = {
-    labels: ["HFAT-1", "HFAT-2", "HFAT-3", "Ambulance", "CST", "Autopsy"],
+    labels: ["HFAT-1", "HFAT-2", "HFAT-3", "Ambulance", "CST", "Autopsy",'LOT'],
     datasets: [
       {
         data: [
@@ -29,6 +29,7 @@ const BarChart = ({ counter }) => {
           counter.AMBULANCECount ?? 0,
           counter.CSTCount ?? 0,
           counter.AutopsyCount ?? 0,
+          counter.LOTCount ?? 0,
         ],
         backgroundColor: [
           colors.greenAccent[400],

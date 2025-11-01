@@ -11,6 +11,7 @@ const column = [
   { field: "Name", headerName: "Name of the data collecter:" },
   { field: "State", headerName: "State" },
   { field: "TypeOfDeath", headerName: "Type Of Death" , valueGetter : (params) => params.data.TypeOfDeath.join(",")},
+  { field: "Date", headerName: "Date" },
   { field: "FA1", headerName: "FA.1 : Name of the respondent:" },
   {
     field: "FA2",

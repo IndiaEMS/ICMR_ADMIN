@@ -83,8 +83,8 @@ const columns = [
     children: [
       {
         headerName: "Red",
-        field: "B4_0",
-        valueGetter: (params) => params.data?.B4?.[0]?.split(":")[1],
+        // field: "B4_0",
+        valueGetter: (params) => params.data?.B4?.[0] === "" || !params.data?.B4?.[0] ? "uncheck" : params.data?.B4?.[0]?.split(":")[1],
         valueSetter: (params) => {
           const value = params.newValue;
           const B4 = params.data.B4 || [];
@@ -95,7 +95,7 @@ const columns = [
       {
         headerName: "Yellow",
         field: "B4_1",
-        valueGetter: (params) => params.data?.B4?.[1]?.split(":")[1],
+        valueGetter: (params) => params.data?.B4?.[1] === "" || !params.data?.B4?.[1] ? "uncheck" : params.data?.B4?.[1]?.split(":")[1],
         valueSetter: (params) => {
           const value = params.newValue;
           const B4 = params.data.B4 || [];
@@ -106,7 +106,7 @@ const columns = [
       {
         headerName: "Green",
         field: "B4_2",
-        valueGetter: (params) => params.data?.B4?.[2]?.split(":")[1],
+        valueGetter: (params) => params.data?.B4?.[1] === "" || !params.data?.B4?.[2] ? "uncheck" : params.data?.B4?.[2]?.split(":")[1],
         valueSetter: (params) => {
           const value = params.newValue;
           const B4 = params.data.B4 || [];
@@ -129,7 +129,7 @@ const columns = [
   {
     headerName: "1B.7 Does the facility have a licensed in-house blood bank?",
     field: "B7",
-    valueGetter: (params) => params.data?.B7?.split(":")[0],
+    valueGetter: (params) => params.data?.B7?.split(":")[0] === "" ? "uncheck" : params.data?.B7?.split(":")[0],
     editable: false,
     valueSetter: (params) => {
       const value = params.newValue;
@@ -143,14 +143,11 @@ const columns = [
     headerName:
     "1B.7 Does the facility have a licensed in-house blood bank? (Other Specify)",
     field: "B7",
-    valueGetter: (params) => params.data?.B7?.split(":")[1],
+    valueGetter: (params) => params.data?.B7?.split(":")[1] === "" ? "uncheck" : params.data?.B7?.split(":")[1],
     editable: false,
     valueSetter: (params) => {
       const value = params.newValue;
       var B7 = params.data.B7 || "";
-      
-      B7 = "Hello";
-      console.log("B7", B7);
       // set value after colon
       // B7 = B7.includes(":") ? `${B7.split(":")[0]}:${value}` : `${B7}:${value}`;
       return { ...params.data, B7 };
@@ -309,7 +306,7 @@ const columns = [
         field: "B12_5",
         headerName: "Other",
         valueGetter: (params) =>
-          (params.data?.B12?.[5]?.length > 0 && "Other") || null,
+          (params.data?.B12?.[5]?.length > 0 && "Other") || "uncheck",
       },
       {
         field: "B12_5",
