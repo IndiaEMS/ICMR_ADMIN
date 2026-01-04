@@ -186,9 +186,11 @@ const Dashboard = () => {
       setCounter(data);
     } catch (error) {
       console.error("Error fetching data:", error);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/login");
+      if(localStorage.getItem("token") === null || localStorage.getItem("user") === null) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+      }
       setError(error.message);
     } finally {
       setLoading(false);

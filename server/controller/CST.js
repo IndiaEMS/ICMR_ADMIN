@@ -1,9 +1,9 @@
-import { CSTFORM } from "../Database/CST.js";
+import { CSTFORM,CST_FINAL,CST_Mapping } from "../Database/CST.js";
 import { User } from "../Database/user.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import { Worker } from "worker_threads";
 import fastCsv from "fast-csv";
-
+import xlsx from "xlsx";
 import { createObjectCsvWriter, createObjectCsvStringifier } from "csv-writer";
 // import {dirname} from "path";
 // __dirname = dirname;
@@ -12,21 +12,30 @@ import path, { dirname } from "path";
 import { fileURLToPath } from "url";
 import { Transform } from "stream";
 
-export const CSTConroller = (req, res) => {
-  const { CompleteForm } = req.body;
-  CSTFORM.create(CompleteForm)
-    .then((response) => {
-      res.status(200).json({
-        success: "Data submitted successfully!",
-        response: response,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({
-        error: "Error occured in saving data.",
-      });
-    });
+// ES module fix for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+
+export const CSTConroller = async (req, res) => {
+  const { CompleteForm, AC3_table, AC15_table } = req.body;
+  try {
+    const form = await CSTFORM.findOneAndUpdate(
+      {
+        _id: CompleteForm._id,
+        Household_ID: CompleteForm.Household_ID,
+        Respondent_ID: CompleteForm.Respondent_ID,
+      },
+      { ...CompleteForm, AC3_table, AC15_table },
+      { new: true }
+    );
+    if (!form) {
+      return res.status(404).json({ error: "Form ID not found" });
+    }
+    res.json({ message: "Form submitted successfully", form });
+  } catch (error) {
+    res.status(500).json({ error: "Error submitting form" });
+  }
 };
 
 // export const CSTGetController = async (req, res, next) => {
@@ -551,6 +560,19 @@ export const CSTUpdateController = async (req, res) => {
     // const { id } = req.params;
     const data = req.body;
     const updatedData = await CSTFORM.findByIdAndUpdate(data._id, data);
+    res.status(200).json({updatedData,succes:true});
+  }
+  catch (error) {
+    console.error(error);
+    res.status(500).send("Error updating data");
+  }
+}
+
+export const CSTFinalUpdateController = async (req, res) => {
+  try {
+    // const { id } = req.params;
+    const data = req.body;
+    const updatedData = await CST_FINAL.findByIdAndUpdate(data._id, data);
     res.status(200).json({updatedData,succes:true});
   }
   catch (error) {
@@ -2342,3 +2364,563 @@ const getOptionsIndex = (data) => {
     }, []).join(", ")
   : '';
 };
+
+export const CSTFinalGetController = async (req, res, next) => {
+  try {
+    const adminId = req.user._id;
+    const state = req.user.sitename;
+    const role = req.user.role;
+
+    if (!adminId || !state) {
+      return next(new ErrorHandler("Both ID and state are required"));
+    }
+
+    const validateUser = await User.findById(adminId);
+    if (!validateUser) {
+      return next(new ErrorHandler("User is not authenticated"));
+    }
+
+    const stateCode = state?.trim();
+
+    const matchedState = states.find((s) => s.label === stateCode);
+
+    if (!matchedState) {
+      return res.status(400).json({
+        success: false,
+        message: "State code not found",
+      });
+    }
+
+    const regex = new RegExp(`^${matchedState.value}`);
+
+    // Pagination
+    let { page = 1, limit = 2000 } = req.query; // Default values
+    const skip = (page - 1) * limit; // Correct skip calculation
+
+    // Query based on role
+    // const query = role === "superadmin" ? {} : { AA2: { $regex: regex } };
+    const query = role === "superadmin" 
+  // ? { AA1: { $nin: ["", null, undefined] } } // Check that AA1 is not an empty string
+  ? {} // Check that AA1 is not an empty string
+  : { 
+      AA2: { $regex: regex },
+      AA1: { $nin: ["", null, undefined] } // Also ensure AA1 is not empty for non-superadmin roles
+    };
+
+
+
+    const CSTData = await CST_FINAL.find(query).skip(skip).limit(limit);
+    const totalRecords = await CST_FINAL.countDocuments(query);
+    const totalPages = Math.ceil(totalRecords / limit);
+
+    // if (!CSTData || CSTData.length === 0) {
+    //   return next(new ErrorHandler("Data not found"));
+    // }
+
+    res.status(200).json({
+      success: true,
+      data: CSTData,
+      totalRecords,
+      totalPages,
+      currentPage: page,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const CSTGetFinalRows = async (req, res) => {
+  try {
+    const data = await CST_Mapping.find({})
+  .sort({ index: 1 }) // ascending order by "index" field
+  .lean();
+    res.json({ success: true, rows: data });
+  } catch (err) {
+    console.error("Error in getRows:", err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+
+
+// // ✅ Helper: Normalize header names safely
+// function normalizeHeader(header) {
+//   if (!header) return "";
+//   return header
+//     .toString()
+//     .trim()
+//     .toLowerCase()
+//     .replace(/\s+/g, "")               // remove all spaces
+//     .replace(/[\u200B-\u200D\uFEFF]/g, "") // remove zero-width chars
+//     .replace(/[\r\n\t]/g, "");         // remove line breaks/tabs
+// }
+
+// export const CSTUploadController = async (req, res) => {
+//   try {
+//     console.log(`State Name : ${req.user.sitename}`);
+
+//     if (!req.file) return res.status(200).send("No file uploaded.");
+
+//     const file = req.file;
+//     let uploadDir = path.join(__dirname, "../uploaded final data");
+//     let tempUploadDir = path.join(__dirname, "../uploaded final data/temp");
+
+//     if (req.user.role === "admin")
+//       uploadDir = path.join(uploadDir, req.user.sitename);
+
+//     if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+//     if (!fs.existsSync(tempUploadDir)) fs.mkdirSync(tempUploadDir, { recursive: true });
+
+//     const tempFilePath = path.join(tempUploadDir, `${Date.now()}_${file.originalname}`);
+//     const newFilePath = path.join(uploadDir, `${Date.now()}_${file.originalname}`);
+
+//     fs.writeFileSync(tempFilePath, file.buffer);
+
+//     // ✅ Load mapping and normalize header names
+//     const mappings = await CST_Mapping.find({}).lean();
+//     const headerMapping = {};
+//     mappings.forEach((m) => {
+//       if (m.headerName && m.field)
+//         headerMapping[normalizeHeader(m.headerName)] = m.field.trim();
+//     });
+
+//     if (!headerMapping || Object.keys(headerMapping).length === 0)
+//       return res.status(200).send("Header mappings not found.");
+
+//     // // ✅ Read Excel file
+//     // const workbook = xlsx.readFile(tempFilePath);
+//     // const sheetName = workbook.SheetNames[0];
+//     // const worksheet = workbook.Sheets[sheetName];
+//     // const jsonData = xlsx.utils.sheet_to_json(worksheet, { defval: "" }); // defval="" prevents undefined
+
+//     // ✅ Read Excel file
+//     const workbook = xlsx.readFile(tempFilePath);
+//     const sheetName = workbook.SheetNames[0];
+//     const worksheet = workbook.Sheets[sheetName];
+
+//     // 🩵 FIX: Trim unused/hidden columns and detect true headers
+//     const range = xlsx.utils.decode_range(worksheet["!ref"]);
+//     const firstRow = [];
+//     for (let c = range.s.c; c <= range.e.c; c++) {
+//       const cell = worksheet[xlsx.utils.encode_cell({ r: range.s.r, c })];
+//       const value = cell ? String(cell.v).trim() : "";
+//       if (value) firstRow.push(value); // only count non-empty headers
+//     }
+
+//     // 🩵 FIX: Restrict Excel range to actual header columns
+//     if (firstRow.length > 0) {
+//       range.e.c = range.s.c + firstRow.length - 1;
+//       worksheet["!ref"] = xlsx.utils.encode_range(range);
+//     }
+
+//     // 🩵 FIX: Now convert to JSON safely
+//     const jsonData = xlsx.utils.sheet_to_json(worksheet, { defval: "" }); // defval="" prevents undefined
+    
+
+//     if (!jsonData || jsonData.length === 0)
+//       return res.status(200).send("Empty Excel file.");
+
+//     // ✅ Extract and normalize headers
+//     const excelHeaders = Object.keys(jsonData[0]);
+//     const dbHeadersTrimmed = Object.keys(headerMapping).map(h => normalizeHeader(h));
+//     const excelHeadersTrimmed = excelHeaders.map(h => normalizeHeader(h));
+
+//     // ✅ Compare DB mapping count and Excel header count
+//     const dbHeaderCount = dbHeadersTrimmed.length;
+//     const excelHeaderCount = excelHeadersTrimmed.length;
+
+//     const missingHeaders = dbHeadersTrimmed.filter(h => !excelHeadersTrimmed.includes(h));
+//     const extraHeaders = excelHeadersTrimmed.filter(h => !dbHeadersTrimmed.includes(h));
+
+//     if (excelHeaderCount !== dbHeaderCount || missingHeaders.length > 0 || extraHeaders.length > 0) {
+//       console.error(`❌ Header mismatch detected. DB Count: ${dbHeaderCount}, Excel Count: ${excelHeaderCount}`);
+
+//       if (missingHeaders.length > 0)
+//         console.error(`❌ Missing Excel headers (in DB but not Excel): \n${missingHeaders.join(",\n")}`);
+//       if (extraHeaders.length > 0)
+//         console.error(`❌ Extra Excel headers (in Excel but not DB): \n${extraHeaders.join(",\n")}`);
+
+//       return res.status(200).json({
+//         message: "Invalid file format. Please check the uploaded file headers.",
+//         missingHeaders,
+//         extraHeaders,
+//       });
+//     }
+
+//     console.log("CST Header Mapping Loaded:", dbHeaderCount);
+
+//     // ✅ Process rows
+//     const batchSize = 500;
+//     let batch = [];
+//     let insertedCount = 0;
+//     let duplicateCount = 0;
+
+//     console.log(`Starting to process ${jsonData.length} Excel rows...`);
+
+//     for (const row of jsonData) {
+//       const allEmpty = Object.values(row).every(v => !v || v.toString().trim() === "");
+//       if (allEmpty) continue;
+
+//       const transformed = transformRow(row, headerMapping);
+//       batch.push(transformed);
+
+//       if (batch.length >= batchSize) {
+//         const { inserted, duplicates } = await insertBatchWithSkip(batch);
+//         insertedCount += inserted;
+//         duplicateCount += duplicates;
+//         batch = [];
+//       }
+//     }
+
+//     // ✅ Insert remaining
+//     if (batch.length > 0) {
+//       const { inserted, duplicates } = await insertBatchWithSkip(batch);
+//       insertedCount += inserted;
+//       duplicateCount += duplicates;
+//     }
+
+//     // ✅ Clean up files
+//     fs.unlink(tempFilePath, (err) => {
+//       if (err) console.error("Error deleting temp file:", err);
+//     });
+//     fs.writeFileSync(newFilePath, file.buffer);
+
+//     console.log(`Upload complete. Inserted: ${insertedCount}, Duplicates skipped: ${duplicateCount}`);
+
+//     res.status(200).json({
+//       message: "✅ File uploaded successfully.",
+//       inserted: insertedCount,
+//       duplicatesSkipped: duplicateCount,
+//     });
+
+//   } catch (error) {
+//     console.error("Error in CSTUploadController:", error);
+//     res.status(500).send("Internal server error");
+//   }
+// };
+
+// // ✅ Reuse helper functions
+// const transformRow = (row, headerMapping) => {
+//   const newRow = {};
+//   let index = 0;
+//   for (const excelHeader in row) {
+//     const normalizedHeader = normalizeHeader(excelHeader);
+//     const mappedKey = headerMapping[normalizedHeader];
+//     const key = mappedKey || `Unmapped_${index++}`;
+//     const value = row[excelHeader] !== undefined ? String(row[excelHeader]).trim() : null;
+//     setNestedValue(newRow, key, value);
+//   }
+//   return newRow;
+// };
+
+// const setNestedValue = (obj, path, value) => {
+//   const keys = path.split(".");
+//   let current = obj;
+
+//   for (let i = 0; i < keys.length - 1; i++) {
+//     const key = keys[i];
+//     const nextKey = keys[i + 1];
+//     const isNextArrayIndex = /^\d+$/.test(nextKey);
+//     if (!(key in current)) {
+//       current[key] = isNextArrayIndex ? [] : {};
+//     }
+//     current = current[key];
+//   }
+//   current[keys[keys.length - 1]] = value;
+// };
+
+// async function insertBatchWithSkip(batch) {
+//   try {
+//     console.log(batch.length);
+//     const result = await CST_FINAL.insertMany(batch, {
+//       ordered: false,
+//       rawResult: true,
+//       validateBeforeSave: false,
+//     });
+
+//     if (result.insertedCount)
+//       console.log(`✅ Inserted ${result.insertedCount} documents`);
+
+//     return { inserted: result.insertedCount || 0, duplicates: 0 };
+//   } catch (err) {
+//     if (err.code === 11000) {
+//       const inserted = err.result?.result?.nInserted || 0;
+//       const duplicates = batch.length - inserted;
+//       console.warn(`⚠️ ${duplicates} duplicate record(s) skipped.`);
+//       return { inserted, duplicates };
+//     }
+//     throw err;
+//   }
+// }
+
+// export const CSTUploadController = async (req, res) => {
+//   try {
+//     const file = req.file;
+//     if (!file) return res.status(400).send("No file uploaded");
+
+//     // ✅ Temp directory
+//     const tempUploadDir = path.join(__dirname, "../uploaded final data/temp");
+//     if (!fs.existsSync(tempUploadDir)) {
+//       fs.mkdirSync(tempUploadDir, { recursive: true });
+//     }
+
+//     // ✅ Unique file path
+//     const tempFilePath = path.join(
+//       tempUploadDir,
+//       `${Date.now()}_${file.originalname}`
+//     );
+
+//     // ✅ If using Multer with diskStorage → file.path exists
+//     if (file.path) {
+//       // move or rename directly
+//       fs.renameSync(file.path, tempFilePath);
+//     } else if (file.stream) {
+//       // ✅ For Multer memoryStorage: use stream (best for large files)
+//       const writeStream = fs.createWriteStream(tempFilePath);
+//       await new Promise((resolve, reject) => {
+//         file.stream.pipe(writeStream);
+//         file.stream.on("error", reject);
+//         writeStream.on("finish", resolve);
+//       });
+//     } else if (file.buffer) {
+//       // ✅ For small files (fallback)
+//       await fs.promises.writeFile(tempFilePath, file.buffer);
+//     }
+
+//     res.status(200).json({ message: "File stored in temp", path: tempFilePath });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("File upload failed");
+//   }
+// };
+
+// import fs from "fs";
+// import path from "path";
+
+export const CSTUploadController = async (req, res) => {
+  try {
+    const file = req.file;
+    if (!file) return res.status(400).send("No file uploaded");
+
+    // ✅ Base folders
+    const baseDir = path.join(__dirname, "../uploaded final data");
+    const tempDir = path.join(baseDir, "temp");
+    const siteDir = path.join(baseDir, req.user?.sitename || "unknown");
+
+    // ✅ Ensure folders exist
+    [tempDir, siteDir].forEach((dir) => {
+      if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    });
+
+    // ✅ Unique filename
+    const uniqueName = `${Date.now()}_${file.originalname}`;
+    const tempFilePath = path.join(tempDir, uniqueName);
+    const siteFilePath = path.join(siteDir, uniqueName);
+
+    // ✅ Save to temp (stream or buffer)
+    if (file.path) {
+      // multer.diskStorage
+      fs.copyFileSync(file.path, tempFilePath);
+    } else if (file.stream) {
+      // multer.memoryStorage + stream
+      const writeStream = fs.createWriteStream(tempFilePath);
+      await new Promise((resolve, reject) => {
+        file.stream.pipe(writeStream);
+        file.stream.on("error", reject);
+        writeStream.on("finish", resolve);
+      });
+    } else if (file.buffer) {
+      // small files
+      await fs.promises.writeFile(tempFilePath, file.buffer);
+    }
+
+    // ✅ Copy from temp → user’s site folder
+    fs.copyFileSync(tempFilePath, siteFilePath);
+
+    // ✅ Log both paths
+    console.log(`✅ File stored temporarily at: ${tempFilePath}`);
+    console.log(`✅ File copied to site folder: ${siteFilePath}`);
+
+    res.status(200).json({
+      message: "File uploaded successfully",
+      // tempPath: tempFilePath,
+      // sitePath: siteFilePath,
+    });
+  } catch (err) {
+    console.error("❌ File upload failed:", err);
+    res.status(500).send("File upload failed");
+  }
+};
+
+// ✅ Helper: normalize header names
+function normalizeHeader(header) {
+  if (!header) return "";
+  return header
+    .toString()
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "")
+    .replace(/[\u200B-\u200D\uFEFF]/g, "")
+    .replace(/[\r\n\t]/g, "");
+}
+
+// ✅ Controller
+export const WORKINGCSTUploadController = async (req, res) => {
+  // const tempFilePath = req.file?.path;
+  // if (!tempFilePath) return res.status(400).send("No file uploaded.");
+  try {
+    // console.log(`State Name: ${req.user.sitename}`);
+    // console.log(`File saved at: ${tempFilePath}`);
+
+    console.log(`State Name : ${req.user.sitename}`);
+
+    if (!req.file) return res.status(200).send("No file uploaded.");
+
+    const file = req.file;
+    let uploadDir = path.join(__dirname, "../uploaded final data");
+    let tempUploadDir = path.join(__dirname, "../uploaded final data/temp");
+
+    if (req.user.role === "admin")  uploadDir = path.join(uploadDir, req.user.sitename);
+
+    if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
+    if (!fs.existsSync(tempUploadDir)) fs.mkdirSync(tempUploadDir, { recursive: true });
+
+    const tempFilePath = path.join(tempUploadDir, `${Date.now()}_${file.originalname}`);
+    const newFilePath = path.join(uploadDir, `${Date.now()}_${file.originalname}`);
+
+    fs.writeFileSync(tempFilePath, file.buffer);
+
+
+
+    // ✅ Load mapping
+    const mappings = await CST_Mapping.find({}).lean();
+    if (!mappings.length)
+      return res.status(400).send("Header mappings not found.");
+
+    const headerMapping = {};
+    mappings.forEach(m => {
+      if (m.mappingHeaderName && m.field)
+        headerMapping[normalizeHeader(m.mappingHeaderName)] = m.field.trim();
+    });
+
+    // ✅ Read Excel (from disk)
+    const workbook = xlsx.readFile(tempFilePath, { cellDates: true });
+    const sheetName = workbook.SheetNames[0];
+    const worksheet = workbook.Sheets[sheetName];
+    const jsonData = xlsx.utils.sheet_to_json(worksheet, { defval: "" });
+
+    if (!jsonData.length) return res.status(400).send("Empty Excel file.");
+
+    // ✅ Validate headers
+    const excelHeaders = Object.keys(jsonData[0]).map(normalizeHeader);
+    const dbHeaders = Object.keys(headerMapping);
+
+    const missing = dbHeaders.filter(h => !excelHeaders.includes(h));
+    const extra = excelHeaders.filter(h => !dbHeaders.includes(h));
+
+    if (missing.length || extra.length) {
+      console.warn("Header mismatch detected");
+      return res.status(400).json({
+        message: "Invalid file format. Please check the uploaded file headers.",
+        missingHeaders: missing,
+        extraHeaders: extra,
+      });
+    }
+
+    // ✅ Process and insert in batches
+    const batchSize = 500;
+    let batch = [];
+    let inserted = 0;
+    let duplicates = 0;
+
+    for (const row of jsonData) {
+      const allEmpty = Object.values(row).every(v => !v || v.toString().trim() === "");
+      if (allEmpty) continue;
+
+      const transformed = transformRow(row, headerMapping);
+      batch.push(transformed);
+
+      if (batch.length >= batchSize) {
+        const { inserted: ins, duplicates: dup } = await insertBatchWithSkip(batch);
+        inserted += ins;
+        duplicates += dup;
+        batch = [];
+      }
+    }
+
+    if (batch.length > 0) {
+      const { inserted: ins, duplicates: dup } = await insertBatchWithSkip(batch);
+      inserted += ins;
+      duplicates += dup;
+    }
+    
+    console.log(`Upload complete. Inserted: ${inserted}, Duplicates: ${duplicates}`);
+    if (tempFilePath) {
+      fs.unlink(tempFilePath, (err) => {
+        if (err) console.error("Error deleting temp file:", err);
+      });
+    }
+
+    res.status(200).json({
+      message: "✅ File uploaded successfully.",
+      inserted,
+      duplicatesSkipped: duplicates,
+    });
+  } catch (err) {
+    console.error("Error in CSTUploadController:", err);
+    res.status(500).send("Internal Server Error");
+  } finally {
+    // 🧹 Always delete file after processing
+    // if (tempFilePath) {
+    //   fs.unlink(tempFilePath, (err) => {
+    //     if (err) console.error("Error deleting temp file:", err);
+    //   });
+    // }
+  }
+};
+
+// ✅ Transform row using DB header mapping
+function transformRow(row, headerMapping) {
+  const newRow = {};
+  let index = 0;
+  for (const header in row) {
+    const normalized = normalizeHeader(header);
+    const mapped = headerMapping[normalized];
+    const key = mapped || `Unmapped_${index++}`;
+    const value = row[header] !== undefined ? String(row[header]).trim() : null;
+    setNestedValue(newRow, key, value);
+  }
+  return newRow;
+}
+
+// ✅ Helper to set nested object keys (e.g., a.b.c)
+function setNestedValue(obj, path, value) {
+  const keys = path.split(".");
+  let current = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    const key = keys[i];
+    if (!(key in current)) current[key] = {};
+    current = current[key];
+  }
+  current[keys[keys.length - 1]] = value;
+}
+
+// ✅ Bulk insert with skip duplicates
+async function insertBatchWithSkip(batch) {
+  try {
+    const result = await CST_FINAL.insertMany(batch, {
+      ordered: false,
+      rawResult: true,
+      validateBeforeSave: false,
+    });
+    return { inserted: result.insertedCount || 0, duplicates: 0 };
+  } catch (err) {
+    if (err.code === 11000) {
+      const inserted = err.result?.result?.nInserted || 0;
+      const duplicates = batch.length - inserted;
+      console.warn(`⚠️ ${duplicates} duplicate record(s) skipped.`);
+      return { inserted, duplicates };
+    }
+    throw err;
+  }
+}

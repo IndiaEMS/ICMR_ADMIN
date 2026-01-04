@@ -46,6 +46,8 @@ export const LOTController = (req, res) => {
   });
 };
 
+
+
 export const LOTGet = async (req, res, next) => {
   try {
     const adminId = req.user.id;
@@ -140,3 +142,38 @@ export const LOTUpdateController = async (req, res) => {
     res.status(500).send("Error updating data");
   }
 }
+
+export const LOTAndroidController = (req, res) => {
+  var { completeform } = req.body;
+
+  // console.log(req.body);
+  
+  
+
+  // console.log(completeform);
+
+  LOT.countDocuments({ LOTA3: completeform?.LOTA3 }).then((response) => {
+    
+    // console.log(response);
+    
+    const combinedData = {
+      ...completeform,
+      uniqueCode: `${completeform.LOTA3}_${response + 1}`,
+    };
+    LOT.create(combinedData)
+      .then((response) => {
+        res.status(200).json({
+          ok: true,
+          success: "Data submitted successfully!",
+          response: response,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).json({
+          ok: false,
+          error: "Error occured in saving data.",
+        });
+      });
+  });
+};

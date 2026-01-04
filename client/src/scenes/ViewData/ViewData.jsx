@@ -6,11 +6,18 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
+  DialogActions,
+  Typography,
+  Paper,
+  IconButton,
 } from "@mui/material";
+
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import CloseIcon from "@mui/icons-material/Close";
 
 import { tokens } from "../../theme";
 import RefreshIcon from "@mui/icons-material/Refresh";
-import { DownloadOutlined } from "@mui/icons-material";
+import { DownloadOutlined, UploadFile } from "@mui/icons-material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Header from "../../components/Header";
 import React, { useState, useEffect, useRef } from "react";
@@ -31,6 +38,9 @@ import {
 } from "./Ambulance/Ambulance_columns_export";
 import { LOTColumns } from "./LOT/LOT_columns";
 import { LOTColumnsExport } from "./LOT/LOT_columns_export";
+
+import { LOTFinalColumns } from "./LOT final/LOT_columns";
+import { LOTFinalColumnsExport } from "./LOT final/LOT_columns_export";
 
 import { HFAT1Rows } from "./HFAT-1/HFAT_1_rows";
 import { HFAT2Rows } from "./HFAT-2/HFAT_2_rows";
@@ -57,6 +67,7 @@ const ViewData = ({ formName }) => {
   const [exportColumns, setExportColumns] = useState([]);
   const [title, setTitle] = useState(formName);
   const [loading, setLoading] = useState(false);
+  const [fileUploadLoading, setFileUploadLoading] = useState(false);
   const [isDownloadDisabled, setIsDownloadDisabled] = useState(false);
   const [selectedState, setSelectedState] = useState("");
   const [selectedRows, setSelectedRows] = useState([]);
@@ -67,6 +78,30 @@ const ViewData = ({ formName }) => {
   const [mapData, setMapData] = useState([]);
 
   const [isMapBtnDisabled, setIsMapBtnDisabled] = useState(false);
+
+  const [isFinalData, setIsFinalData] = useState(false);
+  const [uploadPopupOpen, setUploadPopupOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const [sampleFileLink, setSampleFileLink] = useState("");
+
+  const handleFileChange = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    if (file.type !== "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" && !file.name.endsWith(".xls") && !file.name.endsWith(".xlsx")) {
+      alert("Please select a Excel file.");
+      setSelectedFile(null);
+      return;
+    }
+    setSelectedFile(file);
+  }
+};
+
+
+  const handleUploadPopupClose = () => {
+    setUploadPopupOpen(false);
+    setSelectedFile(null);
+  };
 
   const adminState = user;
 
@@ -136,6 +171,7 @@ const ViewData = ({ formName }) => {
       );
     }
 
+    setIsFinalData(false);
     setLoading(true);
     setRows([]);
     if (formName === "HFAT-1") {
@@ -148,13 +184,36 @@ const ViewData = ({ formName }) => {
       filterAndMapData(data);
       // setRows(HFAT1Rows(data));
       // setRows(AmbulanceRows(data));
-    } else if (formName === "HFAT-2") {
+    }else if (formName === "HFAT-1-FINAL") {
+      setTitle("HFAT-1");
+      // setColumns(HFAT1ColumnsExport);
+      // setCols(HFAT1ColumnsExport);
+      getCols();
+      // setColumns(HFAT1ColumnsExport);
+      // setExportColumns(HFAT1ColumnsExport);
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
+      // setRows(HFAT1Rows(data));
+      // setRows(AmbulanceRows(data));
+    }  
+    else if (formName === "HFAT-2") {
       setTitle("HFAT-2");
       setColumns(HFAT2ColumnsExport);
       setCols(HFAT2ColumnsExport);
       setExportColumns(HFAT2ColumnsExport);
       setRows(data);
       filterAndMapData(data);
+      // setRows(HFAT2Rows(data));
+    } else if (formName === "HFAT-2-FINAL") {
+      setTitle("HFAT-2");
+      // setColumns(HFAT2ColumnsExport);
+      // setCols(HFAT2ColumnsExport);
+      // setExportColumns(HFAT2ColumnsExport);
+      getCols();
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
       // setRows(HFAT2Rows(data));
     } else if (formName === "HFAT-3") {
       setTitle("HFAT-3");
@@ -164,6 +223,16 @@ const ViewData = ({ formName }) => {
       // setRows(HFAT3Rows(data));
       setRows(data);
       filterAndMapData(data);
+    } else if (formName === "HFAT-3-FINAL") {
+      setTitle("HFAT-3");
+      // setColumns(HFAT3ColumnsExport);
+      // setCols(HFAT3ColumnsExport);
+      // setExportColumns(HFAT3ColumnsExport);
+      // setRows(HFAT3Rows(data));
+      getCols();
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
     } else if (formName === "HFAT-1WithAMB") {
       setTitle("HFAT-1 with Ambulance");
       setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
@@ -171,13 +240,31 @@ const ViewData = ({ formName }) => {
       setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
 
       setRows(data);
+    } else if (formName === "HFAT-1WithAMB-FINAL") {
+      setTitle("HFAT-1 with Ambulance");
+      setColumns([...HFAT1Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT1Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT1ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      setRows(data);
     } else if (formName === "HFAT-2WithAMB") {
       setTitle("HFAT-2 with Ambulance");
       setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
       setCols([...HFAT2Columns, ...HFATAmbulanceColumns]);
       setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
       setRows(data);
+    } else if (formName === "HFAT-2WithAMB-FINAL") {
+      setTitle("HFAT-2 with Ambulance");
+      setColumns([...HFAT2Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT2Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT2ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      setRows(data);
     } else if (formName === "HFAT-3WithAMB") {
+      setTitle("HFAT-3 with Ambulance");
+      setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
+      setCols([...HFAT3Columns, ...HFATAmbulanceColumns]);
+      setExportColumns([...HFAT3ColumnsExport, ...HFATAmbulanceColumnsExport]);
+      setRows(data);
+    } else if (formName === "HFAT-3WithAMB-FINAL") {
       setTitle("HFAT-3 with Ambulance");
       setColumns([...HFAT3Columns, ...HFATAmbulanceColumns]);
       setCols([...HFAT3Columns, ...HFATAmbulanceColumns]);
@@ -191,6 +278,16 @@ const ViewData = ({ formName }) => {
       // setRows(AmbulanceRows(data));
       setRows(data);
       filterAndMapData(data);
+    } else if (formName === "AMBULANCE-FINAL") {
+      setTitle("Ambulance");
+      // setColumns(AmbulanceColumns);
+      // setCols(AmbulanceColumns);
+      // setExportColumns(AmbulanceColumnsExport);
+      // setRows(AmbulanceRows(data));
+      getCols();
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
     } else if (formName === "CST") {
       setTitle("Community Survey Tool");
       setColumns(CSTColumns(data));
@@ -198,6 +295,16 @@ const ViewData = ({ formName }) => {
       setExportColumns(CSTColumns(data));
       setRows(data);
       filterAndMapData(data);
+    } else if (formName === "CST-FINAL") {
+      setTitle("CST");
+      // setColumns(CSTColumns(data));
+      // setCols(CSTColumns(data));
+      // setExportColumns(CSTColumns(data));
+      // setRows(data);
+      getCols();
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
     } else if (formName === "Autopsy") {
       setTitle("Verbal Autopsy Tool");
       setColumns(AutopsyColumnsExport);
@@ -207,6 +314,12 @@ const ViewData = ({ formName }) => {
       setRows(data);
 
       // setRows(CSTRows(data));
+    } else if (formName === "Autopsy-FINAL") {
+      setTitle("Verbal Autopsy Tool");
+      getCols();
+      setRows(data);
+      filterAndMapData(data);
+      setIsFinalData(true);
     } 
     else if(formName === "LOT"){
       setTitle("Live Observation Tool");
@@ -214,6 +327,14 @@ const ViewData = ({ formName }) => {
       setCols(LOTColumns);
       setExportColumns(LOTColumnsExport);
       setRows(data);
+      filterAndMapData(data);
+    }else if(formName === "LOT-FINAL"){
+      setTitle("Live Observation Tool");
+      setColumns(LOTFinalColumns);
+      setCols(LOTFinalColumns);
+      setExportColumns(LOTFinalColumnsExport);
+      setRows(data);
+      setIsFinalData(true);
       filterAndMapData(data);
     }else {
       console.log("No form found");
@@ -243,6 +364,33 @@ const ViewData = ({ formName }) => {
 
   // getRowsAndCols();
 
+  const getCols = async () => {
+    if (loading) return; // Prevent duplicate requests while loading
+
+  try {
+    const { data } = await axios.get(`${url}/${formName}-Rows`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    // setRows(data?.data || []);
+    setColumns(data?.rows || []);
+    setCols(data?.rows || []);
+    setExportColumns(data?.rows || []);
+    setLoading(true); // Start loading after initial data fetch
+  } catch (error) {
+    console.error(error);
+    if(localStorage.getItem("token") === null || localStorage.getItem("user") === null) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+      }
+  }
+  finally {
+    setLoading(false); // End loading
+  }
+};
+
+  
   const getData = async () => {
     if (loading) return; // Prevent duplicate requests while loading
 
@@ -263,7 +411,8 @@ const ViewData = ({ formName }) => {
             limit: chunkSize, // Number of records per page
           },
         });
-
+        // console.log(`Fetched ${data?.data?.length} records from page ${currentPage}`);
+        
         const chunkData = data?.data || [];
 
         allData = [...allData, ...chunkData]; // Append the chunk data
@@ -282,9 +431,11 @@ const ViewData = ({ formName }) => {
       setLoading(true); // Start loading after initial data fetch
     } catch (error) {
       console.log(error);
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      navigate("/login");
+      if(localStorage.getItem("token") === null || localStorage.getItem("user") === null) {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        navigate("/login");
+      }
     } finally {
       setLoading(false); // End loading
     }
@@ -313,6 +464,14 @@ const ViewData = ({ formName }) => {
     }
   }, [selectedState, data]);
 
+  const handleSampleDownload = async (formName) => {
+  try {
+    window.open(`${url}/common/download-sample/${formName}`, "_blank");
+  } catch (error) {
+    console.error("❌ Download failed:", error);
+    alert("Failed to download sample file. Please try again.");
+  }
+};
 
   const handleDownloadCSV = async () => {
     try {
@@ -494,11 +653,12 @@ const ViewData = ({ formName }) => {
   const onSelectionChanged = (params) => {
     const selectedNodes = params.api.getSelectedNodes();
     const selectedData = selectedNodes.map((node) => node.data);
-    setSelectedRows(selectedData);
-
+    
     if (selectedData.length > 10) {
       // Enforce the selection limit of 10
       alert("Maximum 10 records can be selected at one time.");
+    }else{
+      setSelectedRows(selectedData);
     }
   };
 
@@ -540,6 +700,73 @@ const ViewData = ({ formName }) => {
     // show success message
 
   };
+
+  const handleUploadFile = async () => {
+  if (!selectedFile) {
+    alert("Please select a file first!");
+    return;
+  }
+
+  // ✅ Validate file type (only CSV allowed)
+  const fileType = selectedFile.type;
+  const fileName = selectedFile.name.toLowerCase();
+
+  if (!(fileType === "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" || fileName.endsWith(".xls") || fileName.endsWith(".xlsx"))) {
+    alert("Only Excel files are allowed!");
+    return;
+  }
+
+  // ✅ Prepare form data
+  const formData = new FormData();
+  formData.append("file", selectedFile);
+
+  try {
+    setFileUploadLoading(true);
+    // ✅ Call your backend API (replace with your API URL)
+    const response = await axios.post(`${url}/${formName}/upload`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      maxBodyLength: Infinity,
+      maxContentLength: Infinity
+    });
+
+
+    // console.log(response.status);
+    if (response.status === 200) {
+      
+      const { message, inserted, duplicatesSkipped } = response.data || {};
+
+      // Build the message dynamically
+      let alertMessage = message || "✅ File uploaded successfully!";
+      // console.log(alertMessage);
+      
+
+      // Append inserted / duplicate info only if present
+      if (inserted != null || duplicatesSkipped != null) {
+        alertMessage += `\n${inserted != null ? `Inserted: ${inserted}` : ""}${
+          duplicatesSkipped != null ? `\nDuplicates: ${duplicatesSkipped}` : ""
+        }`;
+      }
+
+      alert(alertMessage);
+      setFileUploadLoading(false);
+
+      handleUploadPopupClose();
+      getData(); // Refresh data after successful upload
+    } else {
+      alert("Failed to upload file.");
+      setFileUploadLoading(false);
+    }
+  } catch (error) {
+    console.log(error);
+    
+    setFileUploadLoading(false);
+    alert("Error while uploading file.");
+  }
+};
+
   
 
   if (loading) return <div>Loading...</div>;
@@ -549,6 +776,27 @@ const ViewData = ({ formName }) => {
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Header title={title} subtitle={`Managing the ${title}`} />
         <Box>
+          {isFinalData && (
+            <Button
+            sx={{
+              backgroundColor: colors.blueAccent[700],
+              color: colors.grey[100],
+              fontSize: "14px",
+              fontWeight: "bold",
+              padding: "10px 20px",
+              mr: "10px",
+              "&:hover": {
+                backgroundColor: colors.blueAccent[600],
+              },
+            }}
+            onClick={() => {
+              setUploadPopupOpen(true);
+            }}
+            >
+            <UploadFile sx={{ mr: "10px" }} />
+            Upload File
+          </Button>
+          )}
           <Button
             sx={{
               backgroundColor: colors.blueAccent[700],
@@ -796,15 +1044,30 @@ const ViewData = ({ formName }) => {
         <AgGridReact
           ref={gridRef}
           rowData={rows}
-          columnDefs={cols ?? columns}
+          // columnDefs={cols ?? columns}
           rowSelection={"multiple"}
           onSelectionChanged={onSelectionChanged}
+          columnDefs={
+            (cols ?? columns)?.map((col, index) =>
+              index === 0
+                ? {
+                    ...col,
+                    checkboxSelection: true,         // ✅ checkbox in first column
+                    headerCheckboxSelection: true,   // ✅ "select all" in header
+                    // pinned: "left",                  // optional: keep it visible while scrolling
+                  }
+                : col
+            )
+          }
           defaultColDef={{
             sortable: true,
             filter: true,
             floatingFilter: true,
             editable: true,
           }}
+          // singleClickEdit={true}
+          // double click to edit
+          onCellDoubleClicked={formName == "Live Observation Tool" ? true : false}
           // on cell editing
           onCellValueChanged={onCellValueChanged}
           localeText={loading ? "Loading..." : "No data available"}
@@ -830,6 +1093,81 @@ const ViewData = ({ formName }) => {
           </Box>
         </DialogContent>
       </Dialog>
+      <Dialog open={uploadPopupOpen} maxWidth="xs" fullWidth sx={{ 
+        backdropFilter: "blur(5px)", 
+        "& .MuiDialog-paper": { 
+            backgroundColor: colors.primary[400]
+          },
+          // paper background color
+          
+        }}>
+      <DialogTitle sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        File Upload
+        <IconButton onClick={() => handleUploadPopupClose()} size="small">
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
+      <DialogContent>
+        <center>
+          {/* please follow this format to upload the csv file : <a href={`https://indiaems.paruluniversity.ac.in/src/assets/sample/${formName}.csv`} target="_blank" rel="noopener noreferrer" style={{color:"yellow"}}>Click Here</a> */}
+          please follow this format to upload the excel file : 
+          <span
+            onClick={() => handleSampleDownload(formName)}
+            style={{
+              color: "yellow",
+              cursor: "pointer",
+              textDecoration: "underline",
+            }}
+          >
+             Click Here
+          </span>
+        </center>
+        <Paper
+          elevation={3}
+          sx={{
+            p: 3,
+            backgroundColor: colors.blueAccent[700],
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: 2,
+          }}
+        >
+          <CloudUploadIcon sx={{ fontSize: 60, color: "primary.main" }} />
+          <Typography variant="h6">Select a file to upload</Typography>
+          <input
+            type="file"
+            id="fileInput"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          <label htmlFor="fileInput">
+            <Button variant="outlined" component="span" sx={{ color: colors.grey[100], borderColor: colors.grey[100], backgroundColor: colors.primary[400], "&:hover": { borderColor: colors.primary[500], backgroundColor: colors.primary[700] } }}>
+              {selectedFile && (
+                <Typography variant="body2" color="textSecondary">
+                  {selectedFile.name}
+                </Typography>
+              ) || "Choose File"}
+            </Button>
+          </label>
+          
+        </Paper>
+      </DialogContent>
+      <DialogActions sx={{ px: 3, pb: 2 }}>
+        <Button onClick={() => handleUploadPopupClose()} sx={{ color: colors.grey[100], fontWeight: "bold" }}>
+          Cancel
+        </Button>
+        <Button
+        sx={{ background: colors.blueAccent[700], color: colors.greenAccent, fontWeight: "bold", "&:hover": { background: colors.blueAccent[900] } }}
+          onClick={handleUploadFile}
+          variant="contained"
+          color="primary"
+          disabled={!selectedFile || fileUploadLoading}
+        >
+          Upload
+        </Button>
+      </DialogActions>
+    </Dialog>
     </Box>
   );
 };

@@ -139,100 +139,10 @@ const columns = [
     field: "B10_2",
   },
   {
-    field: "B10",
+    field: "B10_0",
     headerName:
       "1B.10 Which of the following does your facility have to provide easy access for emergency care?",
       valueGetter: (params) => getOptionsIndex(params.data?.B10),
-    },
-    {
-      field: "B11_0",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Decontamination Area at the Entrance of ED)",
-    },
-    {
-      field: "B11_1",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Hospital attendant at the entrance of hospital to help the patient with the wheelchair, stretcher, etc.)",
-    },
-    {
-      field: "B11_2",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Waiting area for patients/ attendants)",
-    },
-    {
-      field: "B11_3",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Police control room)",
-    },
-    {
-      field: "B11_4",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Emergency Registration Counter)",
-    },
-    {
-      field: "B11_5",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Department has proper layout and demarcated areas as per Triage.)",
-    },
-    {
-      field: "B11_6",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Demarcated station for doctors and nurses)",
-    },
-    {
-      field: "B11_7",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Demarcated plaster room)",
-    },
-    {
-      field: "B11_8",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Dedicated isolation rooms (Emergency Infections))",
-    },
-    {
-      field: "B11_9",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Dedicated minor OT.)",
-    },
-    {
-      field: "B11_10",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Provision for emergency OT)",
-    },
-    {
-      field: "B11_11",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Point of care lab (24x7))",
-    },
-    {
-      field: "B11_12",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Demarcated duty room for doctors)",
-    },
-    {
-      field: "B11_13",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Demarcated duty room for nursing staff)",
-    },
-    {
-      field: "B11_14",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Ambulance drivers room)",
-    },
-    {
-      field: "B11_15",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Dedicated LaQshya certified labor room)",
-    },
-    {
-      field: "B11_16",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=Child-friendly service based on MusQan.)",
-    },
-    {
-      field: "B11_17",
-      headerName:
-        "1B.11 Which of the following demarcated /dedicated areas does this facility have for emergency care? (Select all that apply) (choice=NABH Accreditation)",
     },
     {
       field: "B11",
@@ -241,48 +151,29 @@ const columns = [
       valueGetter: (params) => getOptionsIndex(params.data?.B11),
     },
     {
-      field: "B12_0",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Services provided to the patients are clearly defined, displayed prominently.)",
-    },
-    {
-      field: "B12_1",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Names of doctor and nursing staff on duty are displayed and updated.)",
-    },
-    {
-      field: "B12_2",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=List of available drugs are displayed.)",
-    },
-    {
-      field: "B12_3",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=All relevant information is displayed for the patients and visitors including user charges wherever applicable at the time of procedure/ investigation/admission.)",
-    },
-    {
-      field: "B12_4",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Important contact numbers including ambulance, blood bank, police and referral centers displayed.)",
-    },
-    {
-      field: "B12_5",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Other)",
-      valueGetter: (params) =>
-        (params.data?.B12?.[5]?.length > 0 && "Other") || null,
-    },
-    {
-      field: "B12_5",
-      headerName:
-        "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (Other Specify)",
-    },
-    {
       field: "B12",
       headerName:
       "1B.12 Is there any display board of all the emergency services and entitlements available in its departments?",
       valueGetter: (params) => getOptionsIndex(params.data?.B12),
   },
+  {
+    field: "B12_5",
+    headerName:
+      "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (choice=Other)",
+    valueGetter: (params) =>
+      (params.data?.B12?.[5]?.length > 0 && "Other") || null,
+  },
+  {
+    field: "B12_5",
+    headerName:
+      "1B.12 Is there any display board of all the emergency services and entitlements available in its departments? (Other Specify)",
+  },
+  // {
+  //   field: "B12",
+  //   headerName:
+  //     "1B.12 Is there any display board of all the emergency services and entitlements available in its departments?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.B12),
+  // },
   // {
   //   field: "B12_5",
   //   headerName:
@@ -350,12 +241,12 @@ const columns = [
     headerName:
       "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital: (choice=Surge capacity in your hospital)",
   },
-  {
-    field: "B13",
-    headerName:
-      "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital:",
-      valueGetter: (params) => getOptionsIndex(params.data?.B13),
-  },
+  // {
+  //   field: "B13",
+  //   headerName:
+  //     "1B.13 Which of the following safety and security infrastructure/ measures are in place at your hospital:",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.B13),
+  // },
   {
     field: "B14",
     headerName:
@@ -908,10 +799,9 @@ const columns = [
       "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Forensic medicine)",
   },
   {
-    field: "C2a",
+    field: "C2a_0",
     headerName:
-      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital - District hospital + Medical college",
-      valueGetter: (params) => getOptionsIndex(params.data?.C2a),
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Medicine)",
   },
   {
     field: "C2b_0",
@@ -974,11 +864,132 @@ const columns = [
       "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Emergency medicine)",
   },
   {
-    field: "C2b",
+    field: "C2a_1",
     headerName:
-      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital - Medical college",
-      valueGetter: (params) => getOptionsIndex(params.data?.C2b),
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Gynecology and obstetrics)",
   },
+  {
+    field: "C2a_2",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Orthopedics)",
+  },
+  {
+    field: "C2a_3",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=General surgery)",
+  },
+  {
+    field: "C2a_4",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Radiology)",
+  },
+  {
+    field: "C2a_5",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Anesthesia)",
+  },
+  {
+    field: "C2a_6",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Critical care)",
+  },
+  {
+    field: "C2a_7",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Ophthalmology)",
+  },
+  {
+    field: "C2a_8",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=ENT)",
+  },
+  {
+    field: "C2a_9",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Psychiatry)",
+  },
+  {
+    field: "C2a_10",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Dermatology)",
+  },
+  {
+    field: "C2a_11",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - District hospital + Medical college (choice=Forensic medicine)",
+  },
+  // {
+  //   field: "C2a",
+  //   headerName:
+  //     "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital - District hospital + Medical college",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.C2a),
+  // },
+  {
+    field: "C2b_0",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Transfusion medicine)",
+  },
+  {
+    field: "C2b_1",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Cardiology)",
+  },
+  {
+    field: "C2b_2",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=CTVS)",
+  },
+  {
+    field: "C2b_3",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Neurology)",
+  },
+  {
+    field: "C2b_4",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Neurosurgery)",
+  },
+  {
+    field: "C2b_5",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Plastic surgery)",
+  },
+  {
+    field: "C2b_6",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Maxillofacial surgery)",
+  },
+  {
+    field: "C2b_7",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Gastroenterology)",
+  },
+  {
+    field: "C2b_8",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Nephrology)",
+  },
+  {
+    field: "C2b_9",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Urology)",
+  },
+  {
+    field: "C2b_10",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Pediatric surgery)",
+  },
+  {
+    field: "C2b_11",
+    headerName:
+      "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital (Select all that apply) - Medical college (choice=Emergency medicine)",
+  },
+  // {
+  //   field: "C2b",
+  //   headerName:
+  //     "1C.2 Please indicate which of the following specialist/super specialist services are available in your hospital - Medical college",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.C2b),
+  // },
   {
     field: "C3",
     headerName:
@@ -1052,25 +1063,6 @@ const columns = [
       "1C4. Which of the following emergency care trainings have you undergone? (Other Specify)",
     valueGetter: (params) => params.data?.C4?.[11],
   },
-  {
-    field: "C4",
-    headerName:
-      "1C4. Which of the following emergency care trainings have you undergone?",
-      valueGetter: (params) => getOptionsIndex(params.data?.C4),
-  },
-  // {
-  //   field: "C4_11",
-  //   headerName:
-  //     "1C4. Which of the following emergency care trainings have you undergone? (choice = Other)",
-  //   valueGetter: (params) =>
-  //     (params.data?.C4?.[11]?.length > 0 && "Other") || "",
-  // },
-  // {
-  //   field: "C4_12",
-  //   headerName:
-  //     "1C4. Which of the following emergency care trainings have you undergone? (Other Specify)",
-  //   valueGetter: (params) => params.data?.C4?.[11],
-  // },
   {
     field: "C5_0",
     headerName: "1C.5 Frequency of training on emergency care in a year?",
@@ -1234,10 +1226,9 @@ const columns = [
     field: "H1D1_28",
   },
   {
-    field: "H1D1",
+    field: "H1D1_0",
     headerName:
-      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital?",
-      valueGetter: (params) => getOptionsIndex(params.data?.H1D1),
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (Multiple answers possible)? (choice=Saline)",
   },
   {
     field: "H1D2_0",
@@ -1370,11 +1361,292 @@ const columns = [
       "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=incubators)",
   },
   {
-    field: "H1D2",
     headerName:
-      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital?",
-      valueGetter: (params) => getOptionsIndex(params.data?.H1D2),
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Oxygen medicinal gas)",
+    field: "H1D1_0",
   },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Atropine)",
+    field: "H1D1_1",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Diazepam/Lorazepam)",
+    field: "H1D1_2",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Adrenaline)",
+    field: "H1D1_3",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Charcoal activated)",
+    field: "H1D1_4",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Antisnake venom)",
+    field: "H1D1_5",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Pralidoxime (PAM))",
+    field: "H1D1_6",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Magnesium sulphate)",
+    field: "H1D1_7",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Tetanus immunoglobulin)",
+    field: "H1D1_8",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Neostigmine)",
+    field: "H1D1_9",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Aspirin)",
+    field: "H1D1_10",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Clopidogrel)",
+    field: "H1D1_11",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Atorvastatin)",
+    field: "H1D1_12",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Misoprostol)",
+    field: "H1D1_13",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Labetalol IV)",
+    field: "H1D1_14",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Phenobarbitone)",
+    field: "H1D1_15",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Phenytoin (inj))",
+    field: "H1D1_16",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Plasma volume expander)",
+    field: "H1D1_17",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=3% Saline)",
+    field: "H1D1_18",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Dobutamine)",
+    field: "H1D1_19",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Streptokinase)",
+    field: "H1D1_20",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Tenecteplase)",
+    field: "H1D1_21",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Oxytocin)",
+    field: "H1D1_22",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Salbutamol sulphate)",
+    field: "H1D1_23",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Glucose/ 25 % dextrose)",
+    field: "H1D1_24",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Tranexamic acid)",
+    field: "H1D1_25",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=tPA IV)",
+    field: "H1D1_26",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Methergine)",
+    field: "H1D1_27",
+  },
+  {
+    headerName:
+      "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital? (choice=Carboprost)",
+    field: "H1D1_28",
+  },
+  // {
+  //   field: "H1D1",
+  //   headerName:
+  //     "1D.1 Which of the following essential emergency drugs are available at the DH/ Tertiary Care Hospital?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.H1D1),
+  // },
+  {
+    field: "H1D2_0",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=mobile bed for Resuscitation)",
+  },
+  {
+    field: "H1D2_1",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=crash cart (specialized cart for resuscitation))",
+  },
+  {
+    field: "H1D2_2",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Hard Cervical collar)",
+  },
+  {
+    field: "H1D2_3",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Oxygen cylinder/central oxygen supply)",
+  },
+  {
+    field: "H1D2_4",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=suction machine)",
+  },
+  {
+    field: "H1D2_5",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Multipara Monitor (To monitor Heart rate, BP, SPO2[Essential] ECG, Respiration Rate [Desirable] etc))",
+  },
+  {
+    field: "H1D2_6",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=defibrillator with or without external pacer)",
+  },
+  {
+    field: "H1D2_7",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Toothed Forceps, Kocher Forceps, Magills forceps, Artery forceps)",
+  },
+  {
+    field: "H1D2_8",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=AMBU Bag for adult and Paediatric)",
+  },
+  {
+    field: "H1D2_9",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=basic airway equipment like oropharyngeal nasopharyngeal airway, LMA for adult and pediatric)",
+  },
+  {
+    field: "H1D2_10",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=advanced laryngoscope and endotracheal tube or other similar device)",
+  },
+  {
+    field: "H1D2_11",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=tourniquet)",
+  },
+  {
+    field: "H1D2_12",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=pelvic binder or bed sheets with clips)",
+  },
+  {
+    field: "H1D2_13",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=laryngoscope with all sized blades)",
+  },
+  {
+    field: "H1D2_14",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Endotracheal Tubes of all sizes)",
+  },
+  {
+    field: "H1D2_15",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Laryngeal Mask Airway (LMA))",
+  },
+  {
+    field: "H1D2_16",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Chest Tubes with Water seal drain)",
+  },
+  {
+    field: "H1D2_17",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=ECG machine)",
+  },
+  {
+    field: "H1D2_18",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=nebulizer)",
+  },
+  {
+    field: "H1D2_19",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=fluid warmer)",
+  },
+  {
+    field: "H1D2_20",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=Infusion pump and Syringe Drivers)",
+  },
+  {
+    field: "H1D2_21",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=spine board with sling and scotch tapes)",
+  },
+  {
+    field: "H1D2_22",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=splints for all types of fracture)",
+  },
+  {
+    field: "H1D2_23",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=non-invasive ventilators)",
+  },
+  {
+    field: "H1D2_24",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=invasive ventilators)",
+  },
+  {
+    field: "H1D2_25",
+    headerName:
+      "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital? (Multiple answers possible) (choice=incubators)",
+  },
+  // {
+  //   field: "H1D2",
+  //   headerName:
+  //     "1D.2 Which of the following essential emergency equipment is available at the DH/ Tertiary Care Hospital?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.H1D2),
+  // },
   {
     field: "table2_0_Adult",
     headerName:
@@ -1582,12 +1854,12 @@ const columns = [
     headerName:
       "1E.3. Which services does your healthcare facility provide? (Other Specify)",
   },
-  {
-    field: "E3_0",
-    headerName:
-      "1E.3. Which services does your healthcare facility provide?",
-      valueGetter: (params) => getOptionsIndex(params.data?.E3),
-  },
+  // {
+  //   field: "E3_0",
+  //   headerName:
+  //     "1E.3. Which services does your healthcare facility provide?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.E3),
+  // },
   // {
   //   field: "E3_16",
   //   headerName:
@@ -1601,34 +1873,10 @@ const columns = [
   //     "1E.3. Which services does your healthcare facility provide? (Other Specify)",
   // },
   {
-    field: "E4_0",
+    field: "E4",
     headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Radiology-CT)",
-  },
-  {
-    field: "E4_1",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Radiology -ultrasound)",
-  },
-  {
-    field: "E4_2",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Radiology -MRI)",
-  },
-  {
-    field: "E4_3",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Radiology Services are functional 24X7)",
-  },
-  {
-    field: "E4_4",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Point of care lab -ABG, Troponin)",
-  },
-  {
-    field: "E4_5",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Availability of Functional ECG Services.)",
+      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital?",
+      valueGetter: (params) => getOptionsIndex(params.data?.E4),
   },
   {
     field: "E4_6",
@@ -1642,24 +1890,6 @@ const columns = [
     headerName:
       "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (other specify)",
   },
-  {
-    field: "E4",
-    headerName:
-      "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital?",
-      valueGetter: (params) => getOptionsIndex(params.data?.E4),
-  },
-  // {
-  //   field: "E4_6",
-  //   headerName:
-  //     "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (choice=Other)",
-  //   valueGetter: (params) =>
-  //     (params.data?.E4?.[6]?.length > 0 && "Other") || "",
-  // },
-  // {
-  //   field: "E4_6",
-  //   headerName:
-  //     "1E.4 Which of these emergency diagnostic facilities are provided at DH/ Tertiary Care Hospital? (other specify)",
-  // },
   {
     field: "H1F1",
     headerName:
@@ -1706,11 +1936,41 @@ const columns = [
       "1F.4 What key indicators are generated from the emergency management information system? (choice=Number of Referrals)",
   },
   {
-    field: "H1F4",
+    field: "H1F4_0",
     headerName:
-      "1F.4 What key indicators are generated from the emergency management information system?",
-      valueGetter: (params) => getOptionsIndex(params.data?.H1F4),
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Numbers by type of emergencies)",
   },
+  {
+    field: "H1F4_1",
+    headerName:
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Length of hospital stay)",
+  },
+  {
+    field: "H1F4_2",
+    headerName:
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Turnaround time)",
+  },
+  {
+    field: "H1F4_3",
+    headerName:
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Disposal time)",
+  },
+  {
+    field: "H1F4_4",
+    headerName:
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Number of deaths)",
+  },
+  {
+    field: "H1F4_5",
+    headerName:
+      "1F.4 What key indicators are generated from the emergency management information system? (choice=Number of Referrals)",
+  },
+  // {
+  //   field: "H1F4",
+  //   headerName:
+  //     "1F.4 What key indicators are generated from the emergency management information system?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.H1F4),
+  // },
   {
     field: "H1F5",
     headerName:
@@ -1829,21 +2089,6 @@ const columns = [
     headerName: "2H.2.5 Types of audits conducted? (Other Specify)",
   },
   {
-    field: "H1H8_0",
-    headerName: "1H.2.5 Types of audits conducted?",
-    valueGetter: (params) => getOptionsIndex(params.data?.H1H8),
-  },
-  // {
-  //   field: "H1H8_2",
-  //   headerName: "1H.2.5 Types of audits conducted? (choice = other)",
-  //   valueGetter: (params) =>
-  //     (params.data?.H1H8?.[2]?.length > 0 && "Other") || "",
-  // },
-  // {
-  //   field: "H1H8_2",
-  //   headerName: "2H.2.5 Types of audits conducted? (Other Specify)",
-  // },
-  {
     field: "H1H9",
     headerName:
       "1H.2.6 Any action being taken on Audit report in the last one year?",
@@ -1936,9 +2181,94 @@ const columns = [
   {
     field: "I1_0",
     headerName:
-      "1I.1 Indicate whether your hospital has the following documented protocols and systems",
-      valueGetter: (params) => getOptionsIndex(params.data?.I1),
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Procedure for registration and admission of new emergency patients)",
   },
+  {
+    field: "I1_1",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Procedure/Policy for receiving of referral patients)",
+  },
+  {
+    field: "I1_2",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Emergency Manual at the point of care)",
+  },
+  {
+    field: "I1_3",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Triage guidelines and protocol.)",
+  },
+  {
+    field: "I1_4",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Discharge summaries for all patients.)",
+  },
+  {
+    field: "I1_5",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Policy on handling cases of death (outside and inside hospital).)",
+  },
+  {
+    field: "I1_6",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Disaster management plan)",
+  },
+  {
+    field: "I1_7",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Triage policy/system at your emergency department.)",
+  },
+  {
+    field: "I1_8",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system: Code Blue.)",
+  },
+  {
+    field: "I1_9",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system: Trauma.)",
+  },
+  {
+    field: "I1_10",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system: Chest Pain)",
+  },
+  {
+    field: "I1_11",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system: Sepsis.)",
+  },
+  {
+    field: "I1_12",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system: Stroke)",
+  },
+  {
+    field: "I1_13",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system : Maternal Emergencies)",
+  },
+  {
+    field: "I1_14",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system : Neonatal Emergencies)",
+  },
+  {
+    field: "I1_15",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system : Acute Respiratory Emergencies)",
+  },
+  {
+    field: "I1_16",
+    headerName:
+      "1I.1 Indicate whether your hospital has the following documented protocols and systems (Select all that apply): (choice=Alert system : Snake bite and Poisoning)",
+  },
+  // {
+  //   field: "I1_0",
+  //   headerName:
+  //     "1I.1 Indicate whether your hospital has the following documented protocols and systems",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.I1),
+  // },
   { field: "table4_0_SOP", headerName: "MI (SOP/STW)" },
   { field: "table4_0_FollowsSOP", headerName: "MI (FollowsSOP)" },
   { field: "table4_1_SOP", headerName: "Stroke (SOP/STW)" },

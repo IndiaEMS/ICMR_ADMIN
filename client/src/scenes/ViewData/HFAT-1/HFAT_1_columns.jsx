@@ -39,7 +39,7 @@ const columns = [
     children: [
       {
         headerName: "latitude",
-        field: "A10_latitude",
+        field: "A10.latitude",
         valueGetter: (params) => params?.data?.A10?.latitude,
       },
       {

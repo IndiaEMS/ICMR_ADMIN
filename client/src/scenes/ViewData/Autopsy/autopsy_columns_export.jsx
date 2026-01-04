@@ -484,13 +484,13 @@ const column = [
   {
     field: "HB10",
     headerName: "HB.10 : Place of death",
-    valueGetter: (member) => member?.HB10?.split(":")[0],
+    valueGetter: (member) => member?.data?.HB10?.split(":")[0],
     editable: false,
   },
   {
     field: "HB10",
     headerName: "HB.10 : Place of death (Other Specify)",
-    valueGetter: (member) => member?.HB10?.split(":")[1],
+    valueGetter: (member) => member?.data?.HB10?.split(":")[1],
     editable: false,
   },
   {
@@ -629,7 +629,7 @@ const column = [
     field: "IB12",
     headerName: "IB.12 : Did she have foul smelling discharge?",
   },
-  { field: "IC", headerName: "IC : Written narrative in local language" },
+  { field: "IC1", headerName: "IC : Written narrative in local language" },
 ];
 
 const generateColumns = (columns) => {

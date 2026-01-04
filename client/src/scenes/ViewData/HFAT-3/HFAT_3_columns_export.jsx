@@ -1213,11 +1213,11 @@ const columns = [
     field: "H3H8_2",
     headerName: "3H.2.5 Types of audits conducted? (Other Specify)",
   },
-  {
-    field: "H3H8",
-    headerName: "3H.2.5 Types of audits conducted?",
-    valueGetter: (params) => getOptionsIndex(params.data?.H3H8),
-  },
+  // {
+  //   field: "H3H8",
+  //   headerName: "3H.2.5 Types of audits conducted?",
+  //   valueGetter: (params) => getOptionsIndex(params.data?.H3H8),
+  // },
   {
     field: "H3H9",
     headerName:
@@ -1280,12 +1280,6 @@ const columns = [
       "3I.1 What types of registers are maintained at the PHC? (Multiple answers possible) (Other specify)",
   },
   {
-    field: "H3I1",
-    headerName:
-      "3I.1 What types of registers are maintained at the PHC?",
-      valueGetter: (params) => getOptionsIndex(params.data?.H3I1),
-  },
-  {
     field: "H3I2_0",
     headerName:
       "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC? (Select all that apply) (choice=Use of Standard guidelines for triage)",
@@ -1336,12 +1330,12 @@ const columns = [
           : ""
         : "",
   },
-  {
-    field: "H3I2",
-    headerName:
-      "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC?",
-      valueGetter: (params) => getOptionsIndex(params.data?.H3I2),
-  },
+  // {
+  //   field: "H3I2",
+  //   headerName:
+  //     "3I.2 Which of the following SOPs for the management of common medical emergencies are followed at your PHC?",
+  //     valueGetter: (params) => getOptionsIndex(params.data?.H3I2),
+  // },
   {
     field: "table4_0_SOP",
     headerName:

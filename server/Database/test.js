@@ -4,5 +4,5 @@ async function genPassword(password) {
   password = await hash(password, salt);
   console.log(password);
 }
-const password = "Dhruv@Icmr#";
+const password = "";
 genPassword(password);

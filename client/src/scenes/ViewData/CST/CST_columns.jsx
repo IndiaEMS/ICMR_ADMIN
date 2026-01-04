@@ -256,6 +256,7 @@ export const CSTColumns = (data) => {
       PartEcolumns,
       PartFcolumns
     ),
+    // ...PartFcolumns,
     // ...generatePartCColumns(PartBLoopLength, PartCcolumns),
     // ...generateColumns(PartBLoopLength, PartDcolumns),
     // ...generateColumns(PartBLoopLength, PartEcolumns),

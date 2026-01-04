@@ -8,7 +8,7 @@ const generateColumns = (columns) => {
     } else {
       return {
         field: column.field,
-        headerName: column.headerName,
+        headerName: `${column.field} | ${column.headerName}`,
         checkboxSelection: column.checkboxSelection,
         headerCheckboxSelection: column.headerCheckboxSelection,
         valueFormatter: column.valueFormatter,

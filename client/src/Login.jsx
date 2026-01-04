@@ -15,6 +15,12 @@ import axios from "axios";
 import { AppContext } from "./context/user";
 import { useDispatch } from "react-redux";
 import { setToken, setUser } from "./slices/authSlice";
+import ICMRLogo from "./assets/ICMR_Logo.png";
+import PUIcon from "./assets/PU_Icon.png";
+import secondLogo from "./assets/secondLogo.png";
+import thirdLogo from "./assets/thirdLogo.png";
+import fourthLogo from "./assets/fourthLogo.png";
+import fifthLogo from "./assets/fifthLogo.png";
 
 import bgImg from "./assets/bg.jpg";
 
@@ -99,7 +105,7 @@ export default function AdminLogin() {
             {/* show img */}
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/ICMR_Logo.png"
+              src={ICMRLogo}
               alt="logo"
               height="60px"
               sx={{
@@ -112,7 +118,7 @@ export default function AdminLogin() {
             />
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/secondLogo.png"
+              src={secondLogo}
               alt="logo"
               height="60px"
               sx={{
@@ -125,7 +131,7 @@ export default function AdminLogin() {
             />
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/thirdLogo.png"
+              src={thirdLogo}
               alt="logo"
               height="60px"
               sx={{
@@ -138,7 +144,7 @@ export default function AdminLogin() {
             />
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/fourthLogo.png"
+              src={fourthLogo}
               alt="logo"
               height="60px"
               sx={{
@@ -151,7 +157,7 @@ export default function AdminLogin() {
             />
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/fifthLogo.png"
+              src={fifthLogo}
               alt="logo"
               height="60px"
               sx={{
@@ -164,7 +170,7 @@ export default function AdminLogin() {
             />
             <Box
               component="img"
-              src="https://indiaems.icmr.org.in/src/assets/PU_Icon.png"
+              src={PUIcon}
               alt="logo"
               height="60px"
               sx={{

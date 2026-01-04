@@ -103,15 +103,25 @@ function App() {
 
               {[
                 { path: "/ViewData/HFAT-1", formName: "HFAT-1" },
+                { path: "/ViewData/HFAT-1-FINAL", formName: "HFAT-1-FINAL" },
                 { path: "/ViewData/HFAT-2", formName: "HFAT-2" },
+                { path: "/ViewData/HFAT-2-FINAL", formName: "HFAT-2-FINAL" },
                 { path: "/ViewData/HFAT-3", formName: "HFAT-3" },
+                { path: "/ViewData/HFAT-3-FINAL", formName: "HFAT-3-FINAL" },
                 { path: "/ViewData/HFAT-1WithAMB", formName: "HFAT-1WithAMB" },
+                { path: "/ViewData/HFAT-1WithAMB-FINAL", formName: "HFAT-1WithAMB-FINAL" },
                 { path: "/ViewData/HFAT-2WithAMB", formName: "HFAT-2WithAMB" },
+                { path: "/ViewData/HFAT-2WithAMB-FINAL", formName: "HFAT-2WithAMB-FINAL" },
                 { path: "/ViewData/HFAT-3WithAMB", formName: "HFAT-3WithAMB" },
+                { path: "/ViewData/HFAT-3WithAMB-FINAL", formName: "HFAT-3WithAMB-FINAL" },
                 { path: "/ViewData/AMBULANCE", formName: "AMBULANCE" },
+                { path: "/ViewData/AMBULANCE-FINAL", formName: "AMBULANCE-FINAL" },
                 { path: "/ViewData/CST", formName: "CST" },
+                { path: "/ViewData/CST-FINAL", formName: "CST-FINAL" },
                 { path: "/ViewData/Autopsy", formName: "Autopsy" },
+                { path: "/ViewData/Autopsy-FINAL", formName: "Autopsy-FINAL" },
                 { path: "/ViewData/LOT", formName: "LOT" },
+                { path: "/ViewData/LOT-final", formName: "LOT-FINAL" },
               ].map((route) => (
                 <Route
                   key={route.path}

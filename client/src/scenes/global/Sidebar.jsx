@@ -35,6 +35,7 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
   // const { state } = useContext(AppContext);
   const { user } = useSelector((state) => state.auth);
   const userRole = user?.role ?? "";
+  const siteName = user?.sitename ?? "";
   // Pass userRole as a prop or fetch it from context
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -42,6 +43,8 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
   const [selected, setSelected] = useState("Dashboard");
   const [isHfatOpen, setIsHfatOpen] = useState(false);
   const [isHfatAMBOpen, setIsHfatAMBOpen] = useState(false);
+  const [isHfatfinalOpen, setIsHfatfinalOpen] = useState(false);
+  const [isHfatAMBfinalOpen, setIsHfatAMBfinalOpen] = useState(false);
 
   return (
     <Box
@@ -155,14 +158,68 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                     setSelected={setSelected}
                   />
                 )}
+                {(userRole === "superadmin") &&
+                <>
+                  <MenuItem
+                    icon={<ViewListIcon />}
+                    onClick={() => setIsHfatOpen(!isHfatOpen)}
+                    active={selected.startsWith("HFAT")}
+                    style={{ color: colors.grey[100] }}
+                    suffix={
+                      !isCollapsed ? (
+                        isHfatOpen ? (
+                          <KeyboardArrowDownIcon />
+                        ) : (
+                          <KeyboardArrowRightIcon />
+                        )
+                      ) : null
+                    }
+                  >
+                    <Typography>HFAT</Typography>
+                  </MenuItem>
+                  {isHfatOpen && (
+                    <Box paddingLeft="10%">
+                      <Item
+                        icon={<ViewListIcon />}
+                        title="HFAT-1"
+                        to="ViewData/HFAT-1"
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                      <Item
+                        icon={<ViewListIcon />}
+                        title="HFAT-2"
+                        to="ViewData/HFAT-2"
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                      <Item
+                        icon={<ViewListIcon />}
+                        title="HFAT-3"
+                        to="ViewData/HFAT-3"
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                      <Item
+                        icon={<ViewListIcon />}
+                        title="Ambulance"
+                        to="ViewData/AMBULANCE"
+                        selected={selected}
+                        setSelected={setSelected}
+                      />
+                    </Box>
+                  )}
+                </>
+                }
+
                 <MenuItem
                   icon={<ViewListIcon />}
-                  onClick={() => setIsHfatOpen(!isHfatOpen)}
-                  active={selected.startsWith("HFAT")}
+                  onClick={() => setIsHfatfinalOpen(!isHfatfinalOpen)}
+                  active={selected.startsWith("FINAL HFAT")}
                   style={{ color: colors.grey[100] }}
                   suffix={
                     !isCollapsed ? (
-                      isHfatOpen ? (
+                      isHfatfinalOpen ? (
                         <KeyboardArrowDownIcon />
                       ) : (
                         <KeyboardArrowRightIcon />
@@ -170,44 +227,53 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                     ) : null
                   }
                 >
-                  <Typography>HFAT</Typography>
+                  <Typography>HFAT FINAL</Typography>
                 </MenuItem>
-                {isHfatOpen && (
+                {isHfatfinalOpen && (
                   <Box paddingLeft="10%">
                     <Item
                       icon={<ViewListIcon />}
                       title="HFAT-1"
-                      to="ViewData/HFAT-1"
+                      to="ViewData/HFAT-1-FINAL"
                       selected={selected}
                       setSelected={setSelected}
                     />
                     <Item
                       icon={<ViewListIcon />}
                       title="HFAT-2"
-                      to="ViewData/HFAT-2"
+                      to="ViewData/HFAT-2-FINAL"
                       selected={selected}
                       setSelected={setSelected}
                     />
                     <Item
                       icon={<ViewListIcon />}
                       title="HFAT-3"
-                      to="ViewData/HFAT-3"
+                      to="ViewData/HFAT-3-FINAL"
                       selected={selected}
                       setSelected={setSelected}
                     />
                     <Item
                       icon={<ViewListIcon />}
                       title="Ambulance"
-                      to="ViewData/AMBULANCE"
+                      to="ViewData/AMBULANCE-FINAL"
                       selected={selected}
                       setSelected={setSelected}
                     />
                   </Box>
                 )}
+
                 <Item
                   icon={<ViewListIcon />}
                   title="CST"
                   to="ViewData/CST"
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                
+                <Item
+                  icon={<ViewListIcon />}
+                  title="CST-FINAL"
+                  to="ViewData/CST-FINAL"
                   selected={selected}
                   setSelected={setSelected}
                 />
@@ -219,12 +285,26 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                   setSelected={setSelected}
                 />
                 <Item
+                  title="Autopsy FINAL"
+                  to="ViewData/Autopsy-FINAL"
+                  icon={<ViewListIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                <Item
                   title="LOT"
                   to="ViewData/LOT"
                   icon={<ViewListIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
+                {/* <Item
+                  title="LOT Final"
+                  to="ViewData/LOT-final"
+                  icon={<ViewListIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                /> */}
                 <MenuItem
                   icon={<ViewListIcon />}
                   onClick={() => setIsHfatAMBOpen(!isHfatAMBOpen)}
@@ -240,7 +320,7 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                     ) : null
                   }
                 >
-                  <Typography>HFAT With Ambulance</Typography>
+                  <Typography>HFAT With AMB</Typography>
                 </MenuItem>
                 {isHfatAMBOpen && (
                   <Box paddingLeft="10%">
@@ -267,6 +347,49 @@ const Sidebar = ({ isSideBar, setIsSidebar, isCollapsed, setIsCollapsed }) => {
                     />
                   </Box>
                 )}
+
+                {/* <MenuItem
+                  icon={<ViewListIcon />}
+                  onClick={() => setIsHfatAMBfinalOpen(!isHfatAMBfinalOpen)}
+                  active={selected.startsWith("HFAT")}
+                  style={{ color: colors.grey[100] }}
+                  suffix={
+                    !isCollapsed ? (
+                      isHfatAMBfinalOpen ? (
+                        <KeyboardArrowDownIcon />
+                      ) : (
+                        <KeyboardArrowRightIcon />
+                      )
+                    ) : null
+                  }
+                >
+                  <Typography>HFAT With AMB FINAL</Typography>
+                </MenuItem>
+                {isHfatAMBfinalOpen && (
+                  <Box paddingLeft="10%">
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-1"
+                      to="ViewData/HFAT-1WithAMB-FINAL"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-2"
+                      to="ViewData/HFAT-2WithAMB-FINAL"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                    <Item
+                      icon={<ViewListIcon />}
+                      title="HFAT-3"
+                      to="ViewData/HFAT-3WithAMB-FINAL"
+                      selected={selected}
+                      setSelected={setSelected}
+                    />
+                  </Box>
+                )} */}
 
                 {userRole === "superadmin" && (
                   <>
